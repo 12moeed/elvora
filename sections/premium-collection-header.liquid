@@ -1,0 +1,112 @@
+<div class="premium-collection-header">
+  {% if collection.image != blank %}
+    <img
+      src="{{ collection.image | image_url: width: 1800 }}"
+      alt="{{ collection.title | escape }}"
+      class="premium-collection-header-bg"
+      loading="lazy"
+      width="1800"
+      height="600"
+    >
+  {% else %}
+    <img
+      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1800"
+      alt="{{ collection.title | escape }}"
+      class="premium-collection-header-bg"
+      loading="lazy"
+      width="1800"
+      height="600"
+    >
+  {% endif %}
+
+  <div class="premium-collection-header-overlay"></div>
+
+  <div class="premium-collection-header-content">
+    <!-- Breadcrumbs -->
+    <nav class="premium-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="premium-bc-sep">/</span>
+      <a href="/collections">Collections</a>
+      <span class="premium-bc-sep">/</span>
+      <span class="premium-bc-current">{{ collection.title | default: 'All Products' }}</span>
+    </nav>
+
+    <!-- Title & Description -->
+    <h1 class="premium-collection-title">
+      {{ collection.title | default: 'All Products' }}
+      <span class="premium-collection-title-underline"></span>
+    </h1>
+
+    {% if collection.description != blank %}
+      <div class="premium-collection-desc">
+        {{ collection.description }}
+      </div>
+    {% else %}
+      <p class="premium-collection-desc">
+        Explore our curated selection of luxury footwear, handcrafted leather bags, and designer accessories crafted for timeless elegance.
+      </p>
+    {% endif %}
+
+    <!-- Quick Category Filter Pills -->
+    <div class="premium-category-pills">
+      <a
+        href="/collections/all"
+        class="premium-pill {% if collection.handle == 'all' or collection.handle == blank %}active{% endif %}"
+      >
+        All Products
+      </a>
+      <a
+        href="/collections/ladies"
+        class="premium-pill {% if collection.handle == 'ladies' %}active{% endif %}"
+      >
+        Ladies Footwear
+      </a>
+      <a
+        href="/collections/gents"
+        class="premium-pill {% if collection.handle == 'gents' %}active{% endif %}"
+      >
+        Gents Sneakers
+      </a>
+      <a
+        href="/collections/bags"
+        class="premium-pill {% if collection.handle == 'bags' %}active{% endif %}"
+      >
+        Luxury Bags
+      </a>
+      <a
+        href="/collections/perfumes"
+        class="premium-pill {% if collection.handle == 'perfumes' %}active{% endif %}"
+      >
+        Fragrances
+      </a>
+      <a
+        href="/collections/accessories"
+        class="premium-pill {% if collection.handle == 'accessories' %}active{% endif %}"
+      >
+        Accessories
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Header",
+  "tag": "section",
+  "class": "section-collection-header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show Breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category_pills",
+      "label": "Show Quick Category Pills",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

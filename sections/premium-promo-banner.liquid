@@ -1,12 +1,16 @@
 <div class="premium-promo-section">
+  <!-- Glowing Top & Bottom Accent Lines -->
+  <div class="premium-promo-accent-top"></div>
+  <div class="premium-promo-accent-bottom"></div>
+
   {% if section.settings.image != blank %}
     <img
-      src="{{ section.settings.image | image_url: width: 1600 }}"
+      src="{{ section.settings.image | image_url: width: 2400 }}"
       alt="{{ section.settings.title | escape }}"
       class="premium-promo-bg-img"
       loading="lazy"
-      width="1600"
-      height="800"
+      width="2400"
+      height="1000"
     >
   {% elsif section.settings.image_url != blank %}
     <img
@@ -14,17 +18,17 @@
       alt="{{ section.settings.title | escape }}"
       class="premium-promo-bg-img"
       loading="lazy"
-      width="1600"
-      height="800"
+      width="2400"
+      height="1000"
     >
   {% else %}
     <img
-      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1600"
-      alt="Sale Banner"
+      src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=2400"
+      alt="Exclusive Skincare Glow Sale"
       class="premium-promo-bg-img"
       loading="lazy"
-      width="1600"
-      height="800"
+      width="2400"
+      height="1000"
     >
   {% endif %}
 
@@ -37,17 +41,33 @@
     </div>
 
     <h2 class="premium-promo-title">
-      {{ section.settings.title | default: 'Exclusive Mid-Season Sale' }}
+      {{ section.settings.title | default: 'Exclusive Skincare Glow Sale' }}
     </h2>
 
     <p class="premium-promo-sub">
-      {{ section.settings.subtitle | default: 'Enjoy up to 50% off on signature heels, sneakers, and luxury leather accessories. Limited stock available.' }}
+      {{ section.settings.subtitle | default: 'Enjoy up to 40% off on our clinical serums, ceramide barrier creams, and daily SPF defense. Elevate your glow today.' }}
     </p>
+
+    <!-- Horizontal Perks Ribbon -->
+    <div class="premium-promo-perks">
+      <span class="premium-promo-perk">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Dermatologically Tested
+      </span>
+      <span class="premium-promo-perk">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Free Express Delivery (Pakistan)
+      </span>
+      <span class="premium-promo-perk">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Cash on Delivery
+      </span>
+    </div>
 
     <div>
       <a href="{{ section.settings.link | default: '/collections/all' }}" class="premium-promo-cta">
-        {{ section.settings.cta_text | default: 'Shop The Sale' }}
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        {{ section.settings.cta_text | default: 'Shop The Glow Sale' }}
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
         </svg>
       </a>
@@ -59,7 +79,7 @@
 {
   "name": "Premium Promo Banner",
   "tag": "section",
-  "class": "section",
+  "class": "section section--full-width section--full-bleed",
   "settings": [
     {
       "type": "text",

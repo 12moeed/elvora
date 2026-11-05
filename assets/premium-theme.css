@@ -261,17 +261,21 @@
   color: #ffffff;
 }
 
-/* Quick Add Button */
+/* Quick Add / Actions Wrap */
 .premium-quick-add-wrap {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 12px;
+  padding: 10px 8px;
   z-index: 10;
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(12px);
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.25) 75%, transparent 100%);
 }
 
 .premium-card:hover .premium-quick-add-wrap {
@@ -280,30 +284,113 @@
 }
 
 .premium-quick-add-btn {
-  width: 100%;
-  padding: 10px 14px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #d946a8 100%);
-  color: #ffffff;
+  padding: 8px 6px;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(179, 64, 144, 0.4);
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   text-decoration: none;
+  white-space: nowrap;
 }
 
-.premium-quick-add-btn:hover {
-  filter: brightness(1.08);
-  transform: scale(1.02);
+/* Primary "Add to Cart" button */
+.premium-btn-add-cart {
+  flex: 1.15;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #8B1A6B 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(179, 64, 144, 0.45);
+}
+
+.premium-btn-add-cart:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+/* Secondary "Shop Now" button */
+.premium-btn-shop-now {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.premium-btn-shop-now:hover {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .premium-quick-add-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 6px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+  }
+  .premium-quick-add-btn {
+    font-size: 9px;
+    padding: 7px 4px;
+    gap: 3px;
+  }
+  .premium-quick-add-btn svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Toast notification for Cart feedback */
+.elvora-toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #111827;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 99999;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.elvora-toast-notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.elvora-toast-notification .toast-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #10b981;
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 /* Card Content / Info */

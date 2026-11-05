@@ -1010,6 +1010,23 @@
     }
   }
 
+  /* Frosted-glass icon buttons while floating over the hero (transparent header state) */
+  .header[transparent] .header-actions__action {
+    padding: 8px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgb(255 255 255 / 0.2);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .header[transparent] .header-actions__action:hover {
+    background: rgb(255 255 255 / 0.25);
+    transform: scale(1.08);
+  }
+
   .header-actions__action:not(.account-button) .svg-wrapper {
     height: var(--button-size);
     width: var(--button-size);

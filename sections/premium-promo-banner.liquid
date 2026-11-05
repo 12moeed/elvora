@@ -1,0 +1,110 @@
+<div class="premium-promo-section">
+  {% if section.settings.image != blank %}
+    <img
+      src="{{ section.settings.image | image_url: width: 1600 }}"
+      alt="{{ section.settings.title | escape }}"
+      class="premium-promo-bg-img"
+      loading="lazy"
+      width="1600"
+      height="800"
+    >
+  {% elsif section.settings.image_url != blank %}
+    <img
+      src="{{ section.settings.image_url }}"
+      alt="{{ section.settings.title | escape }}"
+      class="premium-promo-bg-img"
+      loading="lazy"
+      width="1600"
+      height="800"
+    >
+  {% else %}
+    <img
+      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1600"
+      alt="Sale Banner"
+      class="premium-promo-bg-img"
+      loading="lazy"
+      width="1600"
+      height="800"
+    >
+  {% endif %}
+
+  <div class="premium-promo-overlay"></div>
+
+  <div class="premium-promo-card">
+    <div class="premium-promo-badge">
+      <span class="premium-promo-badge-pulse"></span>
+      {{ section.settings.badge | default: 'Limited Time Offer' }}
+    </div>
+
+    <h2 class="premium-promo-title">
+      {{ section.settings.title | default: 'Exclusive Mid-Season Sale' }}
+    </h2>
+
+    <p class="premium-promo-sub">
+      {{ section.settings.subtitle | default: 'Enjoy up to 50% off on signature heels, sneakers, and luxury leather accessories. Limited stock available.' }}
+    </p>
+
+    <div>
+      <a href="{{ section.settings.link | default: '/collections/all' }}" class="premium-promo-cta">
+        {{ section.settings.cta_text | default: 'Shop The Sale' }}
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Promo Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge Text",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Exclusive Mid-Season Sale"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Enjoy up to 50% off on signature heels, sneakers, and luxury leather accessories. Limited stock available."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Shop The Sale"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Background Image URL (Fallback)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Promo Banner"
+    }
+  ]
+}
+{% endschema %}

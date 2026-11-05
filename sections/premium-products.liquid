@@ -1,0 +1,208 @@
+<div class="{% if section.settings.has_blush_bg %}premium-best-sellers-section{% else %}premium-categories-wrapper{% endif %}">
+  {% if section.settings.has_blush_bg %}
+    <div class="premium-orb-1"></div>
+    <div class="premium-orb-2"></div>
+  {% endif %}
+
+  <div style="max-width: 1400px; margin: 0 auto; position: relative; z-index: 2;">
+    <div class="premium-section-header">
+      <div>
+        <span class="premium-eyebrow">
+          <span class="premium-eyebrow-dot"></span>
+          {{ section.settings.eyebrow | default: 'Featured' }}
+        </span>
+        <h2 class="premium-section-title">
+          {{ section.settings.title | default: 'Our Products' }}
+          <span class="premium-section-title-line"></span>
+        </h2>
+      </div>
+
+      {% if section.settings.show_view_all %}
+        <a href="{{ section.settings.collection.url | default: '/collections/all' }}" class="premium-view-all-btn">
+          View All
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="premium-product-grid">
+      {% assign prod_count = 0 %}
+      {% if section.settings.collection != blank and section.settings.collection.products.size > 0 %}
+        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+          {% assign prod_count = prod_count | plus: 1 %}
+          {% render 'premium-product-card', product: product %}
+        {% endfor %}
+      {% endif %}
+
+      {% comment %} Fallback dummy cards if store has no products in this collection {% endcomment %}
+      {% if prod_count == 0 %}
+        {% if section.settings.sample_preset == 'best_sellers' %}
+          {% render 'premium-product-card',
+            dummy_title: 'Chic Leather Tote Bag',
+            dummy_price: 'Rs. 15,000',
+            dummy_compare_price: 'Rs. 18,500',
+            dummy_category: 'Bags & Accessories',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Signature Oud Perfume',
+            dummy_price: 'Rs. 9,450',
+            dummy_compare_price: 'Rs. 12,000',
+            dummy_category: 'Fragrances',
+            dummy_badge: 'SALE',
+            dummy_image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Classic Oxford Dress Shoes',
+            dummy_price: 'Rs. 13,999',
+            dummy_compare_price: 'Rs. 16,500',
+            dummy_category: 'Gents Shoes',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Golden Velvet Clutch',
+            dummy_price: 'Rs. 7,200',
+            dummy_compare_price: 'Rs. 9,000',
+            dummy_category: 'Accessories',
+            dummy_badge: 'SALE',
+            dummy_image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&q=80&w=800'
+          %}
+        {% elsif section.settings.sample_preset == 'featured' %}
+          {% render 'premium-product-card',
+            dummy_title: 'Silk Evening Stiletto',
+            dummy_price: 'Rs. 11,500',
+            dummy_compare_price: 'Rs. 14,000',
+            dummy_category: 'Footwear',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Minimalist Minimal Chronograph',
+            dummy_price: 'Rs. 18,900',
+            dummy_compare_price: 'Rs. 22,000',
+            dummy_category: 'Watches',
+            dummy_badge: 'NEW',
+            dummy_image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Handcrafted Suede Loafers',
+            dummy_price: 'Rs. 14,500',
+            dummy_compare_price: 'Rs. 17,000',
+            dummy_category: 'Men Collection',
+            dummy_badge: 'SALE',
+            dummy_image: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Rose Gold Chain Bracelet',
+            dummy_price: 'Rs. 5,800',
+            dummy_compare_price: 'Rs. 7,500',
+            dummy_category: 'Jewelry',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1611591475155-4284fa9c2e7a?auto=format&fit=crop&q=80&w=800'
+          %}
+        {% else %}
+          {% render 'premium-product-card',
+            dummy_title: 'Elegance Pump Heels',
+            dummy_price: 'Rs. 8,999',
+            dummy_compare_price: 'Rs. 12,000',
+            dummy_category: 'Ladies',
+            dummy_badge: 'NEW',
+            dummy_image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Urban Explorer Sneakers',
+            dummy_price: 'Rs. 12,500',
+            dummy_compare_price: 'Rs. 15,000',
+            dummy_category: 'Gents',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Playful Paws Kids Shoes',
+            dummy_price: 'Rs. 4,500',
+            dummy_compare_price: 'Rs. 6,000',
+            dummy_category: 'Kids',
+            dummy_badge: 'SALE',
+            dummy_image: 'https://images.unsplash.com/photo-1514989940723-e8875ea6f03f?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Chic Leather Tote Bag',
+            dummy_price: 'Rs. 15,000',
+            dummy_compare_price: 'Rs. 19,000',
+            dummy_category: 'Accessories',
+            dummy_badge: 'NEW',
+            dummy_image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=800'
+          %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Product Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Fresh Drops"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4,
+      "label": "Products to Show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "has_blush_bg",
+      "label": "Use Soft Blush Background & Orbs",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "sample_preset",
+      "label": "Fallback Sample Items",
+      "options": [
+        { "value": "new_arrivals", "label": "New Arrivals" },
+        { "value": "best_sellers", "label": "Best Sellers" },
+        { "value": "featured", "label": "Featured" }
+      ],
+      "default": "new_arrivals"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Product Grid"
+    }
+  ]
+}
+{% endschema %}

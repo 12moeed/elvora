@@ -1,0 +1,117 @@
+{% comment %}
+  ELVORA PREMIUM PRODUCT CARD SNIPPET
+  Renders a high-end luxury product card with 3:4 aspect ratio,
+  hover zoom, gradient badges, rating stars, and slide-up quick add.
+{% endcomment %}
+
+{% liquid
+  if product
+    assign card_title = product.title
+    assign card_url = product.url
+    assign card_image = product.featured_image | image_url: width: 800
+    assign card_category = product.type | default: product.collections.first.title | default: 'Collection'
+    assign card_price = product.price | money
+    assign card_compare_price = product.compare_at_price | money
+    assign has_discount = false
+    if product.compare_at_price > product.price
+      assign has_discount = true
+      assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+    endif
+  else
+    assign card_title = dummy_title | default: 'Elegance Pump Heels'
+    assign card_url = '/collections/all'
+    assign card_image = dummy_image | default: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800'
+    assign card_category = dummy_category | default: 'Ladies'
+    assign card_price = dummy_price | default: 'Rs. 8,999'
+    assign card_compare_price = dummy_compare_price | default: 'Rs. 12,000'
+    assign has_discount = true
+    assign discount_pct = 25
+  endif
+%}
+
+<div class="premium-card">
+  <div class="premium-card-image-wrap">
+    <a href="{{ card_url }}" style="display: block; width: 100%; height: 100%;">
+      <img
+        src="{{ card_image }}"
+        alt="{{ card_title | escape }}"
+        class="premium-card-image"
+        loading="lazy"
+        width="600"
+        height="800"
+      >
+    </a>
+
+    <!-- Badges -->
+    <div class="premium-card-badges">
+      {% if has_discount %}
+        <span class="premium-badge premium-badge-sale">-{{ discount_pct }}% OFF</span>
+      {% elsif dummy_badge == 'NEW' %}
+        <span class="premium-badge premium-badge-new">NEW</span>
+      {% elsif dummy_badge == 'HOT' %}
+        <span class="premium-badge premium-badge-hot">🔥 HOT</span>
+      {% endif %}
+    </div>
+
+    <!-- Wishlist button -->
+    <button
+      type="button"
+      class="premium-wishlist-btn"
+      aria-label="Add to Wishlist"
+      onclick="this.classList.toggle('active')"
+    >
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </button>
+
+    <!-- Slide-up Quick Add -->
+    <div class="premium-quick-add-wrap">
+      {% if product %}
+        <form method="post" action="/cart/add" style="margin: 0; width: 100%;">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <button type="submit" class="premium-quick-add-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            Add to Bag
+          </button>
+        </form>
+      {% else %}
+        <a href="{{ card_url }}" class="premium-quick-add-btn">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          Shop Now
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Card Info -->
+  <div class="premium-card-info">
+    <div class="premium-card-top-line"></div>
+
+    <div class="premium-card-meta">
+      <span class="premium-card-category">
+        <span class="premium-card-category-dot"></span>
+        {{ card_category }}
+      </span>
+
+      <div class="premium-card-rating">
+        <span>★ 5.0</span>
+      </div>
+    </div>
+
+    <h3 class="premium-card-title">
+      <a href="{{ card_url }}">{{ card_title }}</a>
+    </h3>
+
+    <div class="premium-card-price-row">
+      <span class="premium-price">{{ card_price }}</span>
+      {% if card_compare_price != blank %}
+        <span class="premium-compare-price">{{ card_compare_price }}</span>
+      {% endif %}
+    </div>
+  </div>
+</div>

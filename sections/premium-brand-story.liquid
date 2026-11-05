@@ -1,0 +1,111 @@
+<div class="premium-brand-story-section">
+  {% if section.settings.image != blank %}
+    <img
+      src="{{ section.settings.image | image_url: width: 1800 }}"
+      alt="{{ section.settings.heading | escape }}"
+      class="premium-brand-story-bg"
+      loading="lazy"
+      width="1800"
+      height="900"
+    >
+  {% elsif section.settings.image_url != blank %}
+    <img
+      src="{{ section.settings.image_url }}"
+      alt="{{ section.settings.heading | escape }}"
+      class="premium-brand-story-bg"
+      loading="lazy"
+      width="1800"
+      height="900"
+    >
+  {% else %}
+    <img
+      src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1800"
+      alt="Our Story"
+      class="premium-brand-story-bg"
+      loading="lazy"
+      width="1800"
+      height="900"
+    >
+  {% endif %}
+
+  <div class="premium-brand-story-overlay"></div>
+
+  <div style="max-width: 1400px; width: 100%; margin: 0 auto; position: relative; z-index: 10;">
+    <div class="premium-brand-story-card">
+      <div class="premium-brand-story-eyebrow">
+        {{ section.settings.eyebrow | default: 'Our Heritage' }}
+      </div>
+
+      <h2 class="premium-brand-story-heading">
+        {{ section.settings.heading | default: 'Crafted for Pure Distinction' }}
+      </h2>
+
+      <div class="premium-brand-story-body">
+        {{ section.settings.body | default: '<p>At Elvora, we believe fashion is an effortless blend of elegance and modern craftsmanship. Each collection is meticulously designed with handpicked materials, timeless silhouettes, and an uncompromising commitment to detail.</p><p>From everyday essentials to signature statement pieces, we empower you to embrace your distinctive style.</p>' }}
+      </div>
+
+      <div>
+        <a href="{{ section.settings.cta_link | default: '/pages/about' }}" class="premium-brand-story-cta">
+          {{ section.settings.cta_text | default: 'Discover Our Story' }}
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Brand Story",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Our Heritage"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafted for Pure Distinction"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Story Content",
+      "default": "<p>At Elvora, we believe fashion is an effortless blend of elegance and modern craftsmanship. Each collection is meticulously designed with handpicked materials, timeless silhouettes, and an uncompromising commitment to detail.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Label",
+      "default": "Discover Our Story"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Background Image URL (Fallback)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Brand Story"
+    }
+  ]
+}
+{% endschema %}

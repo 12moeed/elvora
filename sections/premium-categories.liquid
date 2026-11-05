@@ -1,0 +1,185 @@
+<div class="premium-categories-wrapper">
+  <div class="premium-section-header">
+    <div>
+      <span class="premium-eyebrow">
+        <span class="premium-eyebrow-dot"></span>
+        {{ section.settings.eyebrow | default: 'Browse' }}
+      </span>
+      <h2 class="premium-section-title">
+        {{ section.settings.title | default: 'Shop by Category' }}
+        <span class="premium-section-title-line"></span>
+      </h2>
+    </div>
+
+    {% if section.settings.show_view_all %}
+      <a href="{{ section.settings.view_all_link | default: '/collections' }}" class="premium-view-all-btn">
+        View All
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="category-accordion-container">
+    {% for block in section.blocks %}
+      <a
+        href="{{ block.settings.link | default: '/collections/all' }}"
+        class="category-accordion-item"
+        {{ block.shopify_attributes }}
+      >
+        {% if block.settings.image != blank %}
+          <img
+            src="{{ block.settings.image | image_url: width: 800 }}"
+            alt="{{ block.settings.title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="800"
+            height="1000"
+          >
+        {% elsif block.settings.image_url != blank %}
+          <img
+            src="{{ block.settings.image_url }}"
+            alt="{{ block.settings.title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="800"
+            height="1000"
+          >
+        {% else %}
+          <img
+            src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800"
+            alt="{{ block.settings.title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="800"
+            height="1000"
+          >
+        {% endif %}
+
+        <div class="category-accordion-overlay"></div>
+        <div class="category-accordion-tint"></div>
+
+        <div class="category-accordion-content">
+          <h3 class="category-accordion-title">{{ block.settings.title }}</h3>
+          <span class="category-accordion-count">{{ block.settings.subtitle | default: 'Explore Collection' }}</span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Categories",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Browse"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Name",
+          "default": "Ladies Heels"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "18 Items"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "Image URL (Fallback)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Ladies Collection",
+            "subtitle": "24 Items",
+            "image_url": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Gents Sneakers",
+            "subtitle": "18 Items",
+            "image_url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Luxury Bags",
+            "subtitle": "15 Items",
+            "image_url": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=800"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Signature Perfumes",
+            "subtitle": "12 Items",
+            "image_url": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=800"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Kids Special",
+            "subtitle": "10 Items",
+            "image_url": "https://images.unsplash.com/photo-1514989940723-e8875ea6f03f?auto=format&fit=crop&q=80&w=800"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

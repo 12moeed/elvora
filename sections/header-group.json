@@ -17,7 +17,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "🔥 EXCLUSIVE SALE • FREE SHIPPING ACROSS PAKISTAN • CASH ON DELIVERY AVAILABLE",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
             "letter_spacing": "normal",
@@ -32,8 +32,8 @@
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
-        "section_width": "page-width",
-        "background_color": "{{ settings.color_palette.background }}",
+        "section_width": "full-width",
+        "background_color": "#c81ea3",
         "divider_width": 1,
         "divider_color": "{{ settings.color_palette.color2 }}",
         "padding-block-start": 15,
@@ -95,7 +95,8 @@
         "divider_size": "page-width",
         "border_width": 0,
         "background_color_top": "{{ settings.color_palette.background }}",
-        "enable_transparent_header_home": false,
+        "enable_transparent_header_home": true,
+        "text_color_transparent_home": "#FFFFFF",
         "enable_transparent_header_product": false,
         "enable_transparent_header_collection": false
       }

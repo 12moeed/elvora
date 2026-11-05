@@ -21,115 +21,66 @@
     {% endif %}
   </div>
 
-  {% if section.settings.layout == 'accordion' %}
-    <!-- Horizontal Accordion (No Shade) -->
-    <div class="category-accordion-container horizontal-accordion">
-      {% for block in section.blocks %}
-        <a
-          href="{{ block.settings.link | default: '/collections/all' }}"
-          class="category-accordion-item clean-no-shade"
-          {{ block.shopify_attributes }}
-        >
-          {% if block.settings.image != blank %}
-            <img
-              src="{{ block.settings.image | image_url: width: 900 }}"
-              alt="{{ block.settings.title | escape }}"
-              class="category-accordion-img"
-              loading="lazy"
-              width="900"
-              height="600"
-            >
-          {% elsif block.settings.image_url != blank %}
-            <img
-              src="{{ block.settings.image_url }}"
-              alt="{{ block.settings.title | escape }}"
-              class="category-accordion-img"
-              loading="lazy"
-              width="900"
-              height="600"
-            >
-          {% else %}
-            <img
-              src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=900"
-              alt="{{ block.settings.title | escape }}"
-              class="category-accordion-img"
-              loading="lazy"
-              width="900"
-              height="600"
-            >
-          {% endif %}
+  <div class="category-accordion-container">
+    {% for block in section.blocks %}
+      <a
+        href="{{ block.settings.link | default: '/collections/all' }}"
+        class="category-accordion-item"
+        {{ block.shopify_attributes }}
+      >
+        {% if block.settings.image != blank %}
+          <img
+            src="{{ block.settings.image | image_url: width: 1200 }}"
+            alt="{{ block.settings.title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="1200"
+            height="800"
+          >
+        {% elsif block.settings.image_url != blank %}
+          <img
+            src="{{ block.settings.image_url }}"
+            alt="{{ block.settings.title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="1200"
+            height="800"
+          >
+        {% else %}
+          <img
+            src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1200"
+            alt="{{ block.settings.title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="1200"
+            height="800"
+          >
+        {% endif %}
 
-          <div class="premium-cat-glass-pill">
-            <div class="premium-cat-pill-text">
-              <h3 class="premium-cat-pill-title">{{ block.settings.title }}</h3>
-              <span class="premium-cat-pill-count">{{ block.settings.subtitle | default: 'Explore' }}</span>
-            </div>
-            <span class="premium-cat-pill-arrow">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <!-- Clean bottom-only subtle fade for text (NO SHADE ON IMAGE) -->
+        <div class="category-accordion-clean-scrim"></div>
+
+        <!-- Panel Number (01, 02, etc.) -->
+        <div class="category-accordion-num">
+          <span>0{{ forloop.index }}</span>
+        </div>
+
+        <!-- Content -->
+        <div class="category-accordion-content">
+          <h3 class="category-accordion-title">{{ block.settings.title }}</h3>
+          <div class="category-accordion-expanded-info">
+            <span class="category-accordion-count">{{ block.settings.subtitle | default: 'Explore Collection' }}</span>
+            <span class="category-accordion-pill-btn">
+              Explore Collection
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
               </svg>
             </span>
           </div>
-        </a>
-      {% endfor %}
-    </div>
-
-  {% else %}
-    <!-- 5-Column Clean Horizontal Cards Grid (No Shade) -->
-    <div class="premium-horizontal-cat-grid">
-      {% for block in section.blocks %}
-        <a
-          href="{{ block.settings.link | default: '/collections/all' }}"
-          class="premium-horizontal-cat-card"
-          {{ block.shopify_attributes }}
-        >
-          <div class="premium-horizontal-cat-media">
-            {% if block.settings.image != blank %}
-              <img
-                src="{{ block.settings.image | image_url: width: 800 }}"
-                alt="{{ block.settings.title | escape }}"
-                class="premium-horizontal-cat-img"
-                loading="lazy"
-                width="800"
-                height="500"
-              >
-            {% elsif block.settings.image_url != blank %}
-              <img
-                src="{{ block.settings.image_url }}"
-                alt="{{ block.settings.title | escape }}"
-                class="premium-horizontal-cat-img"
-                loading="lazy"
-                width="800"
-                height="500"
-              >
-            {% else %}
-              <img
-                src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800"
-                alt="{{ block.settings.title | escape }}"
-                class="premium-horizontal-cat-img"
-                loading="lazy"
-                width="800"
-                height="500"
-              >
-            {% endif %}
-          </div>
-
-          <!-- Clean Floating Bottom Glass Pill (NO SHADE) -->
-          <div class="premium-cat-glass-pill">
-            <div class="premium-cat-pill-text">
-              <h3 class="premium-cat-pill-title">{{ block.settings.title }}</h3>
-              <span class="premium-cat-pill-count">{{ block.settings.subtitle | default: 'Explore' }}</span>
-            </div>
-            <span class="premium-cat-pill-arrow">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-              </svg>
-            </span>
-          </div>
-        </a>
-      {% endfor %}
-    </div>
-  {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
 </div>
 
 {% schema %}
@@ -149,16 +100,6 @@
       "id": "title",
       "label": "Section Heading",
       "default": "Shop by Skincare Category"
-    },
-    {
-      "type": "select",
-      "id": "layout",
-      "label": "Card Layout Style",
-      "options": [
-        { "value": "grid", "label": "Horizontal Cards (5 Columns)" },
-        { "value": "accordion", "label": "Horizontal Accordion" }
-      ],
-      "default": "grid"
     },
     {
       "type": "checkbox",
@@ -216,7 +157,7 @@
           "settings": {
             "title": "Serums & Actives",
             "subtitle": "32 Formulas",
-            "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1200"
           }
         },
         {
@@ -224,7 +165,7 @@
           "settings": {
             "title": "Cleansers & Toners",
             "subtitle": "24 Products",
-            "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1200"
           }
         },
         {
@@ -232,7 +173,7 @@
           "settings": {
             "title": "Barrier Moisturizers",
             "subtitle": "18 Creams",
-            "image_url": "https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=1200"
           }
         },
         {
@@ -240,7 +181,7 @@
           "settings": {
             "title": "Sunscreen & SPF",
             "subtitle": "14 Formulas",
-            "image_url": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=1200"
           }
         },
         {
@@ -248,7 +189,7 @@
           "settings": {
             "title": "Eye & Night Care",
             "subtitle": "19 Treatments",
-            "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1200"
           }
         }
       ]

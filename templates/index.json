@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -16,7 +17,6 @@
           "name": "t:names.heading",
           "settings": {
             "text": "<h2>Pure Radiance in Every Drop</h2><p>Experience clinical skincare formulations infused with potent botanical actives for a timeless, youthful glow.</p>",
-            "text_color": "#FFFFFF",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "center",
@@ -27,6 +27,7 @@
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "#ffffff",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -45,9 +46,10 @@
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button-custom",
-            "custom_button_background": "#B34090",
-            "custom_button_text": "#FFFFFF",
-            "custom_button_border": "#B34090",
+            "custom_button_background": "#b34090",
+            "custom_button_text": "#ffffff",
+            "custom_button_border": "#b34090",
+            "link_text_color": "",
             "width": "fit-content",
             "custom_width": 100,
             "width_mobile": "fit-content",
@@ -63,11 +65,13 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/billy-huynh-W8KTS-mhFUE-unsplash.jpg",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
+        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -82,7 +86,7 @@
         "section_height_custom": 50,
         "background_color": "rgba(0,0,0,0)",
         "toggle_overlay": true,
-        "overlay_color": "#12121288",
+        "overlay_color": "#12121287",
         "overlay_style": "solid",
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
@@ -99,7 +103,8 @@
           "settings": {
             "title": "Serums & Actives",
             "subtitle": "32 Formulas",
-            "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800",
+            "link": ""
           }
         },
         "cat_2": {
@@ -107,7 +112,8 @@
           "settings": {
             "title": "Cleansers & Toners",
             "subtitle": "24 Products",
-            "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800",
+            "link": ""
           }
         },
         "cat_3": {
@@ -115,7 +121,8 @@
           "settings": {
             "title": "Barrier Moisturizers",
             "subtitle": "18 Creams",
-            "image_url": "https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800",
+            "link": ""
           }
         },
         "cat_4": {
@@ -123,7 +130,8 @@
           "settings": {
             "title": "Sunscreen & SPF",
             "subtitle": "14 Formulas",
-            "image_url": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800",
+            "link": ""
           }
         },
         "cat_5": {
@@ -131,7 +139,8 @@
           "settings": {
             "title": "Eye & Night Care",
             "subtitle": "19 Treatments",
-            "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800"
+            "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800",
+            "link": ""
           }
         }
       },
@@ -145,7 +154,8 @@
       "settings": {
         "eyebrow": "Targeted Care",
         "title": "Shop by Skincare Category",
-        "show_view_all": true
+        "show_view_all": true,
+        "view_all_link": ""
       }
     },
     "new_arrivals": {
@@ -153,9 +163,10 @@
       "settings": {
         "eyebrow": "Fresh Formulations",
         "title": "New Skincare Arrivals",
+        "collection": "",
+        "products_to_show": 10,
         "show_view_all": true,
-        "sample_preset": "new_arrivals",
-        "products_to_show": 10
+        "sample_preset": "new_arrivals"
       }
     },
     "best_sellers": {
@@ -163,9 +174,10 @@
       "settings": {
         "eyebrow": "Customer Favorites",
         "title": "Bestselling Elixirs",
+        "collection": "",
+        "products_to_show": 10,
         "show_view_all": true,
-        "sample_preset": "best_sellers",
-        "products_to_show": 10
+        "sample_preset": "best_sellers"
       }
     },
     "featured_products_1": {
@@ -173,9 +185,10 @@
       "settings": {
         "eyebrow": "Doctor Recommended",
         "title": "Clinical Essentials",
+        "collection": "",
+        "products_to_show": 10,
         "show_view_all": true,
-        "sample_preset": "featured",
-        "products_to_show": 10
+        "sample_preset": "featured"
       }
     },
     "sale_banner": {
@@ -185,6 +198,7 @@
         "title": "Exclusive Skincare Glow Sale",
         "subtitle": "Enjoy up to 40% off on our clinical serums, ceramide barrier creams, and daily SPF defense. Elevate your glow today.",
         "cta_text": "Shop The Glow Sale",
+        "link": "",
         "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1600"
       }
     },
@@ -193,9 +207,10 @@
       "settings": {
         "eyebrow": "Restorative Rituals",
         "title": "Night Repair & Treatments",
+        "collection": "",
+        "products_to_show": 10,
         "show_view_all": true,
-        "sample_preset": "best_sellers",
-        "products_to_show": 10
+        "sample_preset": "best_sellers"
       }
     },
     "about_us": {
@@ -205,6 +220,7 @@
         "heading": "Science-Backed Botanical Skincare",
         "body": "<p>At Elvora, we harmonize high-potency clinical actives with pure botanical extracts to heal, protect, and illuminate your skin. Every formula is dermatologically tested, cruelty-free, and formulated without harmful sulfates, parabens, or synthetic fragrances.</p><p>From targeted dark spot correction to barrier-strengthening hydration, we empower your skin to achieve its healthiest, most radiant glow.</p>",
         "cta_text": "Discover Our Story",
+        "cta_link": "",
         "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1800"
       }
     }

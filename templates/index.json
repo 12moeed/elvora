@@ -146,9 +146,8 @@
         "eyebrow": "Fresh Drops",
         "title": "New Arrivals",
         "show_view_all": true,
-        "has_blush_bg": false,
         "sample_preset": "new_arrivals",
-        "products_to_show": 4
+        "products_to_show": 10
       }
     },
     "best_sellers": {
@@ -157,9 +156,8 @@
         "eyebrow": "Top Picks",
         "title": "Best Sellers",
         "show_view_all": true,
-        "has_blush_bg": true,
         "sample_preset": "best_sellers",
-        "products_to_show": 4
+        "products_to_show": 10
       }
     },
     "featured_products_1": {
@@ -168,9 +166,8 @@
         "eyebrow": "Curated",
         "title": "Featured Products",
         "show_view_all": true,
-        "has_blush_bg": false,
         "sample_preset": "featured",
-        "products_to_show": 4
+        "products_to_show": 10
       }
     },
     "sale_banner": {
@@ -189,9 +186,8 @@
         "eyebrow": "Trending Now",
         "title": "Handcrafted Essentials",
         "show_view_all": true,
-        "has_blush_bg": false,
         "sample_preset": "best_sellers",
-        "products_to_show": 4
+        "products_to_show": 10
       }
     },
     "about_us": {

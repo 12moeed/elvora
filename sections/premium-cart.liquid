@@ -1,0 +1,483 @@
+{% liquid
+  assign free_shipping_threshold = section.settings.free_shipping_threshold | default: 3500 | times: 100
+  assign has_real_items = false
+  if cart.item_count > 0
+    assign has_real_items = true
+    assign cart_total = cart.total_price
+    assign display_count = cart.item_count
+  else
+    assign cart_total = 865000
+    assign display_count = 2
+  endif
+
+  assign amount_left = free_shipping_threshold | minus: cart_total
+  assign shipping_percent = cart_total | times: 100.0 | divided_by: free_shipping_threshold | at_most: 100 | round
+%}
+
+<div class="premium-cart-wrapper">
+  <!-- Breadcrumbs -->
+  <nav class="premium-pdp-breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <span class="active">Your Skincare Bag</span>
+  </nav>
+
+  <!-- Title & Count -->
+  <div class="premium-cart-header">
+    <h1 class="premium-cart-title">
+      Your Skincare Bag
+      <span class="premium-cart-count-badge" id="cart-header-count">({{ display_count }})</span>
+    </h1>
+    <div class="premium-cart-title-underline"></div>
+  </div>
+
+  <!-- Interactive State Switcher (Allows testing both Active & Empty Cart states) -->
+  <div class="cart-preview-switch-bar">
+    <button type="button" class="cart-tab-btn active" id="tab-active-cart-btn" onclick="switchCartTab('active')">
+      🛍️ Active Cart View (Items in Bag)
+    </button>
+    <button type="button" class="cart-tab-btn" id="tab-empty-cart-btn" onclick="switchCartTab('empty')">
+      📭 Empty Cart View
+    </button>
+  </div>
+
+  <!-- ACTIVE CART VIEW -->
+  <div id="cart-active-state-view">
+    <!-- Free Shipping Progress Bar -->
+    <div class="premium-free-shipping-card">
+      <div class="premium-shipping-progress-text">
+        {% if cart_total >= free_shipping_threshold %}
+          <span class="unlocked">🎉 <strong>Congratulations!</strong> You have unlocked <strong>FREE Express Tracked Delivery</strong> across Pakistan!</span>
+        {% else %}
+          <span>Add <strong>{{ amount_left | money }}</strong> more to unlock <strong>FREE Express Delivery</strong>!</span>
+        {% endif %}
+      </div>
+      <div class="premium-shipping-progress-track">
+        <div class="premium-shipping-progress-fill" style="width: {% if cart_total >= free_shipping_threshold %}100{% else %}{{ shipping_percent }}{% endif %}%;"></div>
+      </div>
+    </div>
+
+    <!-- Active Cart Layout (2 Columns) -->
+    <div class="premium-cart-grid">
+      <!-- Left: Line Items List -->
+      <div class="premium-cart-items-column">
+        <form action="/cart" method="post" id="premium-cart-form">
+          <div class="premium-cart-items-card">
+            <div class="premium-cart-table-head">
+              <span>Product</span>
+              <span class="text-center">Quantity</span>
+              <span class="text-right">Total</span>
+            </div>
+
+            <div class="premium-cart-items-list">
+              {% if has_real_items %}
+                {% for item in cart.items %}
+                  <div class="premium-cart-item-row" data-line="{{ forloop.index }}">
+                    <!-- Image -->
+                    <div class="premium-cart-item-img-wrap">
+                      <img
+                        src="{{ item.image | image_url: width: 240 }}"
+                        alt="{{ item.title | escape }}"
+                        class="premium-cart-item-img"
+                        loading="lazy"
+                        width="120"
+                        height="150"
+                      >
+                    </div>
+
+                    <!-- Details -->
+                    <div class="premium-cart-item-details">
+                      <h3 class="premium-cart-item-title">
+                        <a href="{{ item.url }}">{{ item.product.title }}</a>
+                      </h3>
+                      {% unless item.variant.title contains 'Default' %}
+                        <p class="premium-cart-item-variant">{{ item.variant.title }}</p>
+                      {% endunless %}
+
+                      <div class="premium-cart-item-unit-price">
+                        <span>{{ item.price | money }}</span>
+                        {% if item.original_line_price > item.final_line_price %}
+                          <span class="strike">{{ item.original_price | money }}</span>
+                        {% endif %}
+                      </div>
+
+                      <!-- Mobile Quantity & Remove -->
+                      <div class="premium-cart-mobile-actions">
+                        <div class="premium-cart-qty-counter">
+                          <a href="/cart/change?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" class="qty-btn" aria-label="Decrease quantity">-</a>
+                          <span class="qty-val">{{ item.quantity }}</span>
+                          <a href="/cart/change?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" class="qty-btn" aria-label="Increase quantity">+</a>
+                        </div>
+                        <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="premium-cart-remove-btn" title="Remove Item">
+                          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                          </svg>
+                          <span>Remove</span>
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- Desktop Quantity -->
+                    <div class="premium-cart-item-qty-desktop">
+                      <div class="premium-cart-qty-counter">
+                        <a href="/cart/change?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" class="qty-btn" aria-label="Decrease quantity">-</a>
+                        <span class="qty-val">{{ item.quantity }}</span>
+                        <a href="/cart/change?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" class="qty-btn" aria-label="Increase quantity">+</a>
+                      </div>
+                    </div>
+
+                    <!-- Desktop Line Total -->
+                    <div class="premium-cart-item-total-desktop">
+                      <span class="line-total-price">{{ item.final_line_price | money }}</span>
+                      <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="premium-cart-trash-btn" title="Remove">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <!-- Sample Skincare Item 1 -->
+                <div class="premium-cart-item-row" id="sample-row-1">
+                  <div class="premium-cart-item-img-wrap">
+                    <img
+                      src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=300"
+                      alt="Vitamin C Serum"
+                      class="premium-cart-item-img"
+                      loading="lazy"
+                      width="120"
+                      height="150"
+                    >
+                  </div>
+                  <div class="premium-cart-item-details">
+                    <h3 class="premium-cart-item-title">
+                      <a href="/pages/contact?view=pdp">Radiant Glow Vitamin C + Niacinamide Serum</a>
+                    </h3>
+                    <p class="premium-cart-item-variant">50ml Standard • Best Value</p>
+                    <div class="premium-cart-item-unit-price">
+                      <span>Rs. 4,850</span>
+                      <span class="strike">Rs. 6,500</span>
+                    </div>
+
+                    <div class="premium-cart-mobile-actions">
+                      <div class="premium-cart-qty-counter">
+                        <button type="button" class="qty-btn" onclick="updateSampleQty(1, -1)">-</button>
+                        <span class="qty-val" id="sample-qty-1-m">1</span>
+                        <button type="button" class="qty-btn" onclick="updateSampleQty(1, 1)">+</button>
+                      </div>
+                      <button type="button" class="premium-cart-remove-btn" onclick="document.getElementById('sample-row-1').style.display='none';">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        <span>Remove</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="premium-cart-item-qty-desktop">
+                    <div class="premium-cart-qty-counter">
+                      <button type="button" class="qty-btn" onclick="updateSampleQty(1, -1)">-</button>
+                      <span class="qty-val" id="sample-qty-1-d">1</span>
+                      <button type="button" class="qty-btn" onclick="updateSampleQty(1, 1)">+</button>
+                    </div>
+                  </div>
+
+                  <div class="premium-cart-item-total-desktop">
+                    <span class="line-total-price" id="sample-total-1">Rs. 4,850</span>
+                    <button type="button" class="premium-cart-trash-btn" onclick="document.getElementById('sample-row-1').style.display='none';">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sample Skincare Item 2 -->
+                <div class="premium-cart-item-row" id="sample-row-2">
+                  <div class="premium-cart-item-img-wrap">
+                    <img
+                      src="https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=300"
+                      alt="Barrier Repair Cream"
+                      class="premium-cart-item-img"
+                      loading="lazy"
+                      width="120"
+                      height="150"
+                    >
+                  </div>
+                  <div class="premium-cart-item-details">
+                    <h3 class="premium-cart-item-title">
+                      <a href="/pages/contact?view=pdp">Centella Barrier Relief Repair Cream</a>
+                    </h3>
+                    <p class="premium-cart-item-variant">50ml Standard Tube</p>
+                    <div class="premium-cart-item-unit-price">
+                      <span>Rs. 3,800</span>
+                      <span class="strike">Rs. 4,900</span>
+                    </div>
+
+                    <div class="premium-cart-mobile-actions">
+                      <div class="premium-cart-qty-counter">
+                        <button type="button" class="qty-btn" onclick="updateSampleQty(2, -1)">-</button>
+                        <span class="qty-val" id="sample-qty-2-m">1</span>
+                        <button type="button" class="qty-btn" onclick="updateSampleQty(2, 1)">+</button>
+                      </div>
+                      <button type="button" class="premium-cart-remove-btn" onclick="document.getElementById('sample-row-2').style.display='none';">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        <span>Remove</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="premium-cart-item-qty-desktop">
+                    <div class="premium-cart-qty-counter">
+                      <button type="button" class="qty-btn" onclick="updateSampleQty(2, -1)">-</button>
+                      <span class="qty-val" id="sample-qty-2-d">1</span>
+                      <button type="button" class="qty-btn" onclick="updateSampleQty(2, 1)">+</button>
+                    </div>
+                  </div>
+
+                  <div class="premium-cart-item-total-desktop">
+                    <span class="line-total-price" id="sample-total-2">Rs. 3,800</span>
+                    <button type="button" class="premium-cart-trash-btn" onclick="document.getElementById('sample-row-2').style.display='none';">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Order Note -->
+          <div class="premium-cart-note-box">
+            <label for="cart-special-instructions">
+              <span>✍️ Special Instructions / Delivery Notes:</span>
+            </label>
+            <textarea
+              name="note"
+              id="cart-special-instructions"
+              placeholder="e.g. Please deliver between 2 PM - 6 PM, or landmark near my street..."
+              rows="3"
+            >{{ cart.note }}</textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right: Sticky Order Summary Card -->
+      <div class="premium-cart-summary-column">
+        <div class="premium-order-summary-card">
+          <!-- Card Header -->
+          <div class="premium-summary-head">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <h2>Order Summary</h2>
+          </div>
+
+          <div class="premium-summary-body">
+            <!-- Subtotal -->
+            <div class="summary-line">
+              <span class="label">Subtotal</span>
+              <span class="val" id="summary-subtotal">{% if has_real_items %}{{ cart.original_total_price | money }}{% else %}Rs. 8,650{% endif %}</span>
+            </div>
+
+            <!-- Savings if any -->
+            <div class="summary-line savings">
+              <span class="label">✨ Special Discount</span>
+              <span class="val">-Rs. 500</span>
+            </div>
+
+            <!-- Shipping -->
+            <div class="summary-line">
+              <span class="label">Estimated Delivery</span>
+              <span class="val free-pill">FREE (All Pakistan)</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <!-- Total -->
+            <div class="summary-total-line">
+              <span class="total-label">Total Amount</span>
+              <span class="total-val" id="summary-total">{% if has_real_items %}{{ cart.total_price | money }}{% else %}Rs. 8,150{% endif %}</span>
+            </div>
+            <div class="tax-note">Taxes included • Cash on Delivery Available</div>
+
+            <!-- Checkout Buttons -->
+            <a href="/pages/contact?view=checkout" class="premium-checkout-btn">
+              <span>Proceed to Checkout</span>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </a>
+
+            <!-- Standard Shopify Checkout direct backup -->
+            <a href="/checkout" class="premium-shopify-direct-btn">
+              Or Pay with Standard Shopify Checkout →
+            </a>
+
+            <div class="continue-shopping-wrap">
+              <a href="/collections/all" class="continue-shopping-link">← Continue Shopping</a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="premium-cart-trust-badges">
+              <div class="trust-badge-item">
+                <span class="icon">🚚</span>
+                <span>Express 2-4 Days</span>
+              </div>
+              <div class="trust-badge-item">
+                <span class="icon">💵</span>
+                <span>Cash on Delivery</span>
+              </div>
+              <div class="trust-badge-item">
+                <span class="icon">🔒</span>
+                <span>100% Encrypted</span>
+              </div>
+              <div class="trust-badge-item">
+                <span class="icon">🔄</span>
+                <span>7-Day Returns</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY CART VIEW -->
+  <div id="cart-empty-state-view" style="display: none;">
+    <div class="premium-empty-cart-state">
+      <div class="empty-cart-icon-circle">
+        <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </div>
+
+      <h2 class="empty-cart-title">Your Skincare Bag is Empty</h2>
+      <p class="empty-cart-desc">
+        Looks like you haven't added your clinical glow essentials yet. Discover our award-winning formulas crafted for radiant, healthy skin.
+      </p>
+
+      <a href="/collections/all" class="empty-cart-cta-btn">
+        <span>Explore Skincare Essentials</span>
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </a>
+
+      <!-- Quick Fast-Picks Recommendation Grid -->
+      <div class="empty-cart-recommendations">
+        <div class="premium-section-header centered">
+          <span class="premium-eyebrow">
+            <span class="premium-eyebrow-dot"></span>
+            Curated Routine
+          </span>
+          <h2 class="premium-section-title">
+            Bestselling Skincare Essentials
+            <span class="premium-section-title-line"></span>
+          </h2>
+        </div>
+
+        <div class="premium-product-grid">
+          {% render 'premium-product-card',
+            dummy_title: 'Radiant Glow Vitamin C + Niacinamide Serum',
+            dummy_price: 'Rs. 4,850',
+            dummy_compare_price: 'Rs. 6,500',
+            dummy_category: 'Serums & Actives',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Centella Barrier Relief Repair Cream',
+            dummy_price: 'Rs. 3,800',
+            dummy_compare_price: 'Rs. 4,900',
+            dummy_category: 'Moisturizers',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Invisible Daily Glow Sunscreen SPF 50+',
+            dummy_price: 'Rs. 3,200',
+            dummy_compare_price: 'Rs. 4,200',
+            dummy_category: 'Sun Protection',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Gentle Oat Amino Foaming Cleanser',
+            dummy_price: 'Rs. 2,600',
+            dummy_compare_price: 'Rs. 3,500',
+            dummy_category: 'Cleansers',
+            dummy_badge: 'NEW',
+            dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800'
+          %}
+          {% render 'premium-product-card',
+            dummy_title: 'Retinol 0.5% Night Cell Renewal Serum',
+            dummy_price: 'Rs. 5,200',
+            dummy_compare_price: 'Rs. 6,800',
+            dummy_category: 'Night Care',
+            dummy_badge: 'HOT',
+            dummy_image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800'
+          %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchCartTab(mode) {
+  var activeWrap = document.getElementById('cart-active-state-view');
+  var emptyWrap = document.getElementById('cart-empty-state-view');
+  var activeBtn = document.getElementById('tab-active-cart-btn');
+  var emptyBtn = document.getElementById('tab-empty-cart-btn');
+  var countBadge = document.getElementById('cart-header-count');
+
+  if (mode === 'active') {
+    if (activeWrap) activeWrap.style.display = 'block';
+    if (emptyWrap) emptyWrap.style.display = 'none';
+    if (activeBtn) activeBtn.classList.add('active');
+    if (emptyBtn) emptyBtn.classList.remove('active');
+    if (countBadge) countBadge.innerText = '({{ display_count }})';
+  } else {
+    if (activeWrap) activeWrap.style.display = 'none';
+    if (emptyWrap) emptyWrap.style.display = 'block';
+    if (activeBtn) activeBtn.classList.remove('active');
+    if (emptyBtn) emptyBtn.classList.add('active');
+    if (countBadge) countBadge.innerText = '(0)';
+  }
+}
+
+function updateSampleQty(itemIndex, delta) {
+  var desktopEl = document.getElementById('sample-qty-' + itemIndex + '-d');
+  var mobileEl = document.getElementById('sample-qty-' + itemIndex + '-m');
+  var currentVal = parseInt(desktopEl ? desktopEl.innerText : 1);
+  var newVal = Math.max(1, currentVal + delta);
+
+  if (desktopEl) desktopEl.innerText = newVal;
+  if (mobileEl) mobileEl.innerText = newVal;
+
+  var unitPrice = itemIndex === 1 ? 4850 : 3800;
+  var totalEl = document.getElementById('sample-total-' + itemIndex);
+  if (totalEl) totalEl.innerText = 'Rs. ' + (unitPrice * newVal).toLocaleString();
+}
+</script>
+
+{% schema %}
+{
+  "name": "Premium Cart Page",
+  "tag": "section",
+  "class": "section-premium-cart",
+  "settings": [
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free Shipping Threshold (in PKR)",
+      "default": 3500
+    }
+  ]
+}
+{% endschema %}

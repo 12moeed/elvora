@@ -2983,3 +2983,55 @@ header,
 .continue-btn:hover {
   background: var(--color-primary);
 }
+
+
+/* ==========================================================================
+   HOMEPAGE HERO TRUE VERTICAL FULL SCREEN (100VH / 100DVH)
+   Eliminates all bottom gaps, white bands, and offset subtractions
+   ========================================================================== */
+.shopify-section.hero-wrapper:first-child,
+.hero-wrapper:first-child .hero,
+.hero-wrapper:first-child .hero__container,
+.hero-wrapper:first-child .hero__media-grid {
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+}
+
+.hero-wrapper:first-child .hero {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  position: relative !important;
+}
+
+.hero-wrapper:first-child .hero__container {
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  box-sizing: border-box !important;
+}
+
+.hero-wrapper:first-child .hero__media-grid {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero-wrapper:first-child .hero__media {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* Ensure next section (categories) starts immediately after hero with zero gap */
+.shopify-section.hero-wrapper:first-child + .shopify-section {
+  margin-top: 0 !important;
+}
+
+/* Sticky Navbar on non-homepage pages: ensures pages like Cart/PDP/Checkout have comfortable spacing */
+body:not(:has(.elvora-navbar-root[data-is-home="true"])) .elvora-navbar-root {
+  position: sticky !important;
+  top: 0 !important;
+}

@@ -1,0 +1,1927 @@
+{%- doc -%}
+  ELVORA Luxury Skincare Header / Navbar
+  Ported directly from CareCollection React Premium StorefrontNav.
+  Features:
+  - Transparent-over-hero on homepage with smooth frosted-glass solidification on scroll
+  - Signature Elvora 3px pink gradient top accent line
+  - Luxury typography with brand title and clinical skincare subtitle
+  - Rich 2-column Shop mega-menu dropdown with collections & discover links
+  - Glowing Sale pill with pulse flame icon and HOT badge
+  - Search pill with ⌘K badge and interactive search modal overlay
+  - Unified Wishlist + Cart capsule action pill with pulsing item count badge
+  - Join Us luxury shimmer button / User account dropdown
+  - Full-screen responsive slide-out mobile drawer with accordion navigation
+{%- enddoc -%}
+
+{%- liquid
+  assign is_home = false
+  if request.page_type == 'index'
+    assign is_home = true
+  endif
+
+  assign transparent_enabled = section.settings.enable_transparent_home
+  if is_home and transparent_enabled
+    assign start_transparent = true
+  else
+    assign start_transparent = false
+  endif
+-%}
+
+<header-component
+  id="header-component"
+  class="elvora-navbar-root{% if start_transparent %} elvora-is-transparent{% else %} elvora-is-scrolled{% endif %}"
+  data-is-home="{% if is_home %}true{% else %}false{% endif %}"
+  data-transparent="{% if start_transparent %}true{% else %}false{% endif %}"
+  {% if start_transparent %}transparent="not-sticky"{% endif %}
+>
+  <!-- Announcement Bar (Marquee / Delivery ribbon) -->
+  {% if section.settings.show_announcement and section.settings.announcement_text != blank %}
+    <div class="elvora-nav-announcement">
+      <div class="elvora-announcement-inner">
+        <span class="elvora-announcement-text">{{ section.settings.announcement_text }}</span>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Top 3px Luxury Gradient Accent Line -->
+  <div class="elvora-nav-top-accent"></div>
+
+  <!-- Hero dark vignette gradient (active only when transparent over hero) -->
+  <div class="elvora-nav-hero-vignette" aria-hidden="true"></div>
+
+  <!-- Navbar Main Bar -->
+  <div class="elvora-nav-container">
+    <div class="elvora-nav-inner">
+
+      <!-- ── Logo / Brand ── -->
+      <a href="/" class="elvora-nav-brand" aria-label="{{ section.settings.brand_name | default: 'ELVORA' }}">
+        {% if section.settings.logo != blank %}
+          <img
+            src="{{ section.settings.logo | image_url: width: 400 }}"
+            alt="{{ section.settings.brand_name | default: 'ELVORA' }}"
+            class="elvora-brand-img"
+            style="max-width: {{ section.settings.logo_width | default: 130 }}px;"
+            width="{{ section.settings.logo_width | default: 130 }}"
+            height="auto"
+          >
+        {% else %}
+          <div class="elvora-brand-text">
+            <span class="elvora-brand-title">{{ section.settings.brand_name | default: 'ELVORA' }}</span>
+            <span class="elvora-brand-subtitle">{{ section.settings.brand_subtitle | default: 'CLINICAL SKINCARE' }}</span>
+          </div>
+        {% endif %}
+      </a>
+
+      <!-- ── Desktop Navigation Menu ── -->
+      <nav class="elvora-nav-links" aria-label="Main Navigation">
+        <!-- Home -->
+        <a href="/" class="elvora-nav-link{% if request.page_type == 'index' %} is-active{% endif %}">
+          Home
+        </a>
+
+        <!-- Shop Mega Menu -->
+        <div class="elvora-dropdown-wrap elvora-mega-wrap">
+          <a
+            href="/collections/all"
+            class="elvora-nav-link elvora-has-dropdown{% if request.page_type == 'collection' or request.page_type == 'product' %} is-active{% endif %}"
+            aria-expanded="false"
+          >
+            <span>Shop</span>
+            <svg class="elvora-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+
+          <!-- Mega Menu Panel -->
+          <div class="elvora-mega-dropdown">
+            <div class="elvora-dropdown-tip"></div>
+            <div class="elvora-dropdown-card">
+              <div class="elvora-card-top-accent"></div>
+              <div class="elvora-mega-grid">
+                <!-- Left: Skincare Collections -->
+                <div class="elvora-mega-col">
+                  <div class="elvora-mega-col-heading">
+                    <span class="elvora-heading-line"></span>
+                    <span>Collections</span>
+                  </div>
+                  <ul class="elvora-mega-list">
+                    <li>
+                      <a href="/collections/all?category=serums" class="elvora-mega-item">
+                        <span class="elvora-item-dot"></span>
+                        <span class="elvora-item-text">Serums & Actives</span>
+                        <svg class="elvora-item-arrow" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/collections/all?category=cleansers" class="elvora-mega-item">
+                        <span class="elvora-item-dot"></span>
+                        <span class="elvora-item-text">Cleansers & Toners</span>
+                        <svg class="elvora-item-arrow" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/collections/all?category=moisturizers" class="elvora-mega-item">
+                        <span class="elvora-item-dot"></span>
+                        <span class="elvora-item-text">Barrier Moisturizers</span>
+                        <svg class="elvora-item-arrow" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/collections/all?category=sunscreen" class="elvora-mega-item">
+                        <span class="elvora-item-dot"></span>
+                        <span class="elvora-item-text">Sunscreen & SPF 50</span>
+                        <svg class="elvora-item-arrow" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/collections/all?category=eye-care" class="elvora-mega-item">
+                        <span class="elvora-item-dot"></span>
+                        <span class="elvora-item-text">Eye & Lip Targeted Care</span>
+                        <svg class="elvora-item-arrow" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                      </a>
+                    </li>
+                  </ul>
+                  <a href="/collections/all" class="elvora-mega-all-link">
+                    View All Products &rarr;
+                  </a>
+                </div>
+
+                <!-- Right: Discover -->
+                <div class="elvora-mega-col elvora-discover-col">
+                  <div class="elvora-mega-col-heading">
+                    <span class="elvora-heading-line"></span>
+                    <span>Discover</span>
+                  </div>
+                  <ul class="elvora-mega-list">
+                    <li>
+                      <a href="/collections/all?sort_by=created-descending" class="elvora-mega-item elvora-discover-item">
+                        <span class="elvora-discover-icon">✨</span>
+                        <span class="elvora-item-text">New Arrivals</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/collections/all?sort_by=best-selling" class="elvora-mega-item elvora-discover-item">
+                        <span class="elvora-discover-icon">🔥</span>
+                        <span class="elvora-item-text">Best Sellers</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/collections/all" class="elvora-mega-item elvora-discover-item">
+                        <span class="elvora-discover-icon">⭐</span>
+                        <span class="elvora-item-text">Clinical Favorites</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{ section.settings.sale_link | default: '/collections/all' }}" class="elvora-mega-item elvora-discover-item elvora-sale-text">
+                        <span class="elvora-discover-icon">🏷️</span>
+                        <span class="elvora-item-text">Sale & Bundles</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Arrivals -->
+        <a href="/collections/all?sort_by=created-descending" class="elvora-nav-link">
+          New Arrivals
+        </a>
+
+        <!-- Best Sellers -->
+        <a href="/collections/all?sort_by=best-selling" class="elvora-nav-link">
+          Best Sellers
+        </a>
+
+        <!-- Sale Hot Badge Pill -->
+        <a href="{{ section.settings.sale_link | default: '/collections/all' }}" class="elvora-sale-pill-btn">
+          <svg class="elvora-sale-pulse-icon" width="13" height="13" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+          </svg>
+          <span>{{ section.settings.sale_badge_text | default: 'Sale' }}</span>
+          <span class="elvora-sale-hot-tag">{{ section.settings.sale_tag_text | default: 'HOT' }}</span>
+        </a>
+
+        <!-- About / Contact -->
+        <a href="/pages/contact" class="elvora-nav-link">
+          Contact
+        </a>
+      </nav>
+
+      <!-- ── Right Actions (Search, Wishlist, Cart, Join Us, Hamburger) ── -->
+      <div class="elvora-nav-actions">
+
+        <!-- Desktop Search Pill -->
+        <button
+          type="button"
+          class="elvora-search-pill-btn"
+          id="elvora-search-trigger"
+          aria-label="Search clinical formulas"
+        >
+          <svg class="elvora-search-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <span class="elvora-search-text">Search...</span>
+          <span class="elvora-kbd-badge">⌘K</span>
+        </button>
+
+        <!-- Mobile Search Icon -->
+        <button
+          type="button"
+          class="elvora-icon-btn elvora-mobile-search-btn"
+          id="elvora-mobile-search-trigger"
+          aria-label="Search"
+        >
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+
+        <!-- Unified Wishlist + Cart Capsule Pill -->
+        <div class="elvora-action-capsule">
+          <!-- Wishlist -->
+          <a
+            href="/pages/contact?view=wishlist"
+            class="elvora-capsule-item elvora-wishlist-btn"
+            id="elvora-wishlist-trigger"
+            title="Wishlist"
+            aria-label="Wishlist"
+          >
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+            <span class="elvora-capsule-badge elvora-wishlist-count" id="elvora-wishlist-badge">0</span>
+          </a>
+
+          <!-- Divider -->
+          <div class="elvora-capsule-divider"></div>
+
+          <!-- Cart -->
+          <a
+            href="/cart"
+            class="elvora-capsule-item elvora-cart-btn{% if cart.item_count > 0 %} has-items{% endif %}"
+            id="elvora-cart-trigger"
+            title="Cart ({{ cart.item_count }})"
+            aria-label="Shopping Cart with {{ cart.item_count }} items"
+          >
+            <div class="elvora-cart-icon-wrap">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="{% if cart.item_count > 0 %}2.4{% else %}2{% endif %}" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+            </div>
+            <span class="elvora-capsule-badge elvora-cart-count" id="elvora-cart-badge">
+              {{ cart.item_count }}
+            </span>
+          </a>
+        </div>
+
+        <!-- Account / Join Us Button -->
+        {% if customer %}
+          <div class="elvora-user-menu-wrap">
+            <a href="/account" class="elvora-user-avatar-btn" title="My Account">
+              <span class="elvora-avatar-circle">
+                {{ customer.first_name | slice: 0 | default: 'E' | upcase }}
+              </span>
+              <span class="elvora-user-name">{{ customer.first_name }}</span>
+            </a>
+          </div>
+        {% else %}
+          <div class="elvora-desktop-auth">
+            <a href="/account/login" class="elvora-login-link">Login</a>
+            <a href="/account/register" class="elvora-join-btn">
+              <span>Join Us</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+            </a>
+          </div>
+        {% endif %}
+
+        <!-- Mobile Hamburger Toggle -->
+        <button
+          type="button"
+          class="elvora-icon-btn elvora-hamburger-btn"
+          id="elvora-mobile-menu-trigger"
+          aria-label="Open Navigation Menu"
+        >
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</header-component>
+
+<!-- ── Interactive Luxury Search Modal Overlay ── -->
+<div id="elvora-search-modal" class="elvora-modal-backdrop" aria-hidden="true">
+  <div class="elvora-modal-dialog">
+    <div class="elvora-search-modal-card">
+      <div class="elvora-search-modal-header">
+        <form action="/search" method="get" class="elvora-search-modal-form" role="search">
+          <svg class="elvora-search-modal-icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input
+            type="search"
+            name="q"
+            id="elvora-search-input"
+            class="elvora-search-modal-input"
+            placeholder="Search serums, cleansers, ingredients, concerns..."
+            autocomplete="off"
+          >
+          <button type="button" class="elvora-modal-close-btn" id="elvora-search-close-btn" aria-label="Close search">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="elvora-search-modal-body">
+        <div class="elvora-search-suggestions">
+          <p class="elvora-suggestions-label">Popular Skincare Searches</p>
+          <div class="elvora-suggestion-pills">
+            <a href="/search?q=Niacinamide" class="elvora-tag-pill">✨ Niacinamide 10%</a>
+            <a href="/search?q=Vitamin+C" class="elvora-tag-pill">🍊 Vitamin C Radiance</a>
+            <a href="/search?q=Hyaluronic" class="elvora-tag-pill">💧 Hyaluronic Acid</a>
+            <a href="/search?q=Cleanser" class="elvora-tag-pill">🌿 Gentle Cleanser</a>
+            <a href="/search?q=SPF" class="elvora-tag-pill">☀️ SPF 50+ Sunscreen</a>
+            <a href="/search?q=Barrier" class="elvora-tag-pill">🛡️ Ceramide Barrier</a>
+          </div>
+        </div>
+
+        <div class="elvora-search-quick-links">
+          <p class="elvora-suggestions-label">Featured Collections</p>
+          <div class="elvora-quick-collections-grid">
+            <a href="/collections/all?category=serums" class="elvora-quick-col-link">
+              <span class="elvora-q-dot"></span>
+              <span>Serums & Actives</span>
+            </a>
+            <a href="/collections/all?category=cleansers" class="elvora-quick-col-link">
+              <span class="elvora-q-dot"></span>
+              <span>Cleansers & Toners</span>
+            </a>
+            <a href="/collections/all?category=moisturizers" class="elvora-quick-col-link">
+              <span class="elvora-q-dot"></span>
+              <span>Moisturizers & Barrier Care</span>
+            </a>
+            <a href="/collections/all?sort_by=best-selling" class="elvora-quick-col-link">
+              <span class="elvora-q-dot"></span>
+              <span>Best Selling Formulas</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Responsive Slide-Out Mobile Navigation Drawer ── -->
+<div id="elvora-mobile-drawer" class="elvora-drawer-backdrop" aria-hidden="true">
+  <div class="elvora-drawer-panel">
+    <!-- Drawer Header -->
+    <div class="elvora-drawer-header">
+      <div class="elvora-drawer-brand">
+        <span class="elvora-drawer-title">{{ section.settings.brand_name | default: 'ELVORA' }}</span>
+        <span class="elvora-drawer-subtitle">{{ section.settings.brand_subtitle | default: 'CLINICAL SKINCARE' }}</span>
+      </div>
+      <button type="button" class="elvora-drawer-close-btn" id="elvora-drawer-close" aria-label="Close menu">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Drawer Search -->
+    <div class="elvora-drawer-search">
+      <form action="/search" method="get" class="elvora-drawer-search-form" role="search">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          type="search"
+          name="q"
+          placeholder="Search clinical skincare..."
+          class="elvora-drawer-search-input"
+        >
+      </form>
+    </div>
+
+    <!-- Drawer Navigation Links -->
+    <div class="elvora-drawer-nav">
+      <a href="/" class="elvora-drawer-link">
+        <span>Home</span>
+      </a>
+
+      <!-- Shop Accordion -->
+      <div class="elvora-drawer-accordion">
+        <button type="button" class="elvora-drawer-link elvora-accordion-trigger" id="elvora-drawer-shop-toggle">
+          <span>Shop Skincare</span>
+          <svg class="elvora-accordion-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="elvora-accordion-content" id="elvora-drawer-shop-content">
+          <a href="/collections/all?category=serums" class="elvora-drawer-sublink">
+            <span class="elvora-item-dot"></span> Serums & Actives
+          </a>
+          <a href="/collections/all?category=cleansers" class="elvora-drawer-sublink">
+            <span class="elvora-item-dot"></span> Cleansers & Toners
+          </a>
+          <a href="/collections/all?category=moisturizers" class="elvora-drawer-sublink">
+            <span class="elvora-item-dot"></span> Barrier Moisturizers
+          </a>
+          <a href="/collections/all?category=sunscreen" class="elvora-drawer-sublink">
+            <span class="elvora-item-dot"></span> Sunscreen & SPF 50
+          </a>
+          <a href="/collections/all?category=eye-care" class="elvora-drawer-sublink">
+            <span class="elvora-item-dot"></span> Eye & Lip Targeted Care
+          </a>
+          <a href="/collections/all" class="elvora-drawer-sublink elvora-highlight-sublink">
+            View All Products &rarr;
+          </a>
+        </div>
+      </div>
+
+      <a href="/collections/all?sort_by=created-descending" class="elvora-drawer-link">
+        <span>✨ New Arrivals</span>
+      </a>
+
+      <a href="/collections/all?sort_by=best-selling" class="elvora-drawer-link">
+        <span>🔥 Best Sellers</span>
+      </a>
+
+      <a href="{{ section.settings.sale_link | default: '/collections/all' }}" class="elvora-drawer-link elvora-drawer-sale-link">
+        <span>🏷️ Sale & Bundles</span>
+        <span class="elvora-sale-hot-tag">HOT</span>
+      </a>
+
+      <a href="/cart" class="elvora-drawer-link">
+        <span>Shopping Cart</span>
+        <span class="elvora-drawer-badge">{{ cart.item_count }}</span>
+      </a>
+
+      <a href="/pages/contact?view=checkout" class="elvora-drawer-link">
+        <span>Express Checkout (COD)</span>
+      </a>
+
+      <a href="/pages/contact" class="elvora-drawer-link">
+        <span>Contact & Support</span>
+      </a>
+    </div>
+
+    <!-- Drawer Footer / Contact & Auth -->
+    <div class="elvora-drawer-footer">
+      <div class="elvora-drawer-support">
+        <p class="elvora-support-title">Need Skincare Guidance?</p>
+        <p class="elvora-support-sub">WhatsApp: +92 300 1234567 • Mon - Sat</p>
+      </div>
+
+      <div class="elvora-drawer-auth">
+        {% if customer %}
+          <a href="/account" class="elvora-drawer-btn elvora-drawer-btn-primary">My Account</a>
+          <a href="/account/logout" class="elvora-drawer-btn elvora-drawer-btn-secondary">Log Out</a>
+        {% else %}
+          <a href="/account/register" class="elvora-drawer-btn elvora-drawer-btn-primary">Join Us</a>
+          <a href="/account/login" class="elvora-drawer-btn elvora-drawer-btn-secondary">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ==========================================================================
+     ELVORA PREMIUM STOREFRONT NAVBAR STYLES
+     ========================================================================== */
+  .elvora-navbar-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* 3px Pink signature top gradient accent */
+  .elvora-nav-top-accent {
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, #B34090 0%, #e879c0 50%, #B34090 100%);
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Delivery / Announcement Ribbon */
+  .elvora-nav-announcement {
+    background: #c81ea3;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.42rem 1rem;
+    line-height: 1.25;
+    position: relative;
+    z-index: 12;
+    transition: all 0.3s ease;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-nav-announcement {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+
+  .elvora-announcement-inner {
+    max-width: 1720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .elvora-announcement-text {
+    display: inline-block;
+  }
+
+  /* Hero dark vignette gradient for flawless readability against any hero media */
+  .elvora-nav-hero-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.18) 60%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .elvora-nav-container {
+    max-width: 1720px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .elvora-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
+    transition: padding 0.25s ease;
+  }
+
+  /* ── BRAND / LOGO ── */
+  .elvora-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .elvora-brand-img {
+    display: block;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .elvora-brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .elvora-brand-title {
+    font-family: var(--font-heading-family, 'Playfair Display', Georgia, serif);
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    transition: color 0.25s ease;
+  }
+
+  .elvora-brand-subtitle {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-top: 0.3rem;
+    transition: color 0.25s ease;
+  }
+
+  /* ── DESKTOP NAVIGATION LINKS ── */
+  .elvora-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .elvora-nav-links {
+      display: none;
+    }
+  }
+
+  .elvora-nav-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    position: relative;
+    padding: 0.4rem 0;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .elvora-chevron {
+    transition: transform 0.25s ease;
+    opacity: 0.7;
+  }
+
+  .elvora-has-dropdown:hover .elvora-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ── DROPDOWN & MEGA MENU ── */
+  .elvora-dropdown-wrap {
+    position: relative;
+  }
+
+  .elvora-mega-dropdown {
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    padding-top: 0.75rem;
+    min-width: 540px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .elvora-dropdown-wrap:hover .elvora-mega-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .elvora-dropdown-tip {
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    transform: rotate(45deg);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    position: absolute;
+    top: 6px;
+    left: 36px;
+    z-index: 2;
+  }
+
+  .elvora-dropdown-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .elvora-card-top-accent {
+    height: 3px;
+    background: linear-gradient(90deg, #B34090, #e879c0, transparent);
+  }
+
+  .elvora-mega-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .elvora-mega-col-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #B34090;
+    margin-bottom: 0.85rem;
+  }
+
+  .elvora-heading-line {
+    width: 16px;
+    height: 2px;
+    background: #B34090;
+    border-radius: 2px;
+  }
+
+  .elvora-mega-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .elvora-mega-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #374151;
+    transition: all 0.16s ease;
+  }
+
+  .elvora-item-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(179, 64, 144, 0.3);
+    transition: background-color 0.16s ease, transform 0.16s ease;
+    flex-shrink: 0;
+  }
+
+  .elvora-item-arrow {
+    margin-left: auto;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.16s ease;
+    color: #B34090;
+  }
+
+  .elvora-mega-item:hover {
+    background: #fdf2f8;
+    color: #B34090;
+  }
+
+  .elvora-mega-item:hover .elvora-item-dot {
+    background: #B34090;
+    transform: scale(1.3);
+  }
+
+  .elvora-mega-item:hover .elvora-item-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .elvora-discover-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .elvora-mega-all-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #B34090;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+  }
+
+  .elvora-mega-all-link:hover {
+    background: #fdf2f8;
+  }
+
+  /* ── SALE PILL BUTTON (SIGNATURE REACT LOOK) ── */
+  .elvora-sale-pill-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #ffffff !important;
+    text-decoration: none;
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #B34090 0%, #c0396a 100%);
+    box-shadow: 0 4px 14px rgba(179, 64, 144, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .elvora-sale-pill-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(179, 64, 144, 0.45);
+  }
+
+  .elvora-sale-pulse-icon {
+    animation: elvora-pulse 2s infinite ease-in-out;
+  }
+
+  @keyframes elvora-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.85; }
+  }
+
+  .elvora-sale-hot-tag {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 0.55rem;
+    font-weight: 900;
+    color: #78350f;
+    background: #facc15;
+    padding: 2px 5px;
+    border-radius: 9999px;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  }
+
+  /* ── ACTION ITEMS (RIGHT SIDE) ── */
+  .elvora-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* Search Pill (Desktop) */
+  .elvora-search-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    .elvora-search-pill-btn {
+      display: none;
+    }
+  }
+
+  .elvora-search-text {
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .elvora-kbd-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 6px;
+    line-height: 1;
+  }
+
+  /* Mobile Search Icon */
+  .elvora-mobile-search-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 768px) {
+    .elvora-mobile-search-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* Unified Capsule Pill (Wishlist + Cart) */
+  .elvora-action-capsule {
+    display: flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 3px 6px;
+    transition: all 0.25s ease;
+  }
+
+  .elvora-capsule-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .elvora-capsule-divider {
+    width: 1px;
+    height: 16px;
+    margin: 0 3px;
+    opacity: 0.35;
+  }
+
+  .elvora-capsule-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    font-size: 0.62rem;
+    font-weight: 900;
+    min-width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border-radius: 9999px;
+    line-height: 1;
+  }
+
+  .elvora-cart-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+  }
+
+  .elvora-cart-btn.has-items .elvora-cart-icon-wrap {
+    background: linear-gradient(135deg, #B34090 0%, #8B1A6B 100%);
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(179, 64, 144, 0.4);
+  }
+
+  .elvora-cart-btn.has-items .elvora-cart-count {
+    background: #ffffff;
+    color: #B34090;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(179, 64, 144, 0.2);
+  }
+
+  /* Desktop Auth (Login & Join Us) */
+  .elvora-desktop-auth {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 900px) {
+    .elvora-desktop-auth {
+      display: none;
+    }
+  }
+
+  .elvora-login-link {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.45rem 0.75rem;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .elvora-join-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #ffffff !important;
+    text-decoration: none;
+    padding: 0.52rem 1.15rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #B34090 0%, #8B1A6B 100%);
+    box-shadow: 0 4px 14px rgba(179, 64, 144, 0.32);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .elvora-join-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(179, 64, 144, 0.45);
+  }
+
+  /* User avatar when logged in */
+  .elvora-user-menu-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .elvora-user-avatar-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    transition: background 0.2s;
+  }
+
+  .elvora-avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #B34090 0%, #8B1A6B 100%);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .elvora-user-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Mobile Hamburger Toggle */
+  .elvora-hamburger-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 1024px) {
+    .elvora-hamburger-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* ==========================================================================
+     COLOR STATES: TRANSPARENT OVER HERO VS SOLID FROSTED GLASS
+     ========================================================================== */
+
+  /* ── 1. TRANSPARENT STATE (AT TOP OF HERO BANNER) ── */
+  .elvora-navbar-root.elvora-is-transparent {
+    background: transparent;
+    box-shadow: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-nav-hero-vignette {
+    opacity: 1;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-brand-title {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-brand-subtitle {
+    color: #fbcfe8;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-nav-link {
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-nav-link:hover,
+  .elvora-navbar-root.elvora-is-transparent .elvora-nav-link.is-active {
+    color: #ffffff;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-search-pill-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-search-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-kbd-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-mobile-search-btn,
+  .elvora-navbar-root.elvora-is-transparent .elvora-hamburger-btn {
+    color: #ffffff;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-action-capsule {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-capsule-item {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-capsule-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-capsule-divider {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-capsule-badge {
+    background: #ffffff;
+    color: #B34090;
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-login-link {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-login-link:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .elvora-navbar-root.elvora-is-transparent .elvora-user-name {
+    color: #ffffff;
+  }
+
+  /* ── 2. SCROLLED / FROSTED GLASS STATE ── */
+  .elvora-navbar-root.elvora-is-scrolled {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-nav-hero-vignette {
+    opacity: 0;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-brand-title {
+    color: #111827;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-brand-subtitle {
+    color: #B34090;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-nav-link {
+    color: #374151;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-nav-link:hover,
+  .elvora-navbar-root.elvora-is-scrolled .elvora-nav-link.is-active {
+    color: #B34090;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-search-pill-btn {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-search-pill-btn:hover {
+    background: #fdf2f8;
+    border-color: #fbcfe8;
+    color: #B34090;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-kbd-badge {
+    background: #e5e7eb;
+    color: #6b7280;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-mobile-search-btn,
+  .elvora-navbar-root.elvora-is-scrolled .elvora-hamburger-btn {
+    color: #374151;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-action-capsule {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-capsule-item {
+    color: #4b5563;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-capsule-item:hover {
+    color: #B34090;
+    background: #fdf2f8;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-capsule-divider {
+    background: #e5e7eb;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-capsule-badge {
+    background: #B34090;
+    color: #ffffff;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-login-link {
+    color: #4b5563;
+    background: transparent;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-login-link:hover {
+    color: #B34090;
+    background: #fdf2f8;
+  }
+
+  .elvora-navbar-root.elvora-is-scrolled .elvora-user-name {
+    color: #1f2937;
+  }
+
+  /* ==========================================================================
+     INTERACTIVE SEARCH MODAL STYLES
+     ========================================================================== */
+  .elvora-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 5rem 1rem 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s;
+  }
+
+  .elvora-modal-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .elvora-modal-dialog {
+    width: 100%;
+    max-width: 680px;
+    transform: translateY(-20px) scale(0.97);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .elvora-modal-backdrop.is-open .elvora-modal-dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  .elvora-search-modal-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .elvora-search-modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .elvora-search-modal-form {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .elvora-search-modal-icon {
+    color: #B34090;
+    flex-shrink: 0;
+  }
+
+  .elvora-search-modal-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-family: inherit;
+    color: #111827;
+    background: transparent;
+  }
+
+  .elvora-search-modal-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .elvora-modal-close-btn {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .elvora-modal-close-btn:hover {
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  .elvora-search-modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .elvora-suggestions-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #B34090;
+    margin: 0 0 0.85rem 0;
+  }
+
+  .elvora-suggestion-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .elvora-tag-pill {
+    padding: 0.45rem 0.9rem;
+    border-radius: 9999px;
+    background: #fdf2f8;
+    color: #9d174d;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .elvora-tag-pill:hover {
+    background: #fce7f3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(179, 64, 144, 0.15);
+  }
+
+  .elvora-quick-collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.6rem;
+  }
+
+  .elvora-quick-col-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 12px;
+    background: #f9fafb;
+    color: #374151;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .elvora-quick-col-link:hover {
+    background: #fdf2f8;
+    color: #B34090;
+  }
+
+  .elvora-q-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #B34090;
+  }
+
+  /* ==========================================================================
+     MOBILE NAVIGATION DRAWER STYLES
+     ========================================================================== */
+  .elvora-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+  }
+
+  .elvora-drawer-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .elvora-drawer-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 88vw;
+    max-width: 380px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .elvora-drawer-backdrop.is-open .elvora-drawer-panel {
+    transform: translateX(0);
+  }
+
+  .elvora-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .elvora-drawer-brand {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .elvora-drawer-title {
+    font-family: var(--font-heading-family, 'Playfair Display', Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .elvora-drawer-subtitle {
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #B34090;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  .elvora-drawer-close-btn {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    cursor: pointer;
+  }
+
+  .elvora-drawer-search {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .elvora-drawer-search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    padding: 0.55rem 1rem;
+    color: #6b7280;
+  }
+
+  .elvora-drawer-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #111827;
+  }
+
+  .elvora-drawer-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .elvora-drawer-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1f2937;
+    transition: all 0.15s ease;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .elvora-drawer-link:hover {
+    background: #fdf2f8;
+    color: #B34090;
+  }
+
+  .elvora-drawer-sale-link {
+    color: #B34090;
+    background: #fdf2f8;
+  }
+
+  .elvora-drawer-badge {
+    background: #B34090;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 9999px;
+  }
+
+  /* Accordion inside mobile drawer */
+  .elvora-drawer-accordion {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .elvora-accordion-chevron {
+    transition: transform 0.25s ease;
+  }
+
+  .elvora-drawer-accordion.is-open .elvora-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  .elvora-accordion-content {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.35rem 0 0.5rem 1rem;
+  }
+
+  .elvora-drawer-accordion.is-open .elvora-accordion-content {
+    display: flex;
+  }
+
+  .elvora-drawer-sublink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #4b5563;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .elvora-drawer-sublink:hover {
+    background: #fdf2f8;
+    color: #B34090;
+  }
+
+  .elvora-highlight-sublink {
+    color: #B34090;
+    font-weight: 700;
+  }
+
+  /* Drawer Footer */
+  .elvora-drawer-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid #f3f4f6;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .elvora-support-title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #B34090;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .elvora-support-sub {
+    font-size: 0.78rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  .elvora-drawer-auth {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .elvora-drawer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .elvora-drawer-btn-primary {
+    background: linear-gradient(135deg, #B34090 0%, #8B1A6B 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(179, 64, 144, 0.3);
+  }
+
+  .elvora-drawer-btn-secondary {
+    background: #ffffff;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+  }
+</style>
+
+<script>
+  (function initElvoraNavbar() {
+    const headerRoot = document.getElementById('header-component');
+    if (!headerRoot) return;
+
+    const isHome = headerRoot.dataset.isHome === 'true';
+    const transparentEnabled = headerRoot.dataset.transparent === 'true';
+
+    // ── 1. Scroll State Management (Scrubbed smoothly) ──
+    function handleScroll() {
+      if (!isHome || !transparentEnabled) {
+        headerRoot.classList.remove('elvora-is-transparent');
+        headerRoot.classList.add('elvora-is-scrolled');
+        return;
+      }
+
+      // Transition smoothly by 50px of scroll
+      if (window.scrollY > 40) {
+        headerRoot.classList.remove('elvora-is-transparent');
+        headerRoot.classList.add('elvora-is-scrolled');
+        headerRoot.removeAttribute('transparent');
+      } else {
+        headerRoot.classList.add('elvora-is-transparent');
+        headerRoot.classList.remove('elvora-is-scrolled');
+        headerRoot.setAttribute('transparent', 'not-sticky');
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // ── 2. Interactive Search Modal ──
+    const searchModal = document.getElementById('elvora-search-modal');
+    const searchInput = document.getElementById('elvora-search-input');
+    const searchTrigger = document.getElementById('elvora-search-trigger');
+    const mobileSearchTrigger = document.getElementById('elvora-mobile-search-trigger');
+    const searchCloseBtn = document.getElementById('elvora-search-close-btn');
+
+    function openSearch() {
+      if (!searchModal) return;
+      searchModal.classList.add('is-open');
+      searchModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => searchInput && searchInput.focus(), 150);
+    }
+
+    function closeSearch() {
+      if (!searchModal) return;
+      searchModal.classList.remove('is-open');
+      searchModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    if (searchTrigger) searchTrigger.addEventListener('click', openSearch);
+    if (mobileSearchTrigger) mobileSearchTrigger.addEventListener('click', openSearch);
+    if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+
+    // Close on backdrop click
+    if (searchModal) {
+      searchModal.addEventListener('click', (e) => {
+        if (e.target === searchModal) closeSearch();
+      });
+    }
+
+    // ⌘K or Ctrl+K shortcut
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (searchModal && searchModal.classList.contains('is-open')) {
+          closeSearch();
+        } else {
+          openSearch();
+        }
+      }
+      if (e.key === 'Escape' && searchModal && searchModal.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+
+    // ── 3. Mobile Navigation Drawer ──
+    const drawerBackdrop = document.getElementById('elvora-mobile-drawer');
+    const menuTrigger = document.getElementById('elvora-mobile-menu-trigger');
+    const drawerCloseBtn = document.getElementById('elvora-drawer-close');
+    const shopToggle = document.getElementById('elvora-drawer-shop-toggle');
+    const shopAccordion = shopToggle ? shopToggle.closest('.elvora-drawer-accordion') : null;
+
+    function openDrawer() {
+      if (!drawerBackdrop) return;
+      drawerBackdrop.classList.add('is-open');
+      drawerBackdrop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      if (!drawerBackdrop) return;
+      drawerBackdrop.classList.remove('is-open');
+      drawerBackdrop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    if (menuTrigger) menuTrigger.addEventListener('click', openDrawer);
+    if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
+
+    if (drawerBackdrop) {
+      drawerBackdrop.addEventListener('click', (e) => {
+        if (e.target === drawerBackdrop) closeDrawer();
+      });
+    }
+
+    if (shopToggle && shopAccordion) {
+      shopToggle.addEventListener('click', () => {
+        shopAccordion.classList.toggle('is-open');
+      });
+    }
+
+    // ── 4. Wishlist Counter Sync (from localStorage if available) ──
+    try {
+      const wishlist = JSON.parse(localStorage.getItem('elvora_wishlist') || '[]');
+      const badge = document.getElementById('elvora-wishlist-badge');
+      if (badge) {
+        badge.textContent = wishlist.length;
+        badge.style.display = wishlist.length > 0 ? 'flex' : 'none';
+      }
+    } catch (e) {}
+
+    // Expose updateCartCount helper for other components (PDP / Quick Add)
+    window.updateElvoraCartBadge = function(newCount) {
+      const badge = document.getElementById('elvora-cart-badge');
+      const cartBtn = document.getElementById('elvora-cart-trigger');
+      if (badge) {
+        badge.textContent = newCount;
+      }
+      if (cartBtn) {
+        if (parseInt(newCount, 10) > 0) {
+          cartBtn.classList.add('has-items');
+        } else {
+          cartBtn.classList.remove('has-items');
+        }
+      }
+    };
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Premium Luxury Header",
+  "tag": "header",
+  "class": "header-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Banner Text",
+      "default": "🔥 EXCLUSIVE SALE • FREE SHIPPING ACROSS PAKISTAN • CASH ON DELIVERY AVAILABLE"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name",
+      "default": "ELVORA"
+    },
+    {
+      "type": "text",
+      "id": "brand_subtitle",
+      "label": "Brand Subtitle",
+      "default": "CLINICAL SKINCARE"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 130
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_home",
+      "label": "Transparent Header Over Hero (Homepage)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_badge_text",
+      "label": "Sale Badge Text",
+      "default": "Sale"
+    },
+    {
+      "type": "text",
+      "id": "sale_tag_text",
+      "label": "Sale Tag Text",
+      "default": "HOT"
+    },
+    {
+      "type": "url",
+      "id": "sale_link",
+      "label": "Sale Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Luxury Header"
+    }
+  ]
+}
+{% endschema %}

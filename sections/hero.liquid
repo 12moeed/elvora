@@ -468,9 +468,9 @@
     --hero-border-opacity: {{ section.settings.border_opacity }}%;
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
     {% if section.settings.section_height == 'custom' %}
-      --hero-min-height: {{ section.settings.section_height_custom }}svh;
+      --hero-min-height: {{ section.settings.section_height_custom }}vh;
     {% elsif section.settings.section_height == "full-screen" %}
-       --hero-min-height: 100svh;
+       --hero-min-height: 100vh;
     {% else %}
       --hero-min-height: var(--section-height-{{ section.settings.section_height }});
     {% endif %}
@@ -558,6 +558,12 @@
      With body as the subject, every [open] or [aria-expanded] change in the header restyles the whole page. */
   #header-group:has(> .header-section > #header-component) ~ * .hero-wrapper:first-child {
     --hero-height-offset: var(--header-group-height, 0);
+  }
+
+  /* When transparent or fixed header is active, offset is 0 so hero takes true vertical 100vh full-screen */
+  #header-group:has(> .header-section > [transparent]) ~ * .hero-wrapper:first-child,
+  #header-group:has(> .header-section > .elvora-navbar-root) ~ * .hero-wrapper:first-child {
+    --hero-height-offset: 0px !important;
   }
 
   .hero {

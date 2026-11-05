@@ -9,7 +9,7 @@
     assign card_title = product.title
     assign card_url = product.url
     assign card_image = product.featured_image | image_url: width: 800
-    assign card_category = product.type | default: product.collections.first.title | default: 'Collection'
+    assign card_category = product.type | default: product.collections.first.title | default: 'Skincare'
     assign card_price = product.price | money
     assign card_compare_price = product.compare_at_price | money
     assign has_discount = false
@@ -18,12 +18,12 @@
       assign discount_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
     endif
   else
-    assign card_title = dummy_title | default: 'Elegance Pump Heels'
-    assign card_url = '/collections/all'
-    assign card_image = dummy_image | default: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800'
-    assign card_category = dummy_category | default: 'Ladies'
-    assign card_price = dummy_price | default: 'Rs. 8,999'
-    assign card_compare_price = dummy_compare_price | default: 'Rs. 12,000'
+    assign card_title = dummy_title | default: 'Radiant Glow Vitamin C Serum'
+    assign card_url = dummy_url | default: '/pages/contact?view=pdp'
+    assign card_image = dummy_image | default: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800'
+    assign card_category = dummy_category | default: 'Serums & Actives'
+    assign card_price = dummy_price | default: 'Rs. 4,850'
+    assign card_compare_price = dummy_compare_price | default: 'Rs. 6,500'
     assign has_discount = true
     assign discount_pct = 25
   endif

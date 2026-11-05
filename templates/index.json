@@ -1,4 +1,12 @@
-{
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -7,7 +15,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h2>Elegance in Every Step</h2><p>Discover our handcrafted footwear, luxury leather bags, and timeless statement pieces.</p>",
+            "text": "<h2>Pure Radiance in Every Drop</h2><p>Experience clinical skincare formulations infused with potent botanical actives for a timeless, youthful glow.</p>",
             "text_color": "#FFFFFF",
             "width": "fit-content",
             "max_width": "normal",
@@ -33,7 +41,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop Collection",
+            "label": "Explore Skincare Collection",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button-custom",
@@ -89,41 +97,41 @@
         "cat_1": {
           "type": "category",
           "settings": {
-            "title": "Ladies Collection",
-            "subtitle": "24 Items",
-            "image_url": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800"
+            "title": "Serums & Actives",
+            "subtitle": "32 Formulas",
+            "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800"
           }
         },
         "cat_2": {
           "type": "category",
           "settings": {
-            "title": "Gents Sneakers",
-            "subtitle": "18 Items",
-            "image_url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800"
+            "title": "Cleansers & Toners",
+            "subtitle": "24 Products",
+            "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800"
           }
         },
         "cat_3": {
           "type": "category",
           "settings": {
-            "title": "Luxury Bags",
-            "subtitle": "15 Items",
-            "image_url": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=800"
+            "title": "Barrier Moisturizers",
+            "subtitle": "18 Creams",
+            "image_url": "https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800"
           }
         },
         "cat_4": {
           "type": "category",
           "settings": {
-            "title": "Signature Perfumes",
-            "subtitle": "12 Items",
-            "image_url": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=800"
+            "title": "Sunscreen & SPF",
+            "subtitle": "14 Formulas",
+            "image_url": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800"
           }
         },
         "cat_5": {
           "type": "category",
           "settings": {
-            "title": "Kids Special",
-            "subtitle": "10 Items",
-            "image_url": "https://images.unsplash.com/photo-1514989940723-e8875ea6f03f?auto=format&fit=crop&q=80&w=800"
+            "title": "Eye & Night Care",
+            "subtitle": "19 Treatments",
+            "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800"
           }
         }
       },
@@ -135,16 +143,16 @@
         "cat_5"
       ],
       "settings": {
-        "eyebrow": "Browse",
-        "title": "Shop by Category",
+        "eyebrow": "Targeted Care",
+        "title": "Shop by Skincare Category",
         "show_view_all": true
       }
     },
     "new_arrivals": {
       "type": "premium-products",
       "settings": {
-        "eyebrow": "Fresh Drops",
-        "title": "New Arrivals",
+        "eyebrow": "Fresh Formulations",
+        "title": "New Skincare Arrivals",
         "show_view_all": true,
         "sample_preset": "new_arrivals",
         "products_to_show": 10
@@ -153,8 +161,8 @@
     "best_sellers": {
       "type": "premium-products",
       "settings": {
-        "eyebrow": "Top Picks",
-        "title": "Best Sellers",
+        "eyebrow": "Customer Favorites",
+        "title": "Bestselling Elixirs",
         "show_view_all": true,
         "sample_preset": "best_sellers",
         "products_to_show": 10
@@ -163,8 +171,8 @@
     "featured_products_1": {
       "type": "premium-products",
       "settings": {
-        "eyebrow": "Curated",
-        "title": "Featured Products",
+        "eyebrow": "Doctor Recommended",
+        "title": "Clinical Essentials",
         "show_view_all": true,
         "sample_preset": "featured",
         "products_to_show": 10
@@ -174,17 +182,17 @@
       "type": "premium-promo-banner",
       "settings": {
         "badge": "Limited Time Offer",
-        "title": "Exclusive Mid-Season Sale",
-        "subtitle": "Enjoy up to 50% off on signature heels, sneakers, and luxury leather accessories. Limited stock available.",
-        "cta_text": "Shop The Sale",
-        "image_url": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1600"
+        "title": "Exclusive Skincare Glow Sale",
+        "subtitle": "Enjoy up to 40% off on our clinical serums, ceramide barrier creams, and daily SPF defense. Elevate your glow today.",
+        "cta_text": "Shop The Glow Sale",
+        "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1600"
       }
     },
     "featured_products_2": {
       "type": "premium-products",
       "settings": {
-        "eyebrow": "Trending Now",
-        "title": "Handcrafted Essentials",
+        "eyebrow": "Restorative Rituals",
+        "title": "Night Repair & Treatments",
         "show_view_all": true,
         "sample_preset": "best_sellers",
         "products_to_show": 10
@@ -193,11 +201,11 @@
     "about_us": {
       "type": "premium-brand-story",
       "settings": {
-        "eyebrow": "Our Heritage",
-        "heading": "Crafted for Pure Distinction",
-        "body": "<p>At Elvora, we believe fashion is an effortless blend of elegance and modern craftsmanship. Each collection is meticulously designed with handpicked materials, timeless silhouettes, and an uncompromising commitment to detail.</p><p>From everyday essentials to signature statement pieces, we empower you to embrace your distinctive style.</p>",
+        "eyebrow": "Our Formulation Philosophy",
+        "heading": "Science-Backed Botanical Skincare",
+        "body": "<p>At Elvora, we harmonize high-potency clinical actives with pure botanical extracts to heal, protect, and illuminate your skin. Every formula is dermatologically tested, cruelty-free, and formulated without harmful sulfates, parabens, or synthetic fragrances.</p><p>From targeted dark spot correction to barrier-strengthening hydration, we empower your skin to achieve its healthiest, most radiant glow.</p>",
         "cta_text": "Discover Our Story",
-        "image_url": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1800"
+        "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1800"
       }
     }
   },

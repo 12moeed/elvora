@@ -1,0 +1,449 @@
+{% liquid
+  if product
+    assign p_title = product.title
+    assign p_image = product.featured_image | image_url: width: 1000
+    assign p_price = product.price | money
+    assign p_compare_price = product.compare_at_price | money
+    assign p_desc = product.description
+    assign p_variants = product.variants
+    assign p_first_variant_id = product.selected_or_first_available_variant.id
+  else
+    assign p_title = 'Radiant Glow Vitamin C + Niacinamide Serum'
+    assign p_image = 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1000'
+    assign p_price = 'Rs. 4,850'
+    assign p_compare_price = 'Rs. 6,500'
+    assign p_desc = '<p>A potent antioxidant elixir formulated with 15% pure Vitamin C, 5% Niacinamide, and Botanical Hyaluronic Acid. Designed to visibly fade hyperpigmentation, smooth uneven texture, and restore luminous, dewy skin radiance within 14 days.</p>'
+    assign p_first_variant_id = ''
+  endif
+
+  assign brand_tagline = section.settings.brand_tagline | default: '✨ ELVORA CLINICAL SKINCARE'
+  assign badge_1 = section.settings.badge_1 | default: '🌿 Clean & Organic'
+  assign badge_2 = section.settings.badge_2 | default: '🔬 Dermatologist Tested'
+  assign badge_3 = section.settings.badge_3 | default: '🐰 Cruelty-Free'
+  assign shipping_note = section.settings.shipping_note | default: 'Taxes included • Free Express Tracked Delivery all over Pakistan'
+%}
+
+<div class="premium-pdp-wrapper">
+  <!-- Breadcrumbs -->
+  <nav class="premium-pdp-breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/collections/all">Skincare</a>
+    <span>/</span>
+    <span class="active">{{ p_title }}</span>
+  </nav>
+
+  <div class="premium-pdp-grid">
+    <!-- Left Column: Gallery -->
+    <div class="premium-pdp-gallery">
+      <div class="premium-pdp-main-image-wrap">
+        <img
+          id="pdp-main-image"
+          src="{{ p_image }}"
+          alt="{{ p_title | escape }}"
+          class="premium-pdp-main-img"
+          loading="eager"
+          width="1000"
+          height="1200"
+        >
+
+        <!-- Skincare floating badges -->
+        <div class="premium-pdp-badges">
+          {% if badge_1 != blank %}<span class="premium-pdp-badge-pill">{{ badge_1 }}</span>{% endif %}
+          {% if badge_2 != blank %}<span class="premium-pdp-badge-pill">{{ badge_2 }}</span>{% endif %}
+          {% if badge_3 != blank %}<span class="premium-pdp-badge-pill">{{ badge_3 }}</span>{% endif %}
+        </div>
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div class="premium-pdp-thumbs">
+        {% if product and product.images.size > 1 %}
+          {% for image in product.images %}
+            <button
+              type="button"
+              class="premium-pdp-thumb-btn {% if forloop.first %}active{% endif %}"
+              onclick="document.getElementById('pdp-main-image').src='{{ image | image_url: width: 1000 }}'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
+            >
+              <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | default: p_title | escape }}" width="100" height="120">
+            </button>
+          {% endfor %}
+        {% else %}
+          <button
+            type="button"
+            class="premium-pdp-thumb-btn active"
+            onclick="document.getElementById('pdp-main-image').src='{{ p_image }}'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
+          >
+            <img src="{{ p_image }}" alt="Angle 1" width="100" height="120">
+          </button>
+          <button
+            type="button"
+            class="premium-pdp-thumb-btn"
+            onclick="document.getElementById('pdp-main-image').src='https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=1000'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
+          >
+            <img src="https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=200" alt="Angle 2" width="100" height="120">
+          </button>
+          <button
+            type="button"
+            class="premium-pdp-thumb-btn"
+            onclick="document.getElementById('pdp-main-image').src='https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1000'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
+          >
+            <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=200" alt="Angle 3" width="100" height="120">
+          </button>
+          <button
+            type="button"
+            class="premium-pdp-thumb-btn"
+            onclick="document.getElementById('pdp-main-image').src='https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1000'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
+          >
+            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=200" alt="Angle 4" width="100" height="120">
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Column: Product Info & Skincare Routine Actions -->
+    <div class="premium-pdp-info">
+      <div class="premium-pdp-brand-eyebrow">
+        <span>{{ brand_tagline }}</span>
+      </div>
+
+      <h1 class="premium-pdp-title">{{ p_title }}</h1>
+
+      <!-- Rating & Reviews Bar -->
+      <div class="premium-pdp-rating-row">
+        <div class="premium-pdp-stars">★★★★★</div>
+        <span class="premium-pdp-rating-text">5.0</span>
+        <span class="premium-pdp-reviews-count">(148 Verified Skincare Reviews)</span>
+      </div>
+
+      <!-- Price Section -->
+      <div class="premium-pdp-price-wrap">
+        <span class="premium-pdp-price" id="pdp-price-display">{{ p_price }}</span>
+        {% if p_compare_price != blank %}
+          <span class="premium-pdp-compare-price" id="pdp-compare-display">{{ p_compare_price }}</span>
+          <span class="premium-pdp-discount-pill">-25% OFF</span>
+        {% endif %}
+      </div>
+      <div class="premium-pdp-tax-note">{{ shipping_note }}</div>
+
+      <!-- Skincare Benefits Highlight Box -->
+      <div class="premium-skincare-highlights">
+        <div class="premium-highlight-item">
+          <span class="icon">💧</span>
+          <div>
+            <strong>24H Deep Moisture Lock</strong>
+            <p>Infuses triple-molecular weight hyaluronic acid deep into dermis layers.</p>
+          </div>
+        </div>
+        <div class="premium-highlight-item">
+          <span class="icon">✨</span>
+          <div>
+            <strong>Visibly Fades Dark Spots</strong>
+            <p>15% stabilized Vitamin C inhibits melanin synthesis for even radiance.</p>
+          </div>
+        </div>
+        <div class="premium-highlight-item">
+          <span class="icon">🌿</span>
+          <div>
+            <strong>Barrier Restoration</strong>
+            <p>Centella Asiatica + Niacinamide soothes redness and protects skin microbiome.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Size / Volume / Variant Selector -->
+      {% if product and product.variants.size > 1 %}
+        <div class="premium-pdp-option-group">
+          <label class="premium-pdp-option-label">Select Option / Volume:</label>
+          <div class="premium-size-pills">
+            {% for variant in product.variants %}
+              <button
+                type="button"
+                class="premium-size-pill {% if forloop.first %}active{% endif %}"
+                data-variant-id="{{ variant.id }}"
+                data-price="{{ variant.price | money }}"
+                {% if variant.compare_at_price %}data-compare="{{ variant.compare_at_price | money }}"{% endif %}
+                onclick="elvoraSelectVariant(this, '{{ variant.id }}', '{{ variant.price | money }}', '{{ variant.compare_at_price | money }}')"
+              >
+                {{ variant.title }}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="premium-pdp-option-group">
+          <label class="premium-pdp-option-label">Select Volume / Size:</label>
+          <div class="premium-size-pills">
+            <button type="button" class="premium-size-pill" onclick="this.parentElement.querySelectorAll('.premium-size-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+              30ml <span>(Travel Size)</span>
+            </button>
+            <button type="button" class="premium-size-pill active" onclick="this.parentElement.querySelectorAll('.premium-size-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+              50ml <span>(Standard • Best Value)</span>
+            </button>
+            <button type="button" class="premium-size-pill" onclick="this.parentElement.querySelectorAll('.premium-size-pill').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+              100ml <span>(Jumbo Deluxe)</span>
+            </button>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Purchase & Quantity Controls -->
+      <div class="premium-pdp-actions">
+        <!-- Quantity counter -->
+        <div class="premium-qty-selector">
+          <button type="button" class="qty-btn" onclick="elvoraUpdateQty(-1)">-</button>
+          <input type="number" id="pdp-quantity" value="1" min="1" readonly>
+          <button type="button" class="qty-btn" onclick="elvoraUpdateQty(1)">+</button>
+        </div>
+
+        <!-- Add to Bag Form -->
+        {% if product %}
+          <form id="pdp-add-form" method="post" action="/cart/add" style="flex: 1; margin: 0;">
+            <input type="hidden" name="id" id="pdp-variant-id" value="{{ p_first_variant_id }}">
+            <input type="hidden" name="quantity" id="pdp-form-qty" value="1">
+            <button type="submit" class="premium-pdp-add-btn">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              Add To Bag
+            </button>
+          </form>
+        {% else %}
+          <button type="button" class="premium-pdp-add-btn" onclick="alert('Item added to Bag!');">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            Add To Bag
+          </button>
+        {% endif %}
+
+        <!-- Wishlist -->
+        <button
+          type="button"
+          class="premium-pdp-wishlist-btn"
+          aria-label="Add to Wishlist"
+          onclick="this.classList.toggle('active')"
+        >
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Buy It Now Button -->
+      <button type="button" class="premium-pdp-buy-now-btn" onclick="elvoraBuyNow()">
+        Buy It Now • Instant Checkout
+      </button>
+
+      <!-- Trust & Delivery Perks -->
+      <div class="premium-pdp-perks">
+        <div class="perk"><span class="perk-icon">🚚</span> Express Tracked Shipping (2-4 Days)</div>
+        <div class="perk"><span class="perk-icon">💵</span> Cash on Delivery Available Across Pakistan</div>
+        <div class="perk"><span class="perk-icon">🔄</span> 7-Day Money-Back Guarantee</div>
+        <div class="perk"><span class="perk-icon">🧪</span> Dermatologically Tested • 100% Non-Comedogenic</div>
+      </div>
+
+      <!-- Skincare Details Accordions -->
+      <div class="premium-pdp-accordions">
+        <!-- Accordion 1: Description / Overview -->
+        {% if p_desc != blank %}
+          <details class="premium-accordion" open>
+            <summary>
+              <span>✨ Product Description & Benefits</span>
+              <span class="chevron">▼</span>
+            </summary>
+            <div class="accordion-body">
+              {{ p_desc }}
+            </div>
+          </details>
+        {% endif %}
+
+        <!-- Accordion 2: How to use Routine -->
+        <details class="premium-accordion" {% if p_desc == blank %}open{% endif %}>
+          <summary>
+            <span>🧴 Daily Application Routine</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <p><strong>Step 1:</strong> Cleanse skin thoroughly with a gentle foaming cleanser and pat dry.</p>
+            <p><strong>Step 2:</strong> Dispense 3 to 4 drops of Elvora Active Serum into the palm of your hand.</p>
+            <p><strong>Step 3:</strong> Smooth gently over face, neck, and décolletage using upward, circular motions.</p>
+            <p><strong>Step 4:</strong> Follow with moisturizer and finish with SPF 50 sunscreen during the day.</p>
+          </div>
+        </details>
+
+        <!-- Accordion 3: Ingredients -->
+        <details class="premium-accordion">
+          <summary>
+            <span>🧪 Clinical Ingredients (Clean Formulation)</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <p><strong>Key Actives:</strong> 15% Ethyl Ascorbic Acid (Stabilized Vitamin C), 5% Niacinamide (Vitamin B3), Multi-Molecular Sodium Hyaluronate, 1% Ferulic Acid, Pure Alpha Arbutin, Centella Asiatica Leaf Extract, Organic Aloe Barbadensis.</p>
+            <p><em>Formulated without: Parabens, Sulfates, Silicones, Synthetic Fragrance, Mineral Oils, or Harmful Toxins.</em></p>
+          </div>
+        </details>
+
+        <!-- Accordion 4: Shipping & Returns -->
+        <details class="premium-accordion">
+          <summary>
+            <span>📦 Shipping & Returns</span>
+            <span class="chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <p>All orders are packaged in temperature-safe, UV-resistant protective shipping boxes to preserve active ingredients. Tracked deliveries arrive in 2-4 business days.</p>
+            <p>Enjoy our 7-day hassle-free exchange and return policy on unsealed items.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Skincare Products ("Complete Your Glow Routine") -->
+  {% if section.settings.show_routine_recommendations %}
+    <div class="premium-routine-section">
+      <div class="premium-section-header centered">
+        <span class="premium-eyebrow">
+          <span class="premium-eyebrow-dot"></span>
+          Curated Routine
+        </span>
+        <h2 class="premium-section-title">
+          {{ section.settings.routine_heading | default: 'Complete Your Skincare Routine' }}
+          <span class="premium-section-title-line"></span>
+        </h2>
+      </div>
+
+      <div class="premium-product-grid">
+        {% render 'premium-product-card',
+          dummy_title: 'Gentle Hydrating Cleanser',
+          dummy_price: 'Rs. 2,450',
+          dummy_compare_price: 'Rs. 3,200',
+          dummy_category: 'Cleanser',
+          dummy_badge: 'NEW',
+          dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800'
+        %}
+        {% render 'premium-product-card',
+          dummy_title: 'Centella Barrier Repair Cream',
+          dummy_price: 'Rs. 3,800',
+          dummy_compare_price: 'Rs. 4,900',
+          dummy_category: 'Moisturizer',
+          dummy_badge: 'HOT',
+          dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800'
+        %}
+        {% render 'premium-product-card',
+          dummy_title: 'Invisible Daily Glow SPF 50+',
+          dummy_price: 'Rs. 3,200',
+          dummy_compare_price: 'Rs. 4,000',
+          dummy_category: 'Sunscreen',
+          dummy_badge: 'HOT',
+          dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800'
+        %}
+        {% render 'premium-product-card',
+          dummy_title: 'Retinol Youth Renewal Night Oil',
+          dummy_price: 'Rs. 5,400',
+          dummy_compare_price: 'Rs. 6,800',
+          dummy_category: 'Night Treatment',
+          dummy_badge: 'SALE',
+          dummy_image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=800'
+        %}
+        {% render 'premium-product-card',
+          dummy_title: 'Rose Water Clarifying Toner',
+          dummy_price: 'Rs. 2,100',
+          dummy_compare_price: 'Rs. 2,800',
+          dummy_category: 'Toners',
+          dummy_badge: 'NEW',
+          dummy_image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800'
+        %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+function elvoraUpdateQty(delta) {
+  var input = document.getElementById('pdp-quantity');
+  var formQty = document.getElementById('pdp-form-qty');
+  var current = parseInt(input.value) || 1;
+  var next = Math.max(1, current + delta);
+  input.value = next;
+  if (formQty) formQty.value = next;
+}
+
+function elvoraSelectVariant(btn, id, price, compare) {
+  btn.parentElement.querySelectorAll('.premium-size-pill').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  var variantInput = document.getElementById('pdp-variant-id');
+  if (variantInput) variantInput.value = id;
+  var priceEl = document.getElementById('pdp-price-display');
+  if (priceEl && price) priceEl.innerText = price;
+  var compareEl = document.getElementById('pdp-compare-display');
+  if (compareEl && compare) compareEl.innerText = compare;
+}
+
+function elvoraBuyNow() {
+  var form = document.getElementById('pdp-add-form');
+  if (form) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'return_to';
+    input.value = '/checkout';
+    form.appendChild(input);
+    form.submit();
+  } else {
+    window.location.href = '/checkout';
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product Detail (PDP)",
+  "tag": "section",
+  "class": "section-product-detail",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand Tagline",
+      "default": "✨ ELVORA CLINICAL SKINCARE"
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Skincare Badge 1",
+      "default": "🌿 Clean & Organic"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Skincare Badge 2",
+      "default": "🔬 Dermatologist Tested"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "Skincare Badge 3",
+      "default": "🐰 Cruelty-Free"
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Shipping & Tax Note",
+      "default": "Taxes included • Free Express Tracked Delivery all over Pakistan"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_routine_recommendations",
+      "label": "Show Routine Recommendations Grid",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "routine_heading",
+      "label": "Recommendations Heading",
+      "default": "Complete Your Skincare Routine"
+    }
+  ]
+}
+{% endschema %}

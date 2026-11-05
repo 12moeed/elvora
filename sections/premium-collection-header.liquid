@@ -43,7 +43,7 @@
       </div>
     {% else %}
       <p class="premium-collection-desc">
-        Explore our curated selection of luxury footwear, handcrafted leather bags, and designer accessories crafted for timeless elegance.
+        Formulated with dermatological precision and clean botanical actives. Explore Elvora's award-winning line of serums, barrier creams, and SPF essentials designed for lasting skin radiance.
       </p>
     {% endif %}
 
@@ -53,37 +53,37 @@
         href="/collections/all"
         class="premium-pill {% if collection.handle == 'all' or collection.handle == blank %}active{% endif %}"
       >
-        All Products
+        All Skincare
       </a>
       <a
-        href="/collections/ladies"
-        class="premium-pill {% if collection.handle == 'ladies' %}active{% endif %}"
+        href="/collections/all?category=serums"
+        class="premium-pill"
       >
-        Ladies Footwear
+        Serums & Actives
       </a>
       <a
-        href="/collections/gents"
-        class="premium-pill {% if collection.handle == 'gents' %}active{% endif %}"
+        href="/collections/all?category=cleansers"
+        class="premium-pill"
       >
-        Gents Sneakers
+        Cleansers & Toners
       </a>
       <a
-        href="/collections/bags"
-        class="premium-pill {% if collection.handle == 'bags' %}active{% endif %}"
+        href="/collections/all?category=moisturizers"
+        class="premium-pill"
       >
-        Luxury Bags
+        Barrier Creams
       </a>
       <a
-        href="/collections/perfumes"
-        class="premium-pill {% if collection.handle == 'perfumes' %}active{% endif %}"
+        href="/collections/all?category=sunscreen"
+        class="premium-pill"
       >
-        Fragrances
+        Sun Defense (SPF)
       </a>
       <a
-        href="/collections/accessories"
-        class="premium-pill {% if collection.handle == 'accessories' %}active{% endif %}"
+        href="/collections/all?category=treatments"
+        class="premium-pill"
       >
-        Accessories
+        Eye & Night Care
       </a>
     </div>
   </div>
@@ -110,3 +110,4 @@
   ]
 }
 {% endschema %}
+

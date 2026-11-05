@@ -4,10 +4,10 @@
       <div>
         <span class="premium-eyebrow">
           <span class="premium-eyebrow-dot"></span>
-          {{ section.settings.eyebrow | default: 'Featured' }}
+          {{ section.settings.eyebrow | default: 'Clinical Formulas' }}
         </span>
         <h2 class="premium-section-title">
-          {{ section.settings.title | default: 'Our Products' }}
+          {{ section.settings.title | default: 'Our Skincare Essentials' }}
           <span class="premium-section-title-line"></span>
         </h2>
       </div>
@@ -34,43 +34,43 @@
       {% comment %} Fallback dummy cards (10 items = 2 rows of 5 products) {% endcomment %}
       {% if prod_count == 0 %}
         {% if section.settings.sample_preset == 'best_sellers' %}
-          {% render 'premium-product-card', dummy_title: 'Chic Leather Tote Bag', dummy_price: 'Rs. 15,000', dummy_compare_price: 'Rs. 18,500', dummy_category: 'Bags', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Signature Oud Perfume', dummy_price: 'Rs. 9,450', dummy_compare_price: 'Rs. 12,000', dummy_category: 'Fragrances', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Classic Oxford Dress Shoes', dummy_price: 'Rs. 13,999', dummy_compare_price: 'Rs. 16,500', dummy_category: 'Gents Shoes', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Golden Velvet Clutch', dummy_price: 'Rs. 7,200', dummy_compare_price: 'Rs. 9,000', dummy_category: 'Accessories', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Diamond Studded Chrono Watch', dummy_price: 'Rs. 24,500', dummy_compare_price: 'Rs. 28,000', dummy_category: 'Watches', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Radiant Glow Vitamin C + Niacinamide Serum', dummy_price: 'Rs. 4,850', dummy_compare_price: 'Rs. 6,500', dummy_category: 'Serums & Actives', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Centella Barrier Relief Repair Cream', dummy_price: 'Rs. 3,800', dummy_compare_price: 'Rs. 4,900', dummy_category: 'Moisturizers', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Invisible Daily Glow Sunscreen SPF 50+', dummy_price: 'Rs. 3,200', dummy_compare_price: 'Rs. 4,200', dummy_category: 'Sun Protection', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Hyaluronic Acid 2% + B5 Hydration Elixir', dummy_price: 'Rs. 4,200', dummy_compare_price: 'Rs. 5,400', dummy_category: 'Hydration', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Gentle Oat Amino Foaming Cleanser', dummy_price: 'Rs. 2,600', dummy_compare_price: 'Rs. 3,500', dummy_category: 'Cleansers', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800' %}
           
-          {% render 'premium-product-card', dummy_title: 'Elegance Pump Heels', dummy_price: 'Rs. 8,999', dummy_compare_price: 'Rs. 12,000', dummy_category: 'Ladies Heels', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Casual Suede Loafers', dummy_price: 'Rs. 11,200', dummy_compare_price: 'Rs. 14,000', dummy_category: 'Men Collection', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Rose Gold Chain Bracelet', dummy_price: 'Rs. 5,800', dummy_compare_price: 'Rs. 7,500', dummy_category: 'Jewelry', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1611591475155-4284fa9c2e7a?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Velvet Evening Handbag', dummy_price: 'Rs. 12,800', dummy_compare_price: 'Rs. 15,000', dummy_category: 'Bags', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Midnight Leather Wallet', dummy_price: 'Rs. 4,500', dummy_compare_price: 'Rs. 6,000', dummy_category: 'Accessories', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Retinol 0.5% Night Cell Renewal Serum', dummy_price: 'Rs. 5,200', dummy_compare_price: 'Rs. 6,800', dummy_category: 'Night Care', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Rose Petal Hydrating Clarifying Toner', dummy_price: 'Rs. 2,400', dummy_compare_price: 'Rs. 3,100', dummy_category: 'Toners', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'AHA 7% + BHA 2% Peeling Solution', dummy_price: 'Rs. 3,600', dummy_compare_price: 'Rs. 4,600', dummy_category: 'Exfoliators', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Peptide & Caffeine Dark Circle Eye Cream', dummy_price: 'Rs. 3,900', dummy_compare_price: 'Rs. 5,000', dummy_category: 'Eye Care', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Ceramide Rich Barrier Sleeping Mask', dummy_price: 'Rs. 4,500', dummy_compare_price: 'Rs. 5,800', dummy_category: 'Night Masks', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1567928815116-2f08816c7cfc?auto=format&fit=crop&q=80&w=800' %}
 
         {% elsif section.settings.sample_preset == 'featured' %}
-          {% render 'premium-product-card', dummy_title: 'Silk Evening Stiletto', dummy_price: 'Rs. 11,500', dummy_compare_price: 'Rs. 14,000', dummy_category: 'Footwear', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Minimalist Chronograph', dummy_price: 'Rs. 18,900', dummy_compare_price: 'Rs. 22,000', dummy_category: 'Watches', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Handcrafted Suede Loafers', dummy_price: 'Rs. 14,500', dummy_compare_price: 'Rs. 17,000', dummy_category: 'Men Collection', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Rose Gold Chain Bracelet', dummy_price: 'Rs. 5,800', dummy_compare_price: 'Rs. 7,500', dummy_category: 'Jewelry', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1611591475155-4284fa9c2e7a?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Royal Bloom Extrait De Parfum', dummy_price: 'Rs. 13,200', dummy_compare_price: 'Rs. 16,000', dummy_category: 'Fragrances', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Multi-Peptide Youth Density Complex', dummy_price: 'Rs. 6,200', dummy_compare_price: 'Rs. 7,800', dummy_category: 'Anti-Aging', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Salicylic Acid 2% Pore Minimizing Tonic', dummy_price: 'Rs. 2,900', dummy_compare_price: 'Rs. 3,800', dummy_category: 'Acne Care', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Deep Moisture Water-Bank Gel Cream', dummy_price: 'Rs. 3,400', dummy_compare_price: 'Rs. 4,500', dummy_category: 'Moisturizers', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Glow Brightening Rice Water Cleanser', dummy_price: 'Rs. 2,400', dummy_compare_price: 'Rs. 3,200', dummy_category: 'Cleansers', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Probiotic Balance Soothing Facial Mist', dummy_price: 'Rs. 2,800', dummy_compare_price: 'Rs. 3,600', dummy_category: 'Mists', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=800' %}
 
-          {% render 'premium-product-card', dummy_title: 'Italian Leather Crossbody', dummy_price: 'Rs. 16,900', dummy_compare_price: 'Rs. 21,000', dummy_category: 'Luxury Bags', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Urban Runner V2', dummy_price: 'Rs. 11,500', dummy_compare_price: 'Rs. 14,000', dummy_category: 'Sneakers', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Luxe Pearl Drop Earrings', dummy_price: 'Rs. 4,800', dummy_compare_price: 'Rs. 6,500', dummy_category: 'Jewelry', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Embossed Crocodile Purse', dummy_price: 'Rs. 13,500', dummy_compare_price: 'Rs. 17,000', dummy_category: 'Accessories', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Midnight Velvet Heels', dummy_price: 'Rs. 9,999', dummy_compare_price: 'Rs. 13,000', dummy_category: 'Heels', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Niacinamide 10% + Zinc 1% Oil Control Serum', dummy_price: 'Rs. 3,950', dummy_compare_price: 'Rs. 4,950', dummy_category: 'Serums & Actives', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Ceramide Moisture Infusion Sheet Mask Set', dummy_price: 'Rs. 2,500', dummy_compare_price: 'Rs. 3,200', dummy_category: 'Sheet Masks', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1567928815116-2f08816c7cfc?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Mineral Tinted Matte Sunscreen SPF 45', dummy_price: 'Rs. 3,500', dummy_compare_price: 'Rs. 4,500', dummy_category: 'Sun Protection', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Squalane Pure Botanical Nourishing Oil', dummy_price: 'Rs. 4,400', dummy_compare_price: 'Rs. 5,600', dummy_category: 'Face Oils', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Honey & Berry Overnight Lip Sleeping Balm', dummy_price: 'Rs. 1,800', dummy_compare_price: 'Rs. 2,400', dummy_category: 'Lip Therapy', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=800' %}
 
         {% else %}
-          {% render 'premium-product-card', dummy_title: 'Elegance Pump Heels', dummy_price: 'Rs. 8,999', dummy_compare_price: 'Rs. 12,000', dummy_category: 'Ladies', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Urban Explorer Sneakers', dummy_price: 'Rs. 12,500', dummy_compare_price: 'Rs. 15,000', dummy_category: 'Gents', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Playful Paws Kids Shoes', dummy_price: 'Rs. 4,500', dummy_compare_price: 'Rs. 6,000', dummy_category: 'Kids', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1514989940723-e8875ea6f03f?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Chic Leather Tote Bag', dummy_price: 'Rs. 15,000', dummy_compare_price: 'Rs. 19,000', dummy_category: 'Accessories', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Classic Chelsea Boot', dummy_price: 'Rs. 14,200', dummy_compare_price: 'Rs. 17,500', dummy_category: 'Footwear', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Advanced Snail 96 Mucin Power Essence', dummy_price: 'Rs. 4,600', dummy_compare_price: 'Rs. 5,800', dummy_category: 'Essence', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Bakuchiol Natural Retinol-Alternative Serum', dummy_price: 'Rs. 5,100', dummy_compare_price: 'Rs. 6,400', dummy_category: 'Serums & Actives', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Centella Calming Daily Sun Fluid SPF 50', dummy_price: 'Rs. 3,300', dummy_compare_price: 'Rs. 4,200', dummy_category: 'Sun Protection', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Matcha Green Tea Antioxidant Cleanser', dummy_price: 'Rs. 2,750', dummy_compare_price: 'Rs. 3,600', dummy_category: 'Cleansers', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Ginseng Essence Water Revitalizing Toner', dummy_price: 'Rs. 3,200', dummy_compare_price: 'Rs. 4,100', dummy_category: 'Toners', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800' %}
 
-          {% render 'premium-product-card', dummy_title: 'Rose Gold Chrono Watch', dummy_price: 'Rs. 19,500', dummy_compare_price: 'Rs. 23,000', dummy_category: 'Watches', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Signature Eau De Parfum', dummy_price: 'Rs. 8,900', dummy_compare_price: 'Rs. 11,500', dummy_category: 'Fragrances', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Minimalist Belted Bag', dummy_price: 'Rs. 11,800', dummy_compare_price: 'Rs. 14,500', dummy_category: 'Bags', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Air Comfort Running Shoes', dummy_price: 'Rs. 10,500', dummy_compare_price: 'Rs. 13,000', dummy_category: 'Sportswear', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Strappy Block Heel Sandal', dummy_price: 'Rs. 7,800', dummy_compare_price: 'Rs. 10,000', dummy_category: 'Ladies Heels', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Glutathione Radiance Boosting Ampoule', dummy_price: 'Rs. 5,600', dummy_compare_price: 'Rs. 7,000', dummy_category: 'Ampoules', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Panthenol 10% Barrier Recovery Balm', dummy_price: 'Rs. 3,900', dummy_compare_price: 'Rs. 4,900', dummy_category: 'Moisturizers', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1567928815116-2f08816c7cfc?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Caffeine 5% Energizing Eye Solution', dummy_price: 'Rs. 3,400', dummy_compare_price: 'Rs. 4,400', dummy_category: 'Eye Care', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Azelaic Acid 10% Skin Clearing Cream', dummy_price: 'Rs. 4,100', dummy_compare_price: 'Rs. 5,200', dummy_category: 'Treatments', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800' %}
+          {% render 'premium-product-card', dummy_title: 'Ceramide Lip Peptide Therapy Treatment', dummy_price: 'Rs. 1,950', dummy_compare_price: 'Rs. 2,600', dummy_category: 'Lip Therapy', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=80&w=800' %}
         {% endif %}
       {% endif %}
     </div>
@@ -79,26 +79,26 @@
 
 {% schema %}
 {
-  "name": "Premium Product Grid",
+  "name": "Premium Products (5x2)",
   "tag": "section",
-  "class": "section",
+  "class": "section-premium-products",
   "settings": [
     {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow Text",
-      "default": "Fresh Drops"
+      "default": "Clinical Formulas"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Heading",
-      "default": "New Arrivals"
+      "label": "Section Title",
+      "default": "Our Skincare Essentials"
     },
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Select Collection"
     },
     {
       "type": "range",
@@ -107,7 +107,7 @@
       "max": 20,
       "step": 5,
       "default": 10,
-      "label": "Products to Show (10 = 2 rows of 5)"
+      "label": "Products to show (Multiples of 5)"
     },
     {
       "type": "checkbox",
@@ -118,18 +118,22 @@
     {
       "type": "select",
       "id": "sample_preset",
-      "label": "Fallback Sample Items",
+      "label": "Sample Data Preset (When collection empty)",
       "options": [
         { "value": "new_arrivals", "label": "New Arrivals" },
         { "value": "best_sellers", "label": "Best Sellers" },
-        { "value": "featured", "label": "Featured" }
+        { "value": "featured", "label": "Featured Formulas" }
       ],
       "default": "new_arrivals"
     }
   ],
   "presets": [
     {
-      "name": "Premium Product Grid"
+      "name": "Premium Products (5x2)",
+      "settings": {
+        "title": "New Skincare Arrivals",
+        "sample_preset": "new_arrivals"
+      }
     }
   ]
 }

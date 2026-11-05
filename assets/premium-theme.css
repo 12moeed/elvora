@@ -1183,3 +1183,463 @@ header,
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(179, 64, 144, 0.35);
 }
+
+
+/* ==========================================================================
+   PREMIUM SKINCARE PRODUCT DETAIL PAGE (PDP) STYLES
+   ========================================================================== */
+.premium-pdp-wrapper {
+  max-width: 1650px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 5rem;
+}
+
+.premium-pdp-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+  margin-bottom: 2rem;
+}
+
+.premium-pdp-breadcrumbs a {
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.premium-pdp-breadcrumbs a:hover {
+  color: var(--color-primary);
+}
+
+.premium-pdp-breadcrumbs .active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.premium-pdp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .premium-pdp-grid {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+  .premium-pdp-gallery {
+    position: sticky;
+    top: 90px;
+  }
+}
+
+.premium-pdp-main-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fdf6fb;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f3f4f6;
+}
+
+.premium-pdp-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.premium-pdp-badges {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.premium-pdp-badge-pill {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #111827;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  width: fit-content;
+}
+
+.premium-pdp-thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 1rem;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.premium-pdp-thumb-btn {
+  width: 80px;
+  height: 96px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.premium-pdp-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.premium-pdp-thumb-btn.active,
+.premium-pdp-thumb-btn:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(179, 64, 144, 0.3);
+  transform: scale(1.03);
+}
+
+.premium-pdp-brand-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.premium-pdp-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 1rem;
+  line-height: 1.25;
+}
+
+.premium-pdp-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  font-size: 13px;
+}
+
+.premium-pdp-stars {
+  color: #f59e0b;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+.premium-pdp-rating-text {
+  font-weight: 800;
+  color: #111827;
+}
+
+.premium-pdp-reviews-count {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.premium-pdp-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.premium-pdp-price {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  font-family: var(--font-body);
+}
+
+.premium-pdp-compare-price {
+  font-size: 18px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.premium-pdp-discount-pill {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.premium-pdp-tax-note {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.premium-skincare-highlights {
+  background: #faf5f9;
+  border: 1px solid rgba(var(--color-primary-rgb), 0.18);
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.premium-highlight-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 13px;
+}
+
+.premium-highlight-item .icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.premium-highlight-item strong {
+  color: #111827;
+  font-size: 13px;
+}
+
+.premium-highlight-item p {
+  color: #6b7280;
+  font-size: 12px;
+  margin: 2px 0 0;
+  line-height: 1.45;
+}
+
+.premium-pdp-option-group {
+  margin-bottom: 1.75rem;
+}
+
+.premium-pdp-option-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #374151;
+  margin-bottom: 0.6rem;
+}
+
+.premium-size-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.premium-size-pill {
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.premium-size-pill span {
+  font-size: 10px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.premium-size-pill.active,
+.premium-size-pill:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.premium-pdp-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.premium-qty-selector {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  height: 52px;
+}
+
+.qty-btn {
+  width: 40px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.qty-btn:hover {
+  background: #f3f4f6;
+  color: var(--color-primary);
+}
+
+#pdp-quantity {
+  width: 36px;
+  height: 100%;
+  border: none;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  outline: none;
+}
+
+.premium-pdp-add-btn {
+  flex: 1;
+  height: 52px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #8B1A6B 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(179, 64, 144, 0.4);
+  transition: all 0.25s;
+}
+
+.premium-pdp-add-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.08);
+}
+
+.premium-pdp-wishlist-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1.5px solid #e5e7eb;
+  background: #ffffff;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.premium-pdp-wishlist-btn:hover,
+.premium-pdp-wishlist-btn.active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.premium-pdp-buy-now-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  background: #111827;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.premium-pdp-buy-now-btn:hover {
+  background: #000000;
+  transform: scale(1.01);
+}
+
+.premium-pdp-perks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 1.25rem;
+  background: #f9fafb;
+  border-radius: 14px;
+  margin-bottom: 2rem;
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.premium-pdp-accordions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.premium-accordion {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+  transition: border-color 0.2s;
+}
+
+.premium-accordion summary {
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.premium-accordion[open] summary {
+  color: var(--color-primary);
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.premium-accordion .accordion-body {
+  padding: 14px 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.premium-routine-section {
+  margin-top: 5rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid #f3f4f6;
+}

@@ -5076,3 +5076,482 @@ body:not(:has(.elvora-navbar-root[data-is-home="true"])) .elvora-navbar-root {
 .star-pick-btn.is-active {
   color: var(--color-primary);
 }
+
+
+/* ==========================================================================
+   ELVORA FULL-SCREEN GLASSMORPHIC AUTH PORTAL (Login & Register)
+   ========================================================================== */
+
+.elvora-auth-fullscreen-hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 1rem 3rem;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  background-image: 
+    radial-gradient(ellipse at 50% 40%, rgba(20, 10, 16, 0.28) 0%, rgba(15, 8, 12, 0.65) 100%),
+    linear-gradient(180deg, rgba(20, 10, 15, 0.35) 0%, rgba(20, 10, 15, 0.55) 100%),
+    url('elvora_auth_backdrop.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Fallback if background image hasn't loaded or on mobile */
+@media (max-width: 768px) {
+  .elvora-auth-fullscreen-hero {
+    background-attachment: scroll;
+    padding: 1rem 0.75rem 2.5rem;
+  }
+}
+
+/* Floating Top Navigation */
+.elvora-auth-floating-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.5rem 0.75rem;
+  z-index: 10;
+}
+
+.elvora-auth-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #1f2937;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s ease;
+}
+
+.elvora-auth-back-btn:hover {
+  background: #ffffff;
+  color: var(--color-primary);
+  transform: translateX(-2px);
+}
+
+.elvora-auth-brand-monogram {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.elvora-brand-title-small {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+}
+
+.elvora-brand-subtitle-small {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
+
+/* Center Content & Glass Card */
+.elvora-auth-center-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 2rem auto;
+  z-index: 10;
+}
+
+.elvora-glass-auth-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  padding: 2.75rem 2.5rem;
+  box-shadow: 
+    0 30px 70px rgba(0, 0, 0, 0.22),
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+  animation: glassCardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes glassCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .elvora-glass-auth-card {
+    padding: 2rem 1.35rem;
+    border-radius: 22px;
+  }
+}
+
+/* Card Header */
+.elvora-card-top-meta {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.elvora-glass-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  background: rgba(179, 64, 144, 0.08);
+  border: 1px solid rgba(179, 64, 144, 0.2);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.elvora-glass-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 6px var(--color-primary);
+}
+
+.elvora-glass-title {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.25;
+  margin: 0 0 0.5rem 0;
+}
+
+.elvora-glass-subtitle {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Tab Bar */
+.elvora-auth-tab-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 5px;
+  border-radius: 14px;
+  margin-bottom: 1.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.elvora-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-body);
+}
+
+.elvora-tab-btn:hover {
+  color: #111827;
+}
+
+.elvora-tab-btn.is-active {
+  background: #ffffff;
+  color: var(--color-primary);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Panes */
+.elvora-auth-pane {
+  display: none;
+}
+
+.elvora-auth-pane.is-active {
+  display: block;
+  animation: paneFadeIn 0.35s ease;
+}
+
+@keyframes paneFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glass Form Elements */
+.elvora-glass-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.elvora-glass-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+@media (max-width: 500px) {
+  .elvora-glass-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.elvora-glass-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.elvora-glass-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.elvora-glass-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #374151;
+}
+
+.elvora-glass-forgot-btn {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0;
+}
+
+.elvora-glass-forgot-btn:hover {
+  text-decoration: underline;
+}
+
+.elvora-glass-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.elvora-glass-input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.6rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #dcd5ca;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #111827;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.elvora-glass-input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(179, 64, 144, 0.15);
+}
+
+.elvora-glass-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.elvora-glass-pwd-eye {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.elvora-glass-pwd-eye:hover {
+  color: var(--color-primary);
+}
+
+.elvora-glass-hint {
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* Perks list inside register form */
+.elvora-glass-perks-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0.25rem 0;
+}
+
+.perk-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: #059669;
+  background: rgba(5, 150, 105, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(5, 150, 105, 0.18);
+}
+
+/* Primary Glass Button */
+.elvora-btn-glass-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.95rem 1.75rem;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(179, 64, 144, 0.35);
+  transition: all 0.25s ease;
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.elvora-btn-glass-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(179, 64, 144, 0.45);
+}
+
+/* Toggle hint */
+.elvora-glass-toggle-hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.elvora-glass-inline-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.elvora-glass-inline-btn:hover {
+  color: var(--color-primary-dark);
+}
+
+/* Recover Intro */
+.elvora-recover-top-intro {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.elvora-recover-h3 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.35rem 0;
+}
+
+.elvora-recover-p {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Alerts */
+.elvora-glass-alert {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.elvora-glass-alert-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.elvora-glass-alert-success {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+/* Trust footer at bottom of card */
+.elvora-glass-trust-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+}

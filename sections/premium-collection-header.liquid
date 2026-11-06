@@ -55,36 +55,52 @@
       >
         All Skincare
       </a>
-      <a
-        href="/collections/all?category=serums"
-        class="premium-pill"
-      >
-        Serums & Actives
-      </a>
-      <a
-        href="/collections/all?category=cleansers"
-        class="premium-pill"
-      >
-        Cleansers & Toners
-      </a>
-      <a
-        href="/collections/all?category=moisturizers"
-        class="premium-pill"
-      >
-        Barrier Creams
-      </a>
-      <a
-        href="/collections/all?category=sunscreen"
-        class="premium-pill"
-      >
-        Sun Defense (SPF)
-      </a>
-      <a
-        href="/collections/all?category=treatments"
-        class="premium-pill"
-      >
-        Eye & Night Care
-      </a>
+
+      {% assign custom_col_count = 0 %}
+      {% for col in collections %}
+        {% unless col.handle == 'frontpage' or col.handle == 'all' %}
+          {% assign custom_col_count = custom_col_count | plus: 1 %}
+          <a
+            href="{{ col.url }}"
+            class="premium-pill {% if collection.handle == col.handle %}active{% endif %}"
+          >
+            {{ col.title }}
+          </a>
+        {% endunless %}
+      {% endfor %}
+
+      {% if custom_col_count == 0 %}
+        <a
+          href="/collections/serums"
+          class="premium-pill {% if collection.handle == 'serums' %}active{% endif %}"
+        >
+          Serums & Actives
+        </a>
+        <a
+          href="/collections/cleansers"
+          class="premium-pill {% if collection.handle == 'cleansers' %}active{% endif %}"
+        >
+          Cleansers & Toners
+        </a>
+        <a
+          href="/collections/moisturizers"
+          class="premium-pill {% if collection.handle == 'moisturizers' %}active{% endif %}"
+        >
+          Barrier Creams
+        </a>
+        <a
+          href="/collections/sunscreen"
+          class="premium-pill {% if collection.handle == 'sunscreen' %}active{% endif %}"
+        >
+          Sun Defense (SPF)
+        </a>
+        <a
+          href="/collections/eye-care"
+          class="premium-pill {% if collection.handle == 'eye-care' %}active{% endif %}"
+        >
+          Eye & Night Care
+        </a>
+      {% endif %}
     </div>
   </div>
 </div>

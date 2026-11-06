@@ -23,15 +23,32 @@
 
   <div class="category-accordion-container">
     {% for block in section.blocks %}
+      {% liquid
+        assign target_link = block.settings.collection.url | default: block.settings.link | default: '/collections/all'
+        assign card_title = block.settings.title | default: block.settings.collection.title | default: 'Skincare'
+        assign card_subtitle = block.settings.subtitle
+        if card_subtitle == blank and block.settings.collection != blank
+          assign card_subtitle = block.settings.collection.all_products_count | append: ' Formulas'
+        endif
+      %}
       <a
-        href="{{ block.settings.link | default: '/collections/all' }}"
+        href="{{ target_link }}"
         class="category-accordion-item"
         {{ block.shopify_attributes }}
       >
         {% if block.settings.image != blank %}
           <img
             src="{{ block.settings.image | image_url: width: 1200 }}"
-            alt="{{ block.settings.title | escape }}"
+            alt="{{ card_title | escape }}"
+            class="category-accordion-img"
+            loading="lazy"
+            width="1200"
+            height="800"
+          >
+        {% elsif block.settings.collection.image != blank %}
+          <img
+            src="{{ block.settings.collection.image | image_url: width: 1200 }}"
+            alt="{{ card_title | escape }}"
             class="category-accordion-img"
             loading="lazy"
             width="1200"
@@ -40,7 +57,7 @@
         {% elsif block.settings.image_url != blank %}
           <img
             src="{{ block.settings.image_url }}"
-            alt="{{ block.settings.title | escape }}"
+            alt="{{ card_title | escape }}"
             class="category-accordion-img"
             loading="lazy"
             width="1200"
@@ -49,7 +66,7 @@
         {% else %}
           <img
             src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1200"
-            alt="{{ block.settings.title | escape }}"
+            alt="{{ card_title | escape }}"
             class="category-accordion-img"
             loading="lazy"
             width="1200"
@@ -67,9 +84,9 @@
 
         <!-- Content -->
         <div class="category-accordion-content">
-          <h3 class="category-accordion-title">{{ block.settings.title }}</h3>
+          <h3 class="category-accordion-title">{{ card_title }}</h3>
           <div class="category-accordion-expanded-info">
-            <span class="category-accordion-count">{{ block.settings.subtitle | default: 'Explore Collection' }}</span>
+            <span class="category-accordion-count">{{ card_subtitle | default: 'Explore Collection' }}</span>
             <span class="category-accordion-pill-btn">
               Explore Collection
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -119,9 +136,14 @@
       "name": "Category Item",
       "settings": [
         {
+          "type": "collection",
+          "id": "collection",
+          "label": "Shopify Collection"
+        },
+        {
           "type": "text",
           "id": "title",
-          "label": "Category Name",
+          "label": "Category Name (Leave blank to use Collection Title)",
           "default": "Serums & Actives"
         },
         {

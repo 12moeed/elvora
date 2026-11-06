@@ -138,114 +138,13 @@
                   </div>
                 {% endfor %}
               {% else %}
-                <!-- Sample Skincare Item 1 -->
-                <div class="premium-cart-item-row" id="sample-row-1">
-                  <div class="premium-cart-item-img-wrap">
-                    <img
-                      src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=300"
-                      alt="Vitamin C Serum"
-                      class="premium-cart-item-img"
-                      loading="lazy"
-                      width="120"
-                      height="150"
-                    >
-                  </div>
-                  <div class="premium-cart-item-details">
-                    <h3 class="premium-cart-item-title">
-                      <a href="/pages/contact?view=pdp">Radiant Glow Vitamin C + Niacinamide Serum</a>
-                    </h3>
-                    <p class="premium-cart-item-variant">50ml Standard • Best Value</p>
-                    <div class="premium-cart-item-unit-price">
-                      <span>Rs. 4,850</span>
-                      <span class="strike">Rs. 6,500</span>
-                    </div>
-
-                    <div class="premium-cart-mobile-actions">
-                      <div class="premium-cart-qty-counter">
-                        <button type="button" class="qty-btn" onclick="updateSampleQty(1, -1)">-</button>
-                        <span class="qty-val" id="sample-qty-1-m">1</span>
-                        <button type="button" class="qty-btn" onclick="updateSampleQty(1, 1)">+</button>
-                      </div>
-                      <button type="button" class="premium-cart-remove-btn" onclick="document.getElementById('sample-row-1').style.display='none';">
-                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                        <span>Remove</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="premium-cart-item-qty-desktop">
-                    <div class="premium-cart-qty-counter">
-                      <button type="button" class="qty-btn" onclick="updateSampleQty(1, -1)">-</button>
-                      <span class="qty-val" id="sample-qty-1-d">1</span>
-                      <button type="button" class="qty-btn" onclick="updateSampleQty(1, 1)">+</button>
-                    </div>
-                  </div>
-
-                  <div class="premium-cart-item-total-desktop">
-                    <span class="line-total-price" id="sample-total-1">Rs. 4,850</span>
-                    <button type="button" class="premium-cart-trash-btn" onclick="document.getElementById('sample-row-1').style.display='none';">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Sample Skincare Item 2 -->
-                <div class="premium-cart-item-row" id="sample-row-2">
-                  <div class="premium-cart-item-img-wrap">
-                    <img
-                      src="https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=300"
-                      alt="Barrier Repair Cream"
-                      class="premium-cart-item-img"
-                      loading="lazy"
-                      width="120"
-                      height="150"
-                    >
-                  </div>
-                  <div class="premium-cart-item-details">
-                    <h3 class="premium-cart-item-title">
-                      <a href="/pages/contact?view=pdp">Centella Barrier Relief Repair Cream</a>
-                    </h3>
-                    <p class="premium-cart-item-variant">50ml Standard Tube</p>
-                    <div class="premium-cart-item-unit-price">
-                      <span>Rs. 3,800</span>
-                      <span class="strike">Rs. 4,900</span>
-                    </div>
-
-                    <div class="premium-cart-mobile-actions">
-                      <div class="premium-cart-qty-counter">
-                        <button type="button" class="qty-btn" onclick="updateSampleQty(2, -1)">-</button>
-                        <span class="qty-val" id="sample-qty-2-m">1</span>
-                        <button type="button" class="qty-btn" onclick="updateSampleQty(2, 1)">+</button>
-                      </div>
-                      <button type="button" class="premium-cart-remove-btn" onclick="document.getElementById('sample-row-2').style.display='none';">
-                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                        <span>Remove</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="premium-cart-item-qty-desktop">
-                    <div class="premium-cart-qty-counter">
-                      <button type="button" class="qty-btn" onclick="updateSampleQty(2, -1)">-</button>
-                      <span class="qty-val" id="sample-qty-2-d">1</span>
-                      <button type="button" class="qty-btn" onclick="updateSampleQty(2, 1)">+</button>
-                    </div>
-                  </div>
-
-                  <div class="premium-cart-item-total-desktop">
-                    <span class="line-total-price" id="sample-total-2">Rs. 3,800</span>
-                    <button type="button" class="premium-cart-trash-btn" onclick="document.getElementById('sample-row-2').style.display='none';">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                      </svg>
-                    </button>
-                  </div>
+                <div class="premium-empty-cart-state" style="text-align: center; padding: 4rem 1rem;">
+                  <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin: 0 auto 1rem; color: #9ca3af;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                  </svg>
+                  <h3 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem;">Your cart is empty</h3>
+                  <p style="color: #6b7280; font-size: 0.95rem; margin-bottom: 1.5rem;">Add products to your cart to begin checkout.</p>
+                  <a href="/collections/all" class="premium-btn-primary" style="display: inline-block; padding: 12px 28px; background: #B34090; color: #fff; border-radius: 9999px; text-decoration: none; font-weight: 600;">Explore Skincare Collection</a>
                 </div>
               {% endif %}
             </div>
@@ -382,46 +281,11 @@
         </div>
 
         <div class="premium-product-grid">
-          {% render 'premium-product-card',
-            dummy_title: 'Radiant Glow Vitamin C + Niacinamide Serum',
-            dummy_price: 'Rs. 4,850',
-            dummy_compare_price: 'Rs. 6,500',
-            dummy_category: 'Serums & Actives',
-            dummy_badge: 'HOT',
-            dummy_image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800'
-          %}
-          {% render 'premium-product-card',
-            dummy_title: 'Centella Barrier Relief Repair Cream',
-            dummy_price: 'Rs. 3,800',
-            dummy_compare_price: 'Rs. 4,900',
-            dummy_category: 'Moisturizers',
-            dummy_badge: 'HOT',
-            dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800'
-          %}
-          {% render 'premium-product-card',
-            dummy_title: 'Invisible Daily Glow Sunscreen SPF 50+',
-            dummy_price: 'Rs. 3,200',
-            dummy_compare_price: 'Rs. 4,200',
-            dummy_category: 'Sun Protection',
-            dummy_badge: 'HOT',
-            dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800'
-          %}
-          {% render 'premium-product-card',
-            dummy_title: 'Gentle Oat Amino Foaming Cleanser',
-            dummy_price: 'Rs. 2,600',
-            dummy_compare_price: 'Rs. 3,500',
-            dummy_category: 'Cleansers',
-            dummy_badge: 'NEW',
-            dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800'
-          %}
-          {% render 'premium-product-card',
-            dummy_title: 'Retinol 0.5% Night Cell Renewal Serum',
-            dummy_price: 'Rs. 5,200',
-            dummy_compare_price: 'Rs. 6,800',
-            dummy_category: 'Night Care',
-            dummy_badge: 'HOT',
-            dummy_image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800'
-          %}
+          {% assign rec_count = 0 %}
+          {% for product in collections.all.products limit: 5 %}
+            {% assign rec_count = rec_count | plus: 1 %}
+            {% render 'premium-product-card', product: product %}
+          {% endfor %}
         </div>
       </div>
     </div>

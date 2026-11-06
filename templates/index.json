@@ -105,8 +105,8 @@
           "type": "category",
           "settings": {
             "title": "Serums & Actives",
-            "subtitle": "32 Formulas",
-            "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800",
+            "subtitle": "Formulas",
+            "image_url": "",
             "link": ""
           }
         },
@@ -114,8 +114,8 @@
           "type": "category",
           "settings": {
             "title": "Cleansers & Toners",
-            "subtitle": "24 Products",
-            "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800",
+            "subtitle": "Products",
+            "image_url": "",
             "link": ""
           }
         },
@@ -123,8 +123,8 @@
           "type": "category",
           "settings": {
             "title": "Barrier Moisturizers",
-            "subtitle": "18 Creams",
-            "image_url": "https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800",
+            "subtitle": "Creams",
+            "image_url": "",
             "link": ""
           }
         },
@@ -132,8 +132,8 @@
           "type": "category",
           "settings": {
             "title": "Sunscreen & SPF",
-            "subtitle": "14 Formulas",
-            "image_url": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800",
+            "subtitle": "Formulas",
+            "image_url": "",
             "link": ""
           }
         },
@@ -141,8 +141,8 @@
           "type": "category",
           "settings": {
             "title": "Eye & Night Care",
-            "subtitle": "19 Treatments",
-            "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800",
+            "subtitle": "Treatments",
+            "image_url": "",
             "link": ""
           }
         }
@@ -202,7 +202,7 @@
         "subtitle": "Enjoy up to 40% off on our clinical serums, ceramide barrier creams, and daily SPF defense. Elevate your glow today.",
         "cta_text": "Shop The Glow Sale",
         "link": "",
-        "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1600"
+        "image_url": ""
       }
     },
     "featured_products_2": {
@@ -224,7 +224,7 @@
         "body": "<p>At Elvora, we harmonize high-potency clinical actives with pure botanical extracts to heal, protect, and illuminate your skin. Every formula is dermatologically tested, cruelty-free, and formulated without harmful sulfates, parabens, or synthetic fragrances.</p><p>From targeted dark spot correction to barrier-strengthening hydration, we empower your skin to achieve its healthiest, most radiant glow.</p>",
         "cta_text": "Discover Our Story",
         "cta_link": "",
-        "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1800"
+        "image_url": ""
       }
     }
   },

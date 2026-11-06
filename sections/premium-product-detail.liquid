@@ -8,11 +8,11 @@
     assign p_variants = product.variants
     assign p_first_variant_id = product.selected_or_first_available_variant.id
   else
-    assign p_title = 'Radiant Glow Vitamin C + Niacinamide Serum'
-    assign p_image = 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1000'
-    assign p_price = 'Rs. 4,850'
-    assign p_compare_price = 'Rs. 6,500'
-    assign p_desc = '<p>A potent antioxidant elixir formulated with 15% pure Vitamin C, 5% Niacinamide, and Botanical Hyaluronic Acid. Designed to visibly fade hyperpigmentation, smooth uneven texture, and restore luminous, dewy skin radiance within 14 days.</p>'
+    assign p_title = 'ELVORA Skincare Product'
+    assign p_image = ''
+    assign p_price = ''
+    assign p_compare_price = ''
+    assign p_desc = '<p>Product details will display here once added in Shopify Admin.</p>'
     assign p_first_variant_id = ''
   endif
 
@@ -67,35 +67,6 @@
               <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | default: p_title | escape }}" width="100" height="120">
             </button>
           {% endfor %}
-        {% else %}
-          <button
-            type="button"
-            class="premium-pdp-thumb-btn active"
-            onclick="document.getElementById('pdp-main-image').src='{{ p_image }}'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
-          >
-            <img src="{{ p_image }}" alt="Angle 1" width="100" height="120">
-          </button>
-          <button
-            type="button"
-            class="premium-pdp-thumb-btn"
-            onclick="document.getElementById('pdp-main-image').src='https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=1000'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
-          >
-            <img src="https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=200" alt="Angle 2" width="100" height="120">
-          </button>
-          <button
-            type="button"
-            class="premium-pdp-thumb-btn"
-            onclick="document.getElementById('pdp-main-image').src='https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=1000'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
-          >
-            <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=200" alt="Angle 3" width="100" height="120">
-          </button>
-          <button
-            type="button"
-            class="premium-pdp-thumb-btn"
-            onclick="document.getElementById('pdp-main-image').src='https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1000'; this.parentElement.querySelectorAll('.premium-pdp-thumb-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');"
-          >
-            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=200" alt="Angle 4" width="100" height="120">
-          </button>
         {% endif %}
       </div>
     </div>
@@ -313,46 +284,16 @@
       </div>
 
       <div class="premium-product-grid">
-        {% render 'premium-product-card',
-          dummy_title: 'Gentle Hydrating Cleanser',
-          dummy_price: 'Rs. 2,450',
-          dummy_compare_price: 'Rs. 3,200',
-          dummy_category: 'Cleanser',
-          dummy_badge: 'NEW',
-          dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800'
-        %}
-        {% render 'premium-product-card',
-          dummy_title: 'Centella Barrier Repair Cream',
-          dummy_price: 'Rs. 3,800',
-          dummy_compare_price: 'Rs. 4,900',
-          dummy_category: 'Moisturizer',
-          dummy_badge: 'HOT',
-          dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800'
-        %}
-        {% render 'premium-product-card',
-          dummy_title: 'Invisible Daily Glow SPF 50+',
-          dummy_price: 'Rs. 3,200',
-          dummy_compare_price: 'Rs. 4,000',
-          dummy_category: 'Sunscreen',
-          dummy_badge: 'HOT',
-          dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800'
-        %}
-        {% render 'premium-product-card',
-          dummy_title: 'Retinol Youth Renewal Night Oil',
-          dummy_price: 'Rs. 5,400',
-          dummy_compare_price: 'Rs. 6,800',
-          dummy_category: 'Night Treatment',
-          dummy_badge: 'SALE',
-          dummy_image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=800'
-        %}
-        {% render 'premium-product-card',
-          dummy_title: 'Rose Water Clarifying Toner',
-          dummy_price: 'Rs. 2,100',
-          dummy_compare_price: 'Rs. 2,800',
-          dummy_category: 'Toners',
-          dummy_badge: 'NEW',
-          dummy_image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800'
-        %}
+        {% assign rel_count = 0 %}
+        {% assign rel_collection = product.collections.first | default: collections.all %}
+        {% if rel_collection != blank and rel_collection.products.size > 0 %}
+          {% for rel_prod in rel_collection.products limit: 6 %}
+            {% if rel_prod.id != product.id and rel_count < 5 %}
+              {% assign rel_count = rel_count | plus: 1 %}
+              {% render 'premium-product-card', product: rel_prod %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   {% endif %}

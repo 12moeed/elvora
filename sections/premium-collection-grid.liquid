@@ -32,19 +32,14 @@
           {% render 'premium-product-card', product: product %}
         {% endfor %}
 
-        {% comment %} Fallback dummy cards if collection has no products {% endcomment %}
         {% if items_count == 0 %}
-          {% render 'premium-product-card', dummy_title: 'Radiant Glow Vitamin C + Niacinamide Serum', dummy_price: 'Rs. 4,850', dummy_compare_price: 'Rs. 6,500', dummy_category: 'Serums & Actives', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Centella Barrier Relief Repair Cream', dummy_price: 'Rs. 3,800', dummy_compare_price: 'Rs. 4,900', dummy_category: 'Moisturizers', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1608248597359-58807d9b9d36?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Invisible Daily Glow Sunscreen SPF 50+', dummy_price: 'Rs. 3,200', dummy_compare_price: 'Rs. 4,200', dummy_category: 'Sun Protection', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Hyaluronic Acid 2% + B5 Hydration Elixir', dummy_price: 'Rs. 4,200', dummy_compare_price: 'Rs. 5,400', dummy_category: 'Hydration', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Gentle Oat Amino Foaming Cleanser', dummy_price: 'Rs. 2,600', dummy_compare_price: 'Rs. 3,500', dummy_category: 'Cleansers', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800' %}
-          
-          {% render 'premium-product-card', dummy_title: 'Retinol 0.5% Night Cell Renewal Serum', dummy_price: 'Rs. 5,200', dummy_compare_price: 'Rs. 6,800', dummy_category: 'Night Care', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Rose Petal Hydrating Clarifying Toner', dummy_price: 'Rs. 2,400', dummy_compare_price: 'Rs. 3,100', dummy_category: 'Toners', dummy_badge: 'SALE', dummy_image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'AHA 7% + BHA 2% Peeling Solution', dummy_price: 'Rs. 3,600', dummy_compare_price: 'Rs. 4,600', dummy_category: 'Exfoliators', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Peptide & Caffeine Dark Circle Eye Cream', dummy_price: 'Rs. 3,900', dummy_compare_price: 'Rs. 5,000', dummy_category: 'Eye Care', dummy_badge: 'HOT', dummy_image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=800' %}
-          {% render 'premium-product-card', dummy_title: 'Ceramide Rich Barrier Sleeping Mask', dummy_price: 'Rs. 4,500', dummy_compare_price: 'Rs. 5,800', dummy_category: 'Night Masks', dummy_badge: 'NEW', dummy_image: 'https://images.unsplash.com/photo-1567928815116-2f08816c7cfc?auto=format&fit=crop&q=80&w=800' %}
+          <div class="premium-empty-state" style="grid-column: 1 / -1; text-align: center; padding: 5rem 1rem; color: #9ca3af;">
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin: 0 auto 1rem; color: rgba(255, 255, 255, 0.3);">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <p style="font-size: 1.15rem; font-weight: 600; color: #f3f4f6; margin-bottom: 0.5rem;">No products found in this collection.</p>
+            <p style="font-size: 0.9rem; color: #9ca3af;">Products added in Shopify Admin will appear here.</p>
+          </div>
         {% endif %}
       </div>
 

@@ -159,9 +159,11 @@
         {{ content_for_layout }}
       </main>
 
+      {% unless template == 'page.login' or template == 'page.register' or template contains 'customers/login' or template contains 'customers/register' %}
       <footer>
         {% sections 'footer-group' %}
       </footer>
+      {% endunless %}
     </div>
 
     {% render 'cart-drawer', render_wrapper: true %}

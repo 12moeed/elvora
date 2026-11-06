@@ -1,0 +1,262 @@
+{% comment %}
+  ELVORA Skincare - Luxury Customer Account & Order History Portal
+  Functional Requirement: Customer order history (Req 6)
+{% endcomment %}
+
+<div class="elvora-account-page-wrapper">
+  <div class="elvora-account-container">
+    
+    <!-- Top Welcome Banner -->
+    <div class="elvora-account-hero-card">
+      <div class="elvora-account-user-meta">
+        <div class="elvora-account-avatar-large">
+          {{ customer.first_name | slice: 0 | default: 'E' | upcase }}
+        </div>
+        <div class="elvora-account-meta-text">
+          <div class="elvora-account-tier-badge">
+            <span class="elvora-tier-dot"></span>
+            <span>ELVORA Verified Patron</span>
+          </div>
+          <h1 class="elvora-account-greeting">
+            Welcome back, {{ customer.first_name | default: customer.name }}
+          </h1>
+          <p class="elvora-account-email">
+            {{ customer.email }} • Member since {{ customer.created_at | date: "%B %Y" }}
+          </p>
+        </div>
+      </div>
+
+      <div class="elvora-account-header-actions">
+        <a href="/pages/contact?view=track-order" class="elvora-btn-acc-track">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+          </svg>
+          <span>Track Any Shipment</span>
+        </a>
+        <a href="/collections/all" class="elvora-btn-acc-shop">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span>Browse Formulations</span>
+        </a>
+        <a href="{{ routes.account_logout_url }}" class="elvora-btn-acc-logout" title="Sign out">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          <span>Sign Out</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Stats Metric Row -->
+    <div class="elvora-account-metrics-grid">
+      <div class="elvora-metric-card">
+        <div class="elvora-metric-icon">
+          <svg width="20" height="20" fill="none" stroke="#B34090" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="elvora-metric-label">Total Orders</span>
+          <strong class="elvora-metric-val">{{ customer.orders.size }}</strong>
+        </div>
+      </div>
+
+      <div class="elvora-metric-card">
+        <div class="elvora-metric-icon">
+          <svg width="20" height="20" fill="none" stroke="#B34090" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="elvora-metric-label">Payment Preference</span>
+          <strong class="elvora-metric-val">Cash on Delivery (COD)</strong>
+        </div>
+      </div>
+
+      <div class="elvora-metric-card">
+        <div class="elvora-metric-icon">
+          <svg width="20" height="20" fill="none" stroke="#B34090" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="elvora-metric-label">Primary City</span>
+          <strong class="elvora-metric-val">{{ customer.default_address.city | default: 'Pakistan' }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid: Order History (Left) & Shipping Details (Right) -->
+    <div class="elvora-account-content-grid">
+      
+      <!-- Order History Section -->
+      <div class="elvora-orders-section-card">
+        <div class="elvora-orders-header">
+          <div>
+            <h2 class="elvora-orders-title">Your Skincare Order History</h2>
+            <p class="elvora-orders-sub">Real-time status of your shipments and purchase receipts</p>
+          </div>
+          {% if customer.orders.size > 0 %}
+            <span class="elvora-orders-count-badge">{{ customer.orders.size }} Orders</span>
+          {% endif %}
+        </div>
+
+        {% paginate customer.orders by 10 %}
+          {% if customer.orders.size > 0 %}
+            <div class="elvora-orders-table-wrap">
+              <table class="elvora-orders-table">
+                <thead>
+                  <tr>
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Payment</th>
+                    <th>Fulfillment</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in customer.orders %}
+                    <tr>
+                      <td class="elvora-td-order-name">
+                        <a href="{{ order.customer_url }}" class="elvora-order-name-link">
+                          {{ order.name }}
+                        </a>
+                      </td>
+                      <td class="elvora-td-date">
+                        {{ order.created_at | date: "%d %b %Y" }}
+                      </td>
+                      <td class="elvora-td-payment">
+                        {% if order.financial_status == 'paid' %}
+                          <span class="elvora-badge elvora-badge-paid">Paid</span>
+                        {% elsif order.financial_status == 'pending' %}
+                          <span class="elvora-badge elvora-badge-cod">COD Pending</span>
+                        {% else %}
+                          <span class="elvora-badge elvora-badge-neutral">{{ order.financial_status_label }}</span>
+                        {% endif %}
+                      </td>
+                      <td class="elvora-td-fulfillment">
+                        {% if order.fulfillment_status == 'fulfilled' %}
+                          <span class="elvora-badge elvora-badge-delivered">Delivered</span>
+                        {% elsif order.fulfillment_status == 'partial' %}
+                          <span class="elvora-badge elvora-badge-transit">Partially Shipped</span>
+                        {% else %}
+                          <span class="elvora-badge elvora-badge-processing">Processing / In QC</span>
+                        {% endif %}
+                      </td>
+                      <td class="elvora-td-total">
+                        <strong>{{ order.total_price | money_with_currency }}</strong>
+                      </td>
+                      <td class="elvora-td-actions">
+                        <div class="elvora-order-btn-group">
+                          <a href="{{ order.customer_url }}" class="elvora-order-view-btn">
+                            View Receipt
+                          </a>
+                          <a href="/pages/contact?view=track-order&order={{ order.name | replace: '#', '' }}" class="elvora-order-track-btn" title="Track Courier Delivery">
+                            Track
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            {% if paginate.pages > 1 %}
+              <div class="elvora-pagination">
+                {{ paginate | default_pagination }}
+              </div>
+            {% endif %}
+
+          {% else %}
+            <!-- Empty Order History State -->
+            <div class="elvora-orders-empty-state">
+              <div class="elvora-empty-icon-wrap">
+                <svg width="44" height="44" fill="none" stroke="#B34090" stroke-width="1.75" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </div>
+              <h3 class="elvora-empty-title">No Skincare Orders Found Yet</h3>
+              <p class="elvora-empty-desc">
+                You haven't placed any orders with ELVORA yet. Explore our clinical serums, cleansers, and barrier creams to begin your routine.
+              </p>
+              <a href="/collections/all" class="elvora-btn-empty-shop">
+                <span>Explore Formulations</span>
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </a>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+
+      <!-- Right Side: Shipping & Profile Details -->
+      <div class="elvora-account-sidebar">
+        
+        <!-- Address Card -->
+        <div class="elvora-profile-card">
+          <div class="elvora-profile-card-header">
+            <h3 class="elvora-profile-card-title">Default Shipping Address</h3>
+            <a href="/account/addresses" class="elvora-manage-addr-link">Manage ({{ customer.addresses_count }})</a>
+          </div>
+
+          {% if customer.default_address %}
+            <div class="elvora-address-box">
+              <div class="elvora-addr-name">
+                {{ customer.default_address.first_name }} {{ customer.default_address.last_name }}
+                {% if customer.default_address == customer.default_address %}
+                  <span class="elvora-addr-badge">Primary COD</span>
+                {% endif %}
+              </div>
+              <p class="elvora-addr-lines">
+                {{ customer.default_address.address1 }}<br>
+                {% if customer.default_address.address2 != blank %}
+                  {{ customer.default_address.address2 }}<br>
+                {% endif %}
+                {{ customer.default_address.city }}{% if customer.default_address.province != blank %}, {{ customer.default_address.province }}{% endif %} {{ customer.default_address.zip }}<br>
+                {{ customer.default_address.country }}
+              </p>
+              {% if customer.default_address.phone != blank %}
+                <div class="elvora-addr-phone">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                  <span>{{ customer.default_address.phone }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="elvora-no-address-state">
+              <p>No default address saved yet. Save an address for faster Cash on Delivery checkout.</p>
+              <a href="/account/addresses" class="elvora-btn-add-addr">+ Add Delivery Address</a>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Skincare Concierge Assistance -->
+        <div class="elvora-concierge-card">
+          <div class="elvora-concierge-icon">
+            <svg width="22" height="22" fill="none" stroke="#B34090" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <h4 class="elvora-concierge-title">Skincare Consultation & Support</h4>
+          <p class="elvora-concierge-desc">
+            Have questions about pairing active ingredients or need help tracking your COD courier package?
+          </p>
+          <a href="https://wa.me/923001234567?text=Hi%20ELVORA,%20I%20need%20assistance%20with%20my%20account" target="_blank" rel="noopener" class="elvora-btn-whatsapp-support">
+            <span>WhatsApp Skincare Advisor</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

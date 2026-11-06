@@ -209,18 +209,7 @@
               </div>
             {% endfor %}
           {% else %}
-            <!-- Interactive preview dummy item -->
-            <div class="checkout-item-mini">
-              <div class="mini-img-wrap">
-                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=200" alt="Vitamin C Serum" width="60" height="75">
-                <span class="qty-pill">1</span>
-              </div>
-              <div class="mini-info">
-                <h4>Radiant Glow Vitamin C + Niacinamide Serum</h4>
-                <span class="variant">50ml Standard</span>
-              </div>
-              <span class="mini-price">Rs. 4,850</span>
-            </div>
+            <p style="color: #6b7280; font-size: 0.9rem; padding: 1.5rem 0; text-align: center;">Your cart is empty. Add products to proceed.</p>
           {% endif %}
         </div>
 
@@ -300,10 +289,13 @@
     </div>
 
     <div class="success-actions">
-      <a href="https://wa.me/923000000000?text=Hello%20Elvora%20Skincare,%20I%20have%20placed%20order%20" target="_blank" class="whatsapp-btn">
-        <span>💬 Contact on WhatsApp for Updates</span>
+      <a id="success-track-btn" href="/pages/track-order" class="continue-btn" style="background: linear-gradient(135deg, #B34090 0%, #8B1A6B 100%); color: #ffffff; border: none; font-weight: 700; box-shadow: 0 4px 15px rgba(179, 64, 144, 0.35);">
+        <span>📦 Track Your Order Now</span>
       </a>
-      <a href="/" class="continue-btn">
+      <a href="https://wa.me/923001234567?text=Hello%20ELVORA,%20I%20have%20placed%20order%20" id="success-whatsapp-btn" target="_blank" class="whatsapp-btn">
+        <span>💬 WhatsApp Order Confirmation</span>
+      </a>
+      <a href="/collections/all" class="continue-btn">
         Continue Shopping
       </a>
     </div>
@@ -362,6 +354,43 @@ function handlePlaceOrder(e) {
   document.getElementById('success-city').innerText = city;
   document.getElementById('success-amount').innerText = total;
   document.getElementById('success-payment').innerText = payment === 'COD' ? 'Cash on Delivery (COD)' : payment;
+
+  // Set up tracking button link
+  var cleanOrderNum = orderNum.replace('#', '');
+  var trackBtn = document.getElementById('success-track-btn');
+  if (trackBtn) {
+    trackBtn.href = '/pages/contact?view=track-order&order=' + encodeURIComponent(cleanOrderNum);
+  }
+
+  // Update WhatsApp link
+  var waBtn = document.getElementById('success-whatsapp-btn');
+  if (waBtn) {
+    waBtn.href = 'https://wa.me/923001234567?text=' + encodeURIComponent('Hello ELVORA, I have placed COD order ' + orderNum + ' for ' + total + ' to ' + city + '. Please confirm delivery.');
+  }
+
+  // Store in localStorage for recent order history & live order tracking lookup
+  try {
+    var stored = JSON.parse(localStorage.getItem('elvora_recent_orders') || '[]');
+    stored.unshift({
+      orderId: orderNum,
+      name: name,
+      phone: phone,
+      city: city,
+      total: total,
+      payment: payment === 'COD' ? 'Cash on Delivery (COD)' : payment,
+      date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+      status: 'In Transit with Courier'
+    });
+    localStorage.setItem('elvora_recent_orders', JSON.stringify(stored.slice(0, 10)));
+  } catch(err) {
+    console.error('Local order save error:', err);
+  }
+
+  // Clear cart in background
+  try {
+    fetch('/cart/clear.js', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+      .catch(function(err) { console.log('Cart clear error:', err); });
+  } catch(e) {}
 
   // Show confirmation screen
   document.getElementById('checkout-main-container').style.display = 'none';

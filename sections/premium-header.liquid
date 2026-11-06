@@ -19,8 +19,15 @@
     assign is_home = true
   endif
 
+  assign is_auth_page = false
+  if template == 'page.login' or template == 'page.register' or template contains 'customers/login' or template contains 'customers/register'
+    assign is_auth_page = true
+  endif
+
   assign transparent_enabled = section.settings.enable_transparent_home
   if is_home and transparent_enabled
+    assign start_transparent = true
+  elsif is_auth_page
     assign start_transparent = true
   else
     assign start_transparent = false
@@ -29,13 +36,14 @@
 
 <header-component
   id="header-component"
-  class="elvora-navbar-root{% if start_transparent %} elvora-is-transparent{% else %} elvora-is-scrolled{% endif %}"
+  class="elvora-navbar-root{% if start_transparent %} elvora-is-transparent{% else %} elvora-is-scrolled{% endif %}{% if is_auth_page %} elvora-is-auth-minimal{% endif %}"
   data-is-home="{% if is_home %}true{% else %}false{% endif %}"
+  data-is-auth="{% if is_auth_page %}true{% else %}false{% endif %}"
   data-transparent="{% if start_transparent %}true{% else %}false{% endif %}"
   {% if start_transparent %}transparent="not-sticky"{% endif %}
 >
   <!-- Announcement Bar (Marquee / Delivery ribbon) -->
-  {% if section.settings.show_announcement and section.settings.announcement_text != blank %}
+  {% if section.settings.show_announcement and section.settings.announcement_text != blank and is_auth_page == false %}
     <div class="elvora-nav-announcement">
       <div class="elvora-announcement-inner">
         <span class="elvora-announcement-text">{{ section.settings.announcement_text }}</span>
@@ -69,6 +77,7 @@
         {% endif %}
       </a>
 
+      {% unless is_auth_page %}
       <!-- ── Desktop Navigation Menu ── -->
       <nav class="elvora-nav-links" aria-label="Main Navigation">
         <!-- Home -->
@@ -285,8 +294,8 @@
           </div>
         {% else %}
           <div class="elvora-desktop-auth">
-            <a href="/account/login" class="elvora-login-link">Login</a>
-            <a href="/account/register" class="elvora-join-btn">
+            <a href="/pages/contact?view=login" class="elvora-login-link">Login</a>
+            <a href="/pages/contact?view=register" class="elvora-join-btn">
               <span>Join Us</span>
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -308,6 +317,7 @@
         </button>
 
       </div>
+      {% endunless %}
     </div>
   </div>
 </header-component>
@@ -465,6 +475,10 @@
         <span>Express Checkout (COD)</span>
       </a>
 
+      <a href="/pages/contact?view=track-order" class="elvora-drawer-link">
+        <span>Track Your Shipment</span>
+      </a>
+
       <a href="/pages/contact" class="elvora-drawer-link">
         <span>Contact & Support</span>
       </a>
@@ -482,8 +496,8 @@
           <a href="/account" class="elvora-drawer-btn elvora-drawer-btn-primary">My Account</a>
           <a href="/account/logout" class="elvora-drawer-btn elvora-drawer-btn-secondary">Log Out</a>
         {% else %}
-          <a href="/account/register" class="elvora-drawer-btn elvora-drawer-btn-primary">Join Us</a>
-          <a href="/account/login" class="elvora-drawer-btn elvora-drawer-btn-secondary">Login</a>
+          <a href="/pages/contact?view=register" class="elvora-drawer-btn elvora-drawer-btn-primary">Join Us</a>
+          <a href="/pages/contact?view=login" class="elvora-drawer-btn elvora-drawer-btn-secondary">Login</a>
         {% endif %}
       </div>
     </div>
@@ -1706,10 +1720,18 @@
     if (!headerRoot) return;
 
     const isHome = headerRoot.dataset.isHome === 'true';
+    const isAuth = headerRoot.dataset.isAuth === 'true';
     const transparentEnabled = headerRoot.dataset.transparent === 'true';
 
     // ── 1. Scroll State Management (Scrubbed smoothly) ──
     function handleScroll() {
+      if (isAuth) {
+        headerRoot.classList.add('elvora-is-transparent');
+        headerRoot.classList.remove('elvora-is-scrolled');
+        headerRoot.setAttribute('transparent', 'not-sticky');
+        return;
+      }
+
       if (!isHome || !transparentEnabled) {
         headerRoot.classList.remove('elvora-is-transparent');
         headerRoot.classList.add('elvora-is-scrolled');

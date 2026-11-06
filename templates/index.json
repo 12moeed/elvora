@@ -112,6 +112,7 @@
             "collection": "",
             "title": "Serums & Actives",
             "subtitle": "Formulas",
+            "image": "shopify://shop_images/01_Serums_and_Actives_CLEAR.jpg",
             "image_url": "",
             "link": ""
           }
@@ -122,6 +123,7 @@
             "collection": "",
             "title": "Cleansers & Toners",
             "subtitle": "Products",
+            "image": "shopify://shop_images/02_Cleansers_and_Toners_CLEAR.jpg",
             "image_url": "",
             "link": ""
           }
@@ -132,6 +134,7 @@
             "collection": "",
             "title": "Barrier Moisturizers",
             "subtitle": "Creams",
+            "image": "shopify://shop_images/03_Barrier_Moisturizers_CLEAR_A.jpg",
             "image_url": "",
             "link": ""
           }
@@ -142,6 +145,7 @@
             "collection": "",
             "title": "Sunscreen & SPF",
             "subtitle": "Formulas",
+            "image": "shopify://shop_images/04_Sunscreen_and_SPF_CLEAR_A.jpg",
             "image_url": "",
             "link": ""
           }
@@ -152,6 +156,7 @@
             "collection": "",
             "title": "Eye & Night Care",
             "subtitle": "Treatments",
+            "image": "shopify://shop_images/05_Eye_and_Night_Care_CLEAR_A.jpg",
             "image_url": "",
             "link": ""
           }

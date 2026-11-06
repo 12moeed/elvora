@@ -5,6 +5,10 @@
     window.location.replace('/pages/contact?view=track-order' + window.location.search);
   } else if (window.location.pathname.indexOf('checkout') !== -1) {
     window.location.replace('/pages/contact?view=checkout' + window.location.search);
+  } else if (window.location.pathname.indexOf('register') !== -1) {
+    window.location.replace('/pages/contact?view=register' + window.location.search);
+  } else if (window.location.pathname.indexOf('login') !== -1 || window.location.pathname.indexOf('account') !== -1) {
+    window.location.replace('/pages/contact?view=login' + window.location.search);
   }
 </script>
 

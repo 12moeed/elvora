@@ -5079,448 +5079,583 @@ body:not(:has(.elvora-navbar-root[data-is-home="true"])) .elvora-navbar-root {
 
 
 /* ==========================================================================
-   ELVORA FULL-SCREEN GLASSMORPHIC AUTH PORTAL (Login & Register)
+   ELVORA SAHARA DESERT FULL-SCREEN GLASSVIEW AUTH PORTAL & SANDSTORM WAVE
    ========================================================================== */
 
-.elvora-auth-fullscreen-hero {
+main#MainContent[data-template="page.login"],
+main#MainContent[data-template="page.register"],
+main#MainContent[data-template*="customers/login"],
+main#MainContent[data-template*="customers/register"] {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.elvora-sahara-auth-stage {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 1.5rem 1rem 3rem;
+  justify-content: center;
+  align-items: center;
+  padding: 5.5rem 1.25rem 2.5rem;
   box-sizing: border-box;
   font-family: var(--font-body);
-  background-image: 
-    radial-gradient(ellipse at 50% 40%, rgba(20, 10, 16, 0.28) 0%, rgba(15, 8, 12, 0.65) 100%),
-    linear-gradient(180deg, rgba(20, 10, 15, 0.35) 0%, rgba(20, 10, 15, 0.55) 100%),
-    url('elvora_auth_backdrop.jpg');
+  overflow: hidden;
+  background-color: #24150d;
+}
+
+/* Layer 1: Sahara Desert Full-Screen Image with Subtle Ken-Burns Drift */
+.elvora-sahara-bg-image {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  background-image: var(--sahara-bg, url('elvora_sahara_dunes.jpg'));
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  overflow-x: hidden;
+  z-index: 1;
+  animation: saharaSlowBreathe 24s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-/* Fallback if background image hasn't loaded or on mobile */
-@media (max-width: 768px) {
-  .elvora-auth-fullscreen-hero {
-    background-attachment: scroll;
-    padding: 1rem 0.75rem 2.5rem;
+@keyframes saharaSlowBreathe {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.06) translate3d(-1.2%, -0.8%, 0);
   }
 }
 
-/* Floating Top Navigation */
-.elvora-auth-floating-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
+/* Warm Golden Desert Vignette for Crystal Card Contrast */
+.elvora-sahara-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: 
+    radial-gradient(ellipse at 50% 50%, rgba(25, 14, 8, 0.15) 0%, rgba(16, 9, 5, 0.55) 100%),
+    linear-gradient(180deg, rgba(12, 6, 3, 0.45) 0%, rgba(25, 14, 8, 0.12) 35%, rgba(18, 10, 5, 0.52) 100%);
+  pointer-events: none;
+}
+
+/* Layer 2: Background Ambient Drifting Sand Canvas */
+.elvora-sand-canvas-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  margin: 0 auto;
-  padding: 0.5rem 0.75rem;
-  z-index: 10;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.elvora-auth-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  color: #1f2937;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-  transition: all 0.25s ease;
+/* Layer 4: Foreground Sandstorm Gust Wave Canvas */
+.elvora-sand-canvas-fg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 60;
+  pointer-events: none;
 }
 
-.elvora-auth-back-btn:hover {
-  background: #ffffff;
-  color: var(--color-primary);
-  transform: translateX(-2px);
-}
-
-.elvora-auth-brand-monogram {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  color: #ffffff;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
-.elvora-brand-title-small {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  color: #ffffff;
-}
-
-.elvora-brand-subtitle-small {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.85);
-  text-transform: uppercase;
-}
-
-/* Center Content & Glass Card */
-.elvora-auth-center-wrap {
+/* Layer 3: Center Stage & 3D Perspective Wrapper */
+.elvora-sahara-center-stage {
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  max-width: 530px;
+  margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin: 2rem auto;
-  z-index: 10;
 }
 
-.elvora-glass-auth-card {
+.elvora-card-3d-perspective {
+  position: relative;
   width: 100%;
-  max-width: 520px;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 28px;
-  padding: 2.75rem 2.5rem;
-  box-shadow: 
-    0 30px 70px rgba(0, 0, 0, 0.22),
-    0 10px 25px rgba(0, 0, 0, 0.1),
-    inset 0 1px 2px rgba(255, 255, 255, 1);
-  box-sizing: border-box;
-  animation: glassCardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  perspective: 1500px;
+  transform-style: preserve-3d;
 }
 
-@keyframes glassCardFadeIn {
-  from {
+/* Volumetric Golden Dust Cloud Haze Overlay ("Dhund") */
+.elvora-dust-cloud-overlay {
+  position: absolute;
+  inset: -70px -90px;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+  overflow: visible;
+}
+
+.dust-billow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  filter: blur(36px);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(248, 206, 136, 0.94) 0%,
+    rgba(224, 169, 92, 0.78) 42%,
+    rgba(195, 134, 62, 0.35) 70%,
+    rgba(195, 134, 62, 0) 100%
+  );
+}
+
+.dust-billow-2 {
+  transform: scale(1.18) translateY(-12px);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 228, 178, 0.88) 0%,
+    rgba(232, 178, 104, 0.65) 50%,
+    rgba(210, 145, 70, 0) 100%
+  );
+}
+
+.dust-billow-3 {
+  transform: scale(0.9) translateY(15px);
+}
+
+/* Left-to-Right Golden Dust Wave Animation */
+.elvora-dust-cloud-overlay.storm-ltr {
+  animation: dustWaveLTR 1.02s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Right-to-Left Golden Dust Wave Animation */
+.elvora-dust-cloud-overlay.storm-rtl {
+  animation: dustWaveRTL 1.02s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes dustWaveLTR {
+  0% {
     opacity: 0;
-    transform: translateY(18px) scale(0.98);
+    transform: translateX(-115%) scaleX(0.75) skewX(-12deg);
   }
-  to {
+  38% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateX(-4%) scaleX(1.18) skewX(-4deg);
+  }
+  55% {
+    opacity: 0.96;
+    transform: translateX(8%) scaleX(1.22) skewX(4deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%) scaleX(1.4) skewX(12deg);
+  }
+}
+
+@keyframes dustWaveRTL {
+  0% {
+    opacity: 0;
+    transform: translateX(115%) scaleX(0.75) skewX(12deg);
+  }
+  38% {
+    opacity: 1;
+    transform: translateX(4%) scaleX(1.18) skewX(4deg);
+  }
+  55% {
+    opacity: 0.96;
+    transform: translateX(-8%) scaleX(1.22) skewX(-4deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-120%) scaleX(1.4) skewX(-12deg);
+  }
+}
+
+/* True Crystal-Transparent GlassView Card */
+.elvora-crystal-glass-card {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 246, 232, 0.16) 0%,
+    rgba(42, 25, 14, 0.42) 55%,
+    rgba(24, 13, 7, 0.54) 100%
+  );
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  border: 1px solid rgba(255, 224, 175, 0.36);
+  border-radius: 28px;
+  padding: 2.35rem 2.25rem 2rem;
+  box-sizing: border-box;
+  box-shadow: 
+    0 32px 80px rgba(10, 5, 2, 0.52),
+    0 8px 28px rgba(0, 0, 0, 0.28),
+    inset 0 1px 1px rgba(255, 242, 215, 0.48),
+    inset 0 -1px 1px rgba(245, 195, 120, 0.18);
+  transform-origin: center center;
+  will-change: transform, filter, opacity;
+}
+
+/* Top Specular Golden Shimmer Rim */
+.elvora-crystal-rim-glow {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 235, 195, 0) 0%,
+    rgba(255, 235, 195, 0.85) 50%,
+    rgba(255, 235, 195, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* 3D Wind-Swept Card Turn inside Golden Sandstorm Mist */
+.elvora-crystal-glass-card.sand-flip-ltr {
+  animation: cardSandFlipLTR 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.elvora-crystal-glass-card.sand-flip-rtl {
+  animation: cardSandFlipRTL 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes cardSandFlipLTR {
+  0% {
+    transform: rotateY(0deg) scale(1);
+    filter: blur(0px) brightness(1);
+  }
+  40% {
+    transform: rotateY(88deg) scale(0.92) translateX(18px);
+    filter: blur(10px) sepia(0.55) brightness(1.35);
+    opacity: 0.25;
+  }
+  44% {
+    transform: rotateY(-88deg) scale(0.92) translateX(-18px);
+    filter: blur(10px) sepia(0.55) brightness(1.35);
+    opacity: 0.25;
+  }
+  100% {
+    transform: rotateY(0deg) scale(1) translateX(0);
+    filter: blur(0px) brightness(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cardSandFlipRTL {
+  0% {
+    transform: rotateY(0deg) scale(1);
+    filter: blur(0px) brightness(1);
+  }
+  40% {
+    transform: rotateY(-88deg) scale(0.92) translateX(-18px);
+    filter: blur(10px) sepia(0.55) brightness(1.35);
+    opacity: 0.25;
+  }
+  44% {
+    transform: rotateY(88deg) scale(0.92) translateX(18px);
+    filter: blur(10px) sepia(0.55) brightness(1.35);
+    opacity: 0.25;
+  }
+  100% {
+    transform: rotateY(0deg) scale(1) translateX(0);
+    filter: blur(0px) brightness(1);
+    opacity: 1;
   }
 }
 
 @media (max-width: 600px) {
-  .elvora-glass-auth-card {
-    padding: 2rem 1.35rem;
+  .elvora-sahara-auth-stage {
+    padding: 4.75rem 0.9rem 2rem;
+  }
+  .elvora-crystal-glass-card {
+    padding: 1.85rem 1.35rem 1.6rem;
     border-radius: 22px;
   }
 }
 
-/* Card Header */
-.elvora-card-top-meta {
+/* Header inside Crystal Card */
+.elvora-crystal-header {
   text-align: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
-.elvora-glass-badge {
+.elvora-crystal-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   padding: 4px 14px;
-  background: rgba(179, 64, 144, 0.08);
-  border: 1px solid rgba(179, 64, 144, 0.2);
+  background: rgba(255, 232, 190, 0.14);
+  border: 1px solid rgba(255, 224, 175, 0.35);
   border-radius: 9999px;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-primary);
-  margin-bottom: 0.75rem;
+  letter-spacing: 0.14em;
+  color: #ffe8be;
+  margin-bottom: 0.65rem;
 }
 
-.elvora-glass-dot {
+.elvora-crystal-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--color-primary);
-  box-shadow: 0 0 6px var(--color-primary);
+  background: #f5c678;
+  box-shadow: 0 0 8px #f5c678;
 }
 
-.elvora-glass-title {
+.elvora-crystal-title {
   font-family: var(--font-heading);
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 700;
-  color: #111827;
-  line-height: 1.25;
-  margin: 0 0 0.5rem 0;
+  color: #fffdf9;
+  line-height: 1.2;
+  margin: 0 0 0.45rem 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
-.elvora-glass-subtitle {
-  font-size: 13px;
-  color: #4b5563;
+.elvora-crystal-subtitle {
+  font-size: 12.5px;
+  color: rgba(255, 245, 232, 0.85);
   line-height: 1.55;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 410px;
 }
 
-/* Tab Bar */
-.elvora-auth-tab-bar {
+/* Segmented Glass Tabs */
+.elvora-crystal-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(14, 7, 3, 0.36);
+  border: 1px solid rgba(255, 225, 180, 0.22);
   padding: 5px;
   border-radius: 14px;
-  margin-bottom: 1.75rem;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  margin-bottom: 1.5rem;
 }
 
-.elvora-tab-btn {
+.elvora-crystal-tab-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 10px 14px;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #4b5563;
+  color: rgba(255, 242, 224, 0.72);
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease;
   font-family: var(--font-body);
 }
 
-.elvora-tab-btn:hover {
-  color: #111827;
+.elvora-crystal-tab-btn:hover {
+  color: #ffffff;
 }
 
-.elvora-tab-btn.is-active {
-  background: #ffffff;
-  color: var(--color-primary);
+.elvora-crystal-tab-btn.is-active {
+  background: linear-gradient(135deg, rgba(255, 236, 200, 0.24) 0%, rgba(179, 64, 144, 0.38) 100%);
+  border-color: rgba(255, 230, 185, 0.48);
+  color: #ffffff;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
 }
 
 /* Panes */
-.elvora-auth-pane {
+.elvora-crystal-pane {
   display: none;
 }
 
-.elvora-auth-pane.is-active {
+.elvora-crystal-pane.is-active {
   display: block;
-  animation: paneFadeIn 0.35s ease;
 }
 
-@keyframes paneFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Glass Form Elements */
-.elvora-glass-form {
+/* Form Layout & Glass Inputs */
+.elvora-crystal-form {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.05rem;
 }
 
-.elvora-glass-row {
+.elvora-crystal-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.85rem;
 }
 
 @media (max-width: 500px) {
-  .elvora-glass-row {
+  .elvora-crystal-row {
     grid-template-columns: 1fr;
   }
 }
 
-.elvora-glass-field {
+.elvora-crystal-field {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
 }
 
-.elvora-glass-label-row {
+.elvora-crystal-label-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.elvora-glass-label {
+.elvora-crystal-label {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #374151;
+  letter-spacing: 0.06em;
+  color: rgba(255, 240, 218, 0.92);
 }
 
-.elvora-glass-forgot-btn {
+.elvora-crystal-forgot-link {
   background: none;
   border: none;
   font-size: 11px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: #ffd89b;
   cursor: pointer;
   padding: 0;
+  transition: color 0.2s;
 }
 
-.elvora-glass-forgot-btn:hover {
+.elvora-crystal-forgot-link:hover {
+  color: #ffffff;
   text-decoration: underline;
 }
 
-.elvora-glass-input-wrap {
+.elvora-crystal-input-wrap {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.elvora-glass-input {
+.elvora-crystal-input {
   width: 100%;
-  padding: 0.85rem 1rem 0.85rem 2.6rem;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #dcd5ca;
+  padding: 0.82rem 1rem 0.82rem 2.55rem;
+  background: rgba(15, 8, 4, 0.38);
+  border: 1px solid rgba(255, 224, 178, 0.3);
   border-radius: 12px;
-  font-size: 14px;
-  color: #111827;
+  font-size: 13.5px;
+  color: #ffffff;
   font-family: var(--font-body);
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
   box-sizing: border-box;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-.elvora-glass-input:focus {
+.elvora-crystal-input::placeholder {
+  color: rgba(255, 238, 215, 0.45);
+}
+
+.elvora-crystal-input:focus {
   outline: none;
-  background: #ffffff;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(179, 64, 144, 0.15);
+  background: rgba(15, 8, 4, 0.56);
+  border-color: #f5c678;
+  box-shadow: 0 0 0 3px rgba(245, 198, 120, 0.22);
 }
 
-.elvora-glass-icon {
+.elvora-crystal-icon {
   position: absolute;
-  left: 0.9rem;
-  color: #9ca3af;
+  left: 0.88rem;
+  color: rgba(255, 232, 195, 0.7);
   display: flex;
   align-items: center;
   pointer-events: none;
 }
 
-.elvora-glass-pwd-eye {
+.elvora-crystal-eye-btn {
   position: absolute;
   right: 0.75rem;
   background: none;
   border: none;
-  color: #9ca3af;
+  color: rgba(255, 232, 195, 0.7);
   cursor: pointer;
   padding: 4px;
   display: flex;
   align-items: center;
 }
 
-.elvora-glass-pwd-eye:hover {
-  color: var(--color-primary);
+.elvora-crystal-eye-btn:hover {
+  color: #ffd89b;
 }
 
-.elvora-glass-hint {
-  font-size: 11px;
-  color: #6b7280;
-  line-height: 1.4;
-  margin-top: 2px;
-}
-
-/* Perks list inside register form */
-.elvora-glass-perks-row {
+/* Perks inside Create Account */
+.elvora-crystal-perks {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
-  margin: 0.25rem 0;
+  margin: 0.15rem 0;
 }
 
-.perk-pill {
+.crystal-perk-tag {
   font-size: 11px;
   font-weight: 600;
-  color: #059669;
-  background: rgba(5, 150, 105, 0.08);
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(5, 150, 105, 0.18);
+  color: #ffe8be;
+  background: rgba(245, 198, 120, 0.14);
+  border: 1px solid rgba(245, 198, 120, 0.32);
+  padding: 3px 10px;
+  border-radius: 9999px;
 }
 
-/* Primary Glass Button */
-.elvora-btn-glass-primary {
+/* Submit Button */
+.elvora-crystal-submit-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: #ffffff;
-  border: none;
-  padding: 0.95rem 1.75rem;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  box-shadow: 0 6px 22px rgba(179, 64, 144, 0.35);
-  transition: all 0.25s ease;
   width: 100%;
-  margin-top: 0.35rem;
+  padding: 0.95rem 1.5rem;
+  margin-top: 0.25rem;
+  background: linear-gradient(135deg, #B34090 0%, #8B1A6B 52%, #c98a4b 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 232, 195, 0.42);
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(179, 64, 144, 0.38);
+  transition: all 0.25s ease;
 }
 
-.elvora-btn-glass-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 28px rgba(179, 64, 144, 0.45);
+.elvora-crystal-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(179, 64, 144, 0.52);
+  filter: brightness(1.08);
 }
 
-/* Toggle hint */
-.elvora-glass-toggle-hint {
+/* Switch Prompt Link */
+.elvora-crystal-switch-prompt {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 0.5rem;
+  font-size: 12.5px;
+  color: rgba(255, 242, 224, 0.8);
+  margin-top: 0.35rem;
 }
 
-.elvora-glass-inline-btn {
+.elvora-crystal-switch-link {
   background: none;
   border: none;
-  color: var(--color-primary);
-  font-size: 12px;
+  color: #ffd89b;
+  font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
   padding: 0;
   text-decoration: underline;
+  transition: color 0.2s;
 }
 
-.elvora-glass-inline-btn:hover {
-  color: var(--color-primary-dark);
-}
-
-/* Recover Intro */
-.elvora-recover-top-intro {
-  text-align: center;
-  margin-bottom: 1.25rem;
-}
-
-.elvora-recover-h3 {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 0.35rem 0;
-}
-
-.elvora-recover-p {
-  font-size: 12px;
-  color: #6b7280;
-  margin: 0;
-  line-height: 1.5;
+.elvora-crystal-switch-link:hover {
+  color: #ffffff;
 }
 
 /* Alerts */
-.elvora-glass-alert {
+.elvora-crystal-alert {
   padding: 0.75rem 1rem;
   border-radius: 10px;
   font-size: 12px;
@@ -5530,28 +5665,32 @@ body:not(:has(.elvora-navbar-root[data-is-home="true"])) .elvora-navbar-root {
   gap: 8px;
 }
 
-.elvora-glass-alert-error {
-  background: #fef2f2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
+.elvora-crystal-alert-error {
+  background: rgba(153, 27, 27, 0.65);
+  color: #fecaca;
+  border: 1px solid rgba(252, 165, 165, 0.45);
 }
 
-.elvora-glass-alert-success {
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+.elvora-crystal-alert-success {
+  background: rgba(22, 101, 52, 0.65);
+  color: #bbf7d0;
+  border: 1px solid rgba(134, 239, 172, 0.45);
 }
 
-/* Trust footer at bottom of card */
-.elvora-glass-trust-footer {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+/* Footer inside Card */
+.elvora-crystal-footer {
+  margin-top: 1.35rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 232, 195, 0.16);
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   font-size: 11px;
   font-weight: 600;
-  color: #6b7280;
+  color: rgba(255, 240, 218, 0.72);
+}
+
+.elvora-crystal-footer .dot-sep {
+  opacity: 0.5;
 }

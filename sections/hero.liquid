@@ -328,8 +328,8 @@
 
   {% if media_count == 0 %}
     <img
-      src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&q=80&w=2400"
-      alt="{{ section.settings.heading | default: 'ELVORA Clinical Skincare' | escape }}"
+      src="{{ 'banner_1_obsidian_gold.jpg' | asset_url }}"
+      alt="ELVORA Clinical Skincare"
       class="hero__media"
       width="2400"
       height="1400"
@@ -368,7 +368,7 @@
   {% endif %}
   {% if media_count == 0 %}
     <img
-      src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&q=80&w=2400"
+      src="{{ 'banner_1_obsidian_gold.jpg' | asset_url }}"
       alt=""
       class="hero__media"
       width="2400"

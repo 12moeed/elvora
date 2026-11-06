@@ -327,15 +327,68 @@
   {{ media_slot_2 }}
 
   {% if media_count == 0 %}
-    <img
-      src="{{ 'banner_1_obsidian_gold.jpg' | asset_url }}"
-      alt="ELVORA Clinical Skincare"
-      class="hero__media"
-      width="2400"
-      height="1400"
-      loading="eager"
-      fetchpriority="high"
-    >
+    <div class="elvora-hero-carousel" id="elvoraHeroCarousel" data-autoplay-interval="5000">
+      <div class="elvora-carousel-slides">
+        <div class="elvora-carousel-slide is-active" data-slide-index="0">
+          <img
+            src="{{ 'banner_3_desert_sand.jpg' | asset_url }}"
+            alt="ELVORA Minimalist Desert Sand & Travertine"
+            class="hero__media elvora-carousel-img"
+            width="2400"
+            height="1400"
+            loading="eager"
+            fetchpriority="high"
+          >
+          <div class="elvora-carousel-badge">01 // Architectural Serenity</div>
+        </div>
+        <div class="elvora-carousel-slide" data-slide-index="1">
+          <img
+            src="{{ 'banner_3b_dewy_radiance.jpg' | asset_url }}"
+            alt="ELVORA Dewy Radiance & Glass Skin"
+            class="hero__media elvora-carousel-img"
+            width="2400"
+            height="1400"
+            loading="lazy"
+          >
+          <div class="elvora-carousel-badge">02 // Barrier & Dewy Glow</div>
+        </div>
+        <div class="elvora-carousel-slide" data-slide-index="2">
+          <img
+            src="{{ 'banner_3c_clinical_routine.jpg' | asset_url }}"
+            alt="ELVORA The Complete Daily Ritual"
+            class="hero__media elvora-carousel-img"
+            width="2400"
+            height="1400"
+            loading="lazy"
+          >
+          <div class="elvora-carousel-badge">03 // The Complete Ritual</div>
+        </div>
+      </div>
+
+      <!-- Luxury Minimalist Controls -->
+      <div class="elvora-carousel-controls">
+        <button type="button" class="elvora-carousel-arrow prev" id="elvoraPrevBtn" aria-label="Previous Slide">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="elvora-carousel-indicators" id="elvoraIndicators">
+          <button type="button" class="elvora-indicator-pill is-active" data-index="0" aria-label="Slide 1">
+            <span class="elvora-pill-fill"></span>
+            <span class="elvora-pill-num">01</span>
+          </button>
+          <button type="button" class="elvora-indicator-pill" data-index="1" aria-label="Slide 2">
+            <span class="elvora-pill-fill"></span>
+            <span class="elvora-pill-num">02</span>
+          </button>
+          <button type="button" class="elvora-indicator-pill" data-index="2" aria-label="Slide 3">
+            <span class="elvora-pill-fill"></span>
+            <span class="elvora-pill-num">03</span>
+          </button>
+        </div>
+        <button type="button" class="elvora-carousel-arrow next" id="elvoraNextBtn" aria-label="Next Slide">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
   {%- endif -%}
 {% endcapture %}
 
@@ -368,7 +421,7 @@
   {% endif %}
   {% if media_count == 0 %}
     <img
-      src="{{ 'banner_1_obsidian_gold.jpg' | asset_url }}"
+      src="{{ 'banner_3_desert_sand.jpg' | asset_url }}"
       alt=""
       class="hero__media"
       width="2400"
@@ -561,6 +614,143 @@
     </div>
   </div>
 </div>
+
+<script>
+  (function() {
+    function initHeroCarousel() {
+      const carousel = document.getElementById('elvoraHeroCarousel');
+      if (!carousel) return;
+      if (carousel.dataset.initialized === 'true') return;
+      carousel.dataset.initialized = 'true';
+
+      const slides = carousel.querySelectorAll('.elvora-carousel-slide');
+      const indicators = carousel.querySelectorAll('.elvora-indicator-pill');
+      const prevBtn = document.getElementById('elvoraPrevBtn');
+      const nextBtn = document.getElementById('elvoraNextBtn');
+      if (slides.length <= 1) return;
+
+      let currentIndex = 0;
+      let autoplayTimer = null;
+      const intervalTime = parseInt(carousel.getAttribute('data-autoplay-interval') || '5000', 10);
+
+      function triggerProgressAnimation(pill) {
+        if (!pill) return;
+        const fill = pill.querySelector('.elvora-pill-fill');
+        if (fill) {
+          fill.style.transition = 'none';
+          fill.style.width = '0%';
+          // Force reflow
+          void fill.offsetWidth;
+          fill.style.transition = `width ${intervalTime}ms linear`;
+          fill.style.width = '100%';
+        }
+      }
+
+      function resetAllFills() {
+        indicators.forEach(ind => {
+          const fill = ind.querySelector('.elvora-pill-fill');
+          if (fill) {
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+          }
+        });
+      }
+
+      function goToSlide(index) {
+        slides.forEach((slide, idx) => {
+          slide.classList.toggle('is-active', idx === index);
+        });
+        resetAllFills();
+        indicators.forEach((indicator, idx) => {
+          indicator.classList.toggle('is-active', idx === index);
+          if (idx === index) {
+            triggerProgressAnimation(indicator);
+          }
+        });
+        currentIndex = index;
+      }
+
+      function nextSlide() {
+        const next = (currentIndex + 1) % slides.length;
+        goToSlide(next);
+        resetTimer();
+      }
+
+      function prevSlide() {
+        const prev = (currentIndex - 1 + slides.length) % slides.length;
+        goToSlide(prev);
+        resetTimer();
+      }
+
+      function resetTimer() {
+        clearInterval(autoplayTimer);
+        autoplayTimer = setInterval(nextSlide, intervalTime);
+      }
+
+      indicators.forEach((pill, idx) => {
+        pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(idx);
+          resetTimer();
+        });
+      });
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          prevSlide();
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          nextSlide();
+        });
+      }
+
+      // Pause on hover
+      const heroContainer = carousel.closest('.hero__container') || carousel;
+      heroContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoplayTimer);
+      });
+      heroContainer.addEventListener('mouseleave', () => {
+        resetTimer();
+      });
+
+      // Touch swipe gestures for mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
+      heroContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      heroContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 40) {
+          if (diff < 0) {
+            nextSlide(); // swipe left
+          } else {
+            prevSlide(); // swipe right
+          }
+        }
+      }, { passive: true });
+
+      // Start initial slide
+      goToSlide(0);
+      resetTimer();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroCarousel);
+    } else {
+      initHeroCarousel();
+    }
+
+    document.addEventListener('shopify:section:load', initHeroCarousel);
+  })();
+</script>
 
 {% stylesheet %}
   .hero-wrapper {

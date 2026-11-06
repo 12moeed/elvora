@@ -323,45 +323,172 @@
 {% endcapture %}
 
 {% capture media %}
-  {{ media_slot_1 }}
-  {{ media_slot_2 }}
-
-  {% if media_count == 0 %}
+  {% if section.settings.enable_carousel != false %}
     {% assign hero_speed_s = section.settings.carousel_speed | default: 3 %}
     {% assign hero_speed_ms = hero_speed_s | times: 1000 %}
+    {% assign num_slides = section.settings.slides_count | default: 3 %}
+
     <div class="elvora-hero-carousel" id="elvoraHeroCarousel" data-autoplay-interval="{{ hero_speed_ms }}">
       <div class="elvora-carousel-slides">
+        <!-- Slide 1 -->
         <div class="elvora-carousel-slide is-active" data-slide-index="0">
-          <img
-            src="{{ 'banner_3_desert_sand.jpg' | asset_url }}"
-            alt="ELVORA Minimalist Desert Sand & Travertine"
-            class="hero__media elvora-carousel-img"
-            width="2400"
-            height="1400"
-            loading="eager"
-            fetchpriority="high"
-          >
+          {% if section.settings.slide_image_1 != blank %}
+            <img
+              src="{{ section.settings.slide_image_1 | image_url: width: 2400 }}"
+              alt="{{ section.settings.slide_image_1.alt | default: 'ELVORA Slide 1' | escape }}"
+              class="hero__media elvora-carousel-img"
+              width="2400"
+              height="1400"
+              loading="eager"
+              fetchpriority="high"
+            >
+          {% elsif section.settings.image_1 != blank and section.settings.media_type_1 == 'image' %}
+            <img
+              src="{{ section.settings.image_1 | image_url: width: 2400 }}"
+              alt="{{ section.settings.image_1.alt | default: 'ELVORA Slide 1' | escape }}"
+              class="hero__media elvora-carousel-img"
+              width="2400"
+              height="1400"
+              loading="eager"
+              fetchpriority="high"
+            >
+          {% else %}
+            <img
+              src="{{ 'banner_3_desert_sand.jpg' | asset_url }}"
+              alt="ELVORA Minimalist Desert Sand & Travertine"
+              class="hero__media elvora-carousel-img"
+              width="2400"
+              height="1400"
+              loading="eager"
+              fetchpriority="high"
+            >
+          {% endif %}
         </div>
-        <div class="elvora-carousel-slide" data-slide-index="1">
-          <img
-            src="{{ 'banner_3b_dewy_radiance.jpg' | asset_url }}"
-            alt="ELVORA Dewy Radiance & Glass Skin"
-            class="hero__media elvora-carousel-img"
-            width="2400"
-            height="1400"
-            loading="lazy"
-          >
-        </div>
-        <div class="elvora-carousel-slide" data-slide-index="2">
-          <img
-            src="{{ 'banner_3c_clinical_routine.jpg' | asset_url }}"
-            alt="ELVORA The Complete Daily Ritual"
-            class="hero__media elvora-carousel-img"
-            width="2400"
-            height="1400"
-            loading="lazy"
-          >
-        </div>
+
+        <!-- Slide 2 -->
+        {% if num_slides >= 2 %}
+          <div class="elvora-carousel-slide" data-slide-index="1">
+            {% if section.settings.slide_image_2 != blank %}
+              <img
+                src="{{ section.settings.slide_image_2 | image_url: width: 2400 }}"
+                alt="{{ section.settings.slide_image_2.alt | default: 'ELVORA Slide 2' | escape }}"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                src="{{ 'banner_3b_dewy_radiance.jpg' | asset_url }}"
+                alt="ELVORA Dewy Radiance & Glass Skin"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <!-- Slide 3 -->
+        {% if num_slides >= 3 %}
+          <div class="elvora-carousel-slide" data-slide-index="2">
+            {% if section.settings.slide_image_3 != blank %}
+              <img
+                src="{{ section.settings.slide_image_3 | image_url: width: 2400 }}"
+                alt="{{ section.settings.slide_image_3.alt | default: 'ELVORA Slide 3' | escape }}"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                src="{{ 'banner_3c_clinical_routine.jpg' | asset_url }}"
+                alt="ELVORA The Complete Daily Ritual"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <!-- Slide 4 -->
+        {% if num_slides >= 4 %}
+          <div class="elvora-carousel-slide" data-slide-index="3">
+            {% if section.settings.slide_image_4 != blank %}
+              <img
+                src="{{ section.settings.slide_image_4 | image_url: width: 2400 }}"
+                alt="{{ section.settings.slide_image_4.alt | default: 'ELVORA Slide 4' | escape }}"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                src="{{ 'banner_3_desert_sand.jpg' | asset_url }}"
+                alt="ELVORA Slide 4"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <!-- Slide 5 -->
+        {% if num_slides >= 5 %}
+          <div class="elvora-carousel-slide" data-slide-index="4">
+            {% if section.settings.slide_image_5 != blank %}
+              <img
+                src="{{ section.settings.slide_image_5 | image_url: width: 2400 }}"
+                alt="{{ section.settings.slide_image_5.alt | default: 'ELVORA Slide 5' | escape }}"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                src="{{ 'banner_3b_dewy_radiance.jpg' | asset_url }}"
+                alt="ELVORA Slide 5"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <!-- Slide 6 -->
+        {% if num_slides >= 6 %}
+          <div class="elvora-carousel-slide" data-slide-index="5">
+            {% if section.settings.slide_image_6 != blank %}
+              <img
+                src="{{ section.settings.slide_image_6 | image_url: width: 2400 }}"
+                alt="{{ section.settings.slide_image_6.alt | default: 'ELVORA Slide 6' | escape }}"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                src="{{ 'banner_3c_clinical_routine.jpg' | asset_url }}"
+                alt="ELVORA Slide 6"
+                class="hero__media elvora-carousel-img"
+                width="2400"
+                height="1400"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
 
       <!-- Corner-to-Corner Center Navigation Arrows -->
@@ -372,20 +499,21 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
 
-      <!-- Bottom Minimalist Indicators (No Numbers) -->
+      <!-- Bottom Minimalist Indicators -->
       <div class="elvora-carousel-indicators" id="elvoraIndicators">
-        <button type="button" class="elvora-indicator-pill is-active" data-index="0" aria-label="Slide 1">
-          <span class="elvora-pill-fill"></span>
-        </button>
-        <button type="button" class="elvora-indicator-pill" data-index="1" aria-label="Slide 2">
-          <span class="elvora-pill-fill"></span>
-        </button>
-        <button type="button" class="elvora-indicator-pill" data-index="2" aria-label="Slide 3">
-          <span class="elvora-pill-fill"></span>
-        </button>
+        {% for idx in (0..num_slides) %}
+          {% if idx < num_slides %}
+            <button type="button" class="elvora-indicator-pill{% if idx == 0 %} is-active{% endif %}" data-index="{{ idx }}" aria-label="Slide {{ idx | plus: 1 }}">
+              <span class="elvora-pill-fill"></span>
+            </button>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
-  {%- endif -%}
+  {% else %}
+    {{ media_slot_1 }}
+    {{ media_slot_2 }}
+  {% endif %}
 {% endcapture %}
 
 {% capture media_blurred %}
@@ -1009,7 +1137,13 @@
   "settings": [
     {
       "type": "header",
-      "content": "ELVORA Luxury Hero Carousel"
+      "content": "✨ ELVORA Luxury Hero Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_carousel",
+      "label": "Enable Rolling Banner Carousel",
+      "default": true
     },
     {
       "type": "range",
@@ -1020,6 +1154,49 @@
       "step": 1,
       "default": 3,
       "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "slides_count",
+      "label": "Total Slides to Display",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload your custom images below. If left empty, ELVORA high-res luxury banners are used automatically."
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_image_1",
+      "label": "Slide 1 Custom Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_image_2",
+      "label": "Slide 2 Custom Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_image_3",
+      "label": "Slide 3 Custom Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_image_4",
+      "label": "Slide 4 Custom Image (Optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_image_5",
+      "label": "Slide 5 Custom Image (Optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_image_6",
+      "label": "Slide 6 Custom Image (Optional)"
     },
     {
       "type": "header",

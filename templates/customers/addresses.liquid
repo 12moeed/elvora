@@ -1,0 +1,168 @@
+{% comment %}
+  ELVORA Skincare - Luxury Customer Address Management
+  Functional Requirement: User management & COD delivery destinations
+{% endcomment %}
+
+<div class="elvora-account-page-wrapper">
+  <div class="elvora-account-container">
+    
+    <!-- Top Nav -->
+    <div class="elvora-auth-top-nav">
+      <a href="/account" class="elvora-auth-back-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        <span>Return to Account Dashboard</span>
+      </a>
+    </div>
+
+    <!-- Header -->
+    <div class="elvora-account-hero-card">
+      <div>
+        <div class="elvora-account-tier-badge">
+          <span class="elvora-tier-dot"></span>
+          <span>Delivery Management</span>
+        </div>
+        <h1 class="elvora-account-greeting">
+          Saved Shipping Addresses
+        </h1>
+        <p class="elvora-account-email">
+          Manage your delivery destinations for rapid Cash on Delivery (COD) checkout across Pakistan.
+        </p>
+      </div>
+
+      <div class="elvora-account-header-actions">
+        <button type="button" class="elvora-btn-acc-track" onclick="toggleNewAddressForm()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+          <span>Add New Address</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Add New Address Collapsible Form Card -->
+    <div id="elvora-new-address-box" class="elvora-orders-section-card" style="display: none; margin-bottom: 2rem;">
+      <div class="elvora-orders-header">
+        <h2 class="elvora-orders-title">Add New Delivery Address</h2>
+        <button type="button" class="elvora-btn-auth-text" onclick="toggleNewAddressForm()">Cancel</button>
+      </div>
+
+      {% form 'customer_address', customer.new_address, class: 'elvora-auth-form' %}
+        <div class="elvora-form-row">
+          <div class="elvora-form-field">
+            <label class="elvora-form-label">First Name *</label>
+            <input type="text" name="address[first_name]" value="{{ form.first_name }}" class="elvora-form-input" required placeholder="Ayesha">
+          </div>
+          <div class="elvora-form-field">
+            <label class="elvora-form-label">Last Name *</label>
+            <input type="text" name="address[last_name]" value="{{ form.last_name }}" class="elvora-form-input" required placeholder="Khan">
+          </div>
+        </div>
+
+        <div class="elvora-form-field">
+          <label class="elvora-form-label">Street Address *</label>
+          <input type="text" name="address[address1]" value="{{ form.address1 }}" class="elvora-form-input" required placeholder="House/Apartment #, Street, Sector">
+        </div>
+
+        <div class="elvora-form-field">
+          <label class="elvora-form-label">Apartment, Suite, Landmark (Optional)</label>
+          <input type="text" name="address[address2]" value="{{ form.address2 }}" class="elvora-form-input" placeholder="Near landmark or plaza">
+        </div>
+
+        <div class="elvora-form-row">
+          <div class="elvora-form-field">
+            <label class="elvora-form-label">City *</label>
+            <input type="text" name="address[city]" value="{{ form.city }}" class="elvora-form-input" required placeholder="Lahore, Karachi, Islamabad...">
+          </div>
+          <div class="elvora-form-field">
+            <label class="elvora-form-label">Postal / Zip Code</label>
+            <input type="text" name="address[zip]" value="{{ form.zip }}" class="elvora-form-input" placeholder="54000">
+          </div>
+        </div>
+
+        <div class="elvora-form-row">
+          <div class="elvora-form-field">
+            <label class="elvora-form-label">Country *</label>
+            <input type="text" name="address[country]" value="Pakistan" class="elvora-form-input" readonly>
+          </div>
+          <div class="elvora-form-field">
+            <label class="elvora-form-label">Mobile Number (For Delivery Rider) *</label>
+            <input type="tel" name="address[phone]" value="{{ form.phone }}" class="elvora-form-input" required placeholder="0300 1234567">
+          </div>
+        </div>
+
+        <div class="elvora-checkbox-field">
+          <label class="elvora-checkbox-label">
+            {{ form.set_as_default_checkbox }}
+            <span>Set as default address for Cash on Delivery</span>
+          </label>
+        </div>
+
+        <div class="elvora-auth-actions" style="margin-top: 1rem;">
+          <button type="submit" class="elvora-btn-auth-primary">
+            <span>Save Delivery Address</span>
+          </button>
+        </div>
+      {% endform %}
+    </div>
+
+    <!-- Existing Addresses Grid -->
+    <div class="elvora-account-content-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
+      {% for address in customer.addresses %}
+        <div class="elvora-profile-card">
+          <div class="elvora-profile-card-header">
+            <h3 class="elvora-profile-card-title">
+              {{ address.first_name }} {{ address.last_name }}
+            </h3>
+            {% if address == customer.default_address %}
+              <span class="elvora-addr-badge">Default COD</span>
+            {% endif %}
+          </div>
+
+          <div class="elvora-address-box" style="margin-bottom: 1.25rem;">
+            <p class="elvora-addr-lines">
+              {{ address.address1 }}<br>
+              {% if address.address2 != blank %}{{ address.address2 }}<br>{% endif %}
+              {{ address.city }}{% if address.province != blank %}, {{ address.province }}{% endif %} {{ address.zip }}<br>
+              {{ address.country }}
+            </p>
+            {% if address.phone != blank %}
+              <div class="elvora-addr-phone">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span>{{ address.phone }}</span>
+              </div>
+            {% endif %}
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <form
+              method="post"
+              action="/account/addresses/{{ address.id }}"
+              onsubmit="return confirm('Are you sure you want to delete this delivery address?');"
+            >
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="elvora-order-btn" style="background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleNewAddressForm() {
+    const box = document.getElementById('elvora-new-address-box');
+    if (!box) return;
+    box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+    if (box.style.display === 'block') {
+      box.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+</script>

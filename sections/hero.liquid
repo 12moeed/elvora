@@ -327,7 +327,9 @@
   {{ media_slot_2 }}
 
   {% if media_count == 0 %}
-    <div class="elvora-hero-carousel" id="elvoraHeroCarousel" data-autoplay-interval="5000">
+    {% assign hero_speed_s = section.settings.carousel_speed | default: 3 %}
+    {% assign hero_speed_ms = hero_speed_s | times: 1000 %}
+    <div class="elvora-hero-carousel" id="elvoraHeroCarousel" data-autoplay-interval="{{ hero_speed_ms }}">
       <div class="elvora-carousel-slides">
         <div class="elvora-carousel-slide is-active" data-slide-index="0">
           <img
@@ -1011,6 +1013,20 @@
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "ELVORA Luxury Hero Carousel"
+    },
+    {
+      "type": "range",
+      "id": "carousel_speed",
+      "label": "Auto-Slide Speed (Seconds)",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 3,
+      "unit": "s"
+    },
     {
       "type": "header",
       "content": "t:content.media_1"

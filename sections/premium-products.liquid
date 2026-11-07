@@ -26,7 +26,18 @@
       {% assign prod_count = 0 %}
       {% assign target_collection = section.settings.collection %}
       {% if target_collection == blank %}
-        {% assign target_collection = collections['all'] %}
+        {% assign title_h = section.settings.title | handleize %}
+        {% if collections[title_h] != blank %}
+          {% assign target_collection = collections[title_h] %}
+        {% elsif section.settings.sample_preset == 'best_sellers' and collections['best-sellers'] != blank %}
+          {% assign target_collection = collections['best-sellers'] %}
+        {% elsif section.settings.sample_preset == 'best_sellers' and collections['bestsellers'] != blank %}
+          {% assign target_collection = collections['bestsellers'] %}
+        {% elsif section.settings.sample_preset == 'new_arrivals' and collections['new-arrivals'] != blank %}
+          {% assign target_collection = collections['new-arrivals'] %}
+        {% else %}
+          {% assign target_collection = collections['all'] %}
+        {% endif %}
       {% endif %}
 
       {% if target_collection != blank and target_collection.products.size > 0 %}

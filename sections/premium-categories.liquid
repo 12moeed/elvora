@@ -24,11 +24,18 @@
   <div class="category-accordion-container">
     {% for block in section.blocks %}
       {% liquid
-        assign target_link = block.settings.collection.url | default: block.settings.link | default: '/collections/all'
-        assign card_title = block.settings.title | default: block.settings.collection.title | default: 'Skincare'
+        assign guess_handle = block.settings.title | handleize
+        assign guessed_coll = collections[guess_handle]
+        assign active_collection = block.settings.collection
+        if active_collection == blank and guessed_coll != blank
+          assign active_collection = guessed_coll
+        endif
+
+        assign target_link = active_collection.url | default: block.settings.link | default: '/collections/all'
+        assign card_title = block.settings.title | default: active_collection.title | default: 'Skincare'
         assign card_subtitle = block.settings.subtitle
-        if card_subtitle == blank and block.settings.collection != blank
-          assign card_subtitle = block.settings.collection.all_products_count | append: ' Formulas'
+        if card_subtitle == blank and active_collection != blank
+          assign card_subtitle = active_collection.all_products_count | append: ' Formulas'
         endif
       %}
       <a

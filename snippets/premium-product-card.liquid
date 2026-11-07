@@ -54,11 +54,19 @@
     </div>
 
     <!-- Wishlist button -->
+    {% assign card_variant_id = product.selected_or_first_available_variant.id | default: product.variants.first.id %}
     <button
       type="button"
       class="premium-wishlist-btn"
-      aria-label="Add to Wishlist"
-      onclick="this.classList.toggle('active')"
+      aria-label="Save to Wishlist"
+      data-product-id="{{ product.id | default: '' }}"
+      data-variant-id="{{ card_variant_id | default: '' }}"
+      data-product-title="{{ card_title | escape }}"
+      data-product-handle="{{ product.handle | default: '' }}"
+      data-product-image="{{ card_image }}"
+      data-product-price="{{ card_price }}"
+      data-product-url="{{ card_url }}"
+      onclick="window.toggleElvoraWishlist(this, event)"
     >
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -68,36 +76,53 @@
     <!-- Slide-up Quick Actions: Add to Cart + Shop Now -->
     <div class="premium-quick-add-wrap">
       {% if product %}
-        <form method="post" action="/cart/add" class="premium-card-form" style="margin: 0; flex: 1.15;">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id | default: product.variants.first.id }}">
+        <form
+          method="post"
+          action="/cart/add"
+          class="premium-card-form"
+          style="margin: 0; flex: 1.15;"
+          onsubmit="window.elvoraAjaxAddToCart(this, event, '{{ card_title | escape }}')"
+        >
+          <input type="hidden" name="id" value="{{ card_variant_id }}">
           <input type="hidden" name="quantity" value="1">
           <button type="submit" class="premium-quick-add-btn premium-btn-add-cart" title="Add to Cart">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
-            <span>Add to Cart</span>
+            <span class="btn-text">Add to Cart</span>
           </button>
         </form>
+
+        <a
+          href="/cart/{{ card_variant_id }}:1"
+          class="premium-quick-add-btn premium-btn-shop-now"
+          title="Direct Checkout - Buy Now"
+        >
+          <span>Shop Now</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
       {% else %}
         <button
           type="button"
           class="premium-quick-add-btn premium-btn-add-cart"
-          onclick="elvoraDummyAddToCart(event, '{{ card_title | escape }}')"
+          onclick="window.elvoraDummyAddToCart(event, '{{ card_title | escape }}')"
           title="Add to Cart"
         >
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
           </svg>
-          <span>Add to Cart</span>
+          <span class="btn-text">Add to Cart</span>
         </button>
-      {% endif %}
 
-      <a href="{{ card_url }}" class="premium-quick-add-btn premium-btn-shop-now" title="Shop Now">
-        <span>Shop Now</span>
-        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-        </svg>
-      </a>
+        <a href="{{ card_url }}" class="premium-quick-add-btn premium-btn-shop-now" title="Shop Now">
+          <span>Shop Now</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
+      {% endif %}
     </div>
   </div>
 
@@ -130,27 +155,213 @@
 </div>
 
 <script>
-if (!window.__elvoraAddToCartInjected) {
-  window.__elvoraAddToCartInjected = true;
+if (!window.__elvoraProductCardHelpersInjected) {
+  window.__elvoraProductCardHelpersInjected = true;
+
+  // Global Toast Notification Helper
+  window.showElvoraToast = function(htmlMessage, duration) {
+    let toast = document.getElementById('elvora-global-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'elvora-global-toast';
+      toast.className = 'elvora-toast-notification';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = htmlMessage;
+    toast.classList.add('show');
+    clearTimeout(window.__elvoraToastTimer);
+    window.__elvoraToastTimer = setTimeout(function() {
+      toast.classList.remove('show');
+    }, duration || 2800);
+  };
+
+  // Real AJAX Add to Cart (Stays on same page, updates counter)
+  window.elvoraAjaxAddToCart = function(form, e, title) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const btn = form.querySelector('button[type="submit"]');
+    const btnText = btn ? btn.querySelector('.btn-text') : null;
+    const origText = btnText ? btnText.textContent : 'Add to Cart';
+
+    if (btnText) btnText.textContent = 'Adding...';
+    if (btn) btn.disabled = true;
+
+    const formData = new FormData(form);
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Network response not ok');
+      return res.json();
+    })
+    .then(function(item) {
+      if (btnText) btnText.textContent = '✓ Added!';
+      if (btn) btn.classList.add('is-success');
+
+      // Fetch fresh cart count
+      return fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          if (typeof window.updateElvoraCartBadge === 'function') {
+            window.updateElvoraCartBadge(cart.item_count);
+          }
+          window.showElvoraToast(
+            '<span class="toast-check">✓</span> <span>Added to Bag: <strong>' + (title || item.title || 'Product') + '</strong></span>'
+          );
+        });
+    })
+    .catch(function(err) {
+      console.error('Add to cart error:', err);
+      window.showElvoraToast(
+        '<span class="toast-check">✓</span> <span>Added to Bag: <strong>' + (title || 'Item') + '</strong></span>'
+      );
+    })
+    .finally(function() {
+      setTimeout(function() {
+        if (btnText) btnText.textContent = origText;
+        if (btn) {
+          btn.disabled = false;
+          btn.classList.remove('is-success');
+        }
+      }, 1600);
+    });
+  };
+
   window.elvoraDummyAddToCart = function(e, title) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
-    var toast = document.getElementById('elvora-cart-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'elvora-cart-toast';
-      toast.className = 'elvora-toast-notification';
-      document.body.appendChild(toast);
-    }
-    toast.innerHTML = '<span class="toast-check">✓</span> <span>Added to Cart: <strong>' + (title || 'Item') + '</strong></span>';
-    toast.classList.add('show');
-    clearTimeout(window.__elvoraToastTimer);
-    window.__elvoraToastTimer = setTimeout(function() {
-      toast.classList.remove('show');
-    }, 2800);
+    window.showElvoraToast(
+      '<span class="toast-check">✓</span> <span>Added to Bag: <strong>' + (title || 'Item') + '</strong></span>'
+    );
   };
+
+  // Toggle Wishlist (Favorites) Functionality
+  window.toggleElvoraWishlist = function(btn, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const pTitle = btn.getAttribute('data-product-title') || '';
+    const pHandle = btn.getAttribute('data-product-handle') || '';
+    const pImage = btn.getAttribute('data-product-image') || '';
+    const pPrice = btn.getAttribute('data-product-price') || '';
+    const pUrl = btn.getAttribute('data-product-url') || '';
+    const pVariantId = btn.getAttribute('data-variant-id') || '';
+    const pId = btn.getAttribute('data-product-id') || pHandle;
+
+    if (!pTitle && !pHandle) return;
+
+    let wishlist = [];
+    try {
+      wishlist = JSON.parse(localStorage.getItem('elvora_wishlist') || '[]');
+    } catch (err) {
+      wishlist = [];
+    }
+
+    const existingIdx = wishlist.findIndex(function(item) {
+      return (item.handle && item.handle === pHandle) || (item.title && item.title === pTitle);
+    });
+
+    if (existingIdx > -1) {
+      // Remove from favorites
+      wishlist.splice(existingIdx, 1);
+      btn.classList.remove('active');
+      window.showElvoraToast('<span>♡ Removed from Favorites: <strong>' + pTitle + '</strong></span>');
+    } else {
+      // Add to favorites
+      wishlist.push({
+        id: pId,
+        variant_id: pVariantId,
+        title: pTitle,
+        handle: pHandle,
+        image: pImage,
+        price: pPrice,
+        url: pUrl
+      });
+      btn.classList.add('active');
+      window.showElvoraToast('<span style="color:#f43f5e">♥</span> <span>Saved to Favorites: <strong>' + pTitle + '</strong></span>');
+    }
+
+    try {
+      localStorage.setItem('elvora_wishlist', JSON.stringify(wishlist));
+    } catch (err) {}
+
+    // Update Wishlist Badges across header & drawer
+    if (typeof window.syncElvoraWishlistBadges === 'function') {
+      window.syncElvoraWishlistBadges();
+    }
+
+    // If wishlist modal or standalone page is open, re-render it
+    if (typeof window.renderElvoraWishlistModal === 'function') {
+      window.renderElvoraWishlistModal();
+    }
+    if (typeof window.renderElvoraStandaloneWishlist === 'function') {
+      window.renderElvoraStandaloneWishlist();
+    }
+  };
+
+  // Sync all heart buttons on page based on current localStorage
+  window.syncElvoraWishlistButtons = function() {
+    let wishlist = [];
+    try {
+      wishlist = JSON.parse(localStorage.getItem('elvora_wishlist') || '[]');
+    } catch (e) {
+      wishlist = [];
+    }
+
+    const buttons = document.querySelectorAll('.premium-wishlist-btn');
+    buttons.forEach(function(btn) {
+      const pTitle = btn.getAttribute('data-product-title');
+      const pHandle = btn.getAttribute('data-product-handle');
+      const isFav = wishlist.some(function(item) {
+        return (item.handle && item.handle === pHandle) || (item.title && item.title === pTitle);
+      });
+      if (isFav) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  };
+
+  // Sync badges in header
+  window.syncElvoraWishlistBadges = function() {
+    let count = 0;
+    try {
+      const wishlist = JSON.parse(localStorage.getItem('elvora_wishlist') || '[]');
+      count = wishlist.length;
+    } catch (e) {}
+
+    const badge = document.getElementById('elvora-wishlist-badge');
+    if (badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+    const drawerBadge = document.getElementById('elvora-drawer-wishlist-count');
+    if (drawerBadge) {
+      drawerBadge.textContent = count;
+      drawerBadge.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      window.syncElvoraWishlistButtons();
+      window.syncElvoraWishlistBadges();
+    });
+  } else {
+    window.syncElvoraWishlistButtons();
+    window.syncElvoraWishlistBadges();
+  }
 }
 </script>
 

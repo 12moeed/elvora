@@ -12,7 +12,10 @@
   assign mobile_url = section.settings.image_url_mobile | default: desktop_url
   assign banner_link = section.settings.banner_link
   assign aspect_mode = section.settings.height_mode | default: 'natural'
-  assign is_boxed = section.settings.container_width == 'boxed'
+  assign is_boxed = false
+  if section.settings.container_width == 'boxed'
+    assign is_boxed = true
+  endif
 -%}
 
 <div class="elvora-featured-banner-wrapper {% if is_boxed %}elvora-banner-boxed{% else %}elvora-banner-fullbleed{% endif %}">

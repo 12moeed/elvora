@@ -24,11 +24,27 @@
   <div class="category-accordion-container">
     {% for block in section.blocks %}
       {% liquid
-        assign guess_handle = block.settings.title | handleize
-        assign guessed_coll = collections[guess_handle]
         assign active_collection = block.settings.collection
-        if active_collection == blank and guessed_coll != blank
-          assign active_collection = guessed_coll
+
+        if active_collection == blank
+          assign raw_title = block.settings.title | strip
+          assign handle_dash = raw_title | handleize
+          assign handle_underscore = handle_dash | replace: '-', '_'
+
+          if collections[handle_dash] != blank
+            assign active_collection = collections[handle_dash]
+          elsif collections[handle_underscore] != blank
+            assign active_collection = collections[handle_underscore]
+          else
+            assign title_lower = raw_title | downcase
+            for col in collections
+              assign col_title_lower = col.title | downcase | strip
+              if col_title_lower == title_lower
+                assign active_collection = col
+                break
+              endif
+            endfor
+          endif
         endif
 
         assign target_link = active_collection.url | default: block.settings.link | default: '/collections/all'
@@ -52,9 +68,9 @@
             width="1200"
             height="800"
           >
-        {% elsif block.settings.collection.image != blank %}
+        {% elsif active_collection.image != blank %}
           <img
-            src="{{ block.settings.collection.image | image_url: width: 1200 }}"
+            src="{{ active_collection.image | image_url: width: 1200 }}"
             alt="{{ card_title | escape }}"
             class="category-accordion-img"
             loading="lazy"

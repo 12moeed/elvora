@@ -1,154 +1,92 @@
 {% comment %}
   ELVORA Skincare - Premium Featured Banner (Image Only)
-  Pure visual banner section for campaign posters, promotional graphics, or brand imagery.
-  No text overlays, no buttons, no obstruction.
-  Supports desktop & mobile images, optional click-through link, and glowing Sahara Gold accents.
+  Exact same full-bleed width & dimensions as Sale Banner, but 100% pure image with NO text overlay.
+  Full-width edge-to-edge, drag-and-drop independent section.
 {% endcomment %}
 
-{%- liquid
-  assign desktop_img = section.settings.image_desktop
-  assign mobile_img = section.settings.image_mobile | default: desktop_img
-  assign desktop_url = section.settings.image_url_desktop
-  assign mobile_url = section.settings.image_url_mobile | default: desktop_url
-  assign banner_link = section.settings.banner_link
-  assign aspect_mode = section.settings.height_mode | default: 'natural'
-  assign is_boxed = false
-  if section.settings.container_width == 'boxed'
-    assign is_boxed = true
-  endif
--%}
-
-<div class="elvora-featured-banner-wrapper {% if is_boxed %}elvora-banner-boxed{% else %}elvora-banner-fullbleed{% endif %}">
+<div class="premium-promo-section premium-featured-banner-section height-{{ section.settings.banner_height | default: 'match_sale' }}">
   
-  <div class="elvora-featured-banner-inner {% if aspect_mode != 'natural' %}is-fixed-height height-{{ aspect_mode }}{% endif %}">
-    
-    {% if section.settings.show_gold_accents %}
-      <div class="elvora-banner-accent-top" aria-hidden="true"></div>
-      <div class="elvora-banner-accent-bottom" aria-hidden="true"></div>
-    {% endif %}
+  {% if section.settings.show_gold_accents %}
+    <div class="premium-promo-accent-top" aria-hidden="true"></div>
+    <div class="premium-promo-accent-bottom" aria-hidden="true"></div>
+  {% endif %}
 
-    {% if banner_link != blank %}
-      <a
-        href="{{ banner_link }}"
-        class="elvora-banner-link"
-        {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-        aria-label="{{ section.settings.accessibility_alt | default: 'Featured Banner' | escape }}"
-      >
+  {% if section.settings.banner_link != blank %}
+    <a
+      href="{{ section.settings.banner_link }}"
+      class="premium-banner-clickable-wrap"
+      {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+      aria-label="{{ section.settings.accessibility_alt | default: 'ELVORA Featured Banner' | escape }}"
+    >
+  {% else %}
+    <div class="premium-banner-clickable-wrap">
+  {% endif %}
+
+    {% if section.settings.image_desktop != blank or section.settings.image_url_desktop != blank %}
+      <picture class="premium-banner-picture">
+        <!-- Mobile source -->
+        {% if section.settings.image_mobile != blank %}
+          <source media="(max-width: 767px)" srcset="{{ section.settings.image_mobile | image_url: width: 1200 }}">
+        {% elsif section.settings.image_url_mobile != blank %}
+          <source media="(max-width: 767px)" srcset="{{ section.settings.image_url_mobile }}">
+        {% endif %}
+
+        <!-- Desktop source -->
+        {% if section.settings.image_desktop != blank %}
+          <img
+            src="{{ section.settings.image_desktop | image_url: width: 2600 }}"
+            alt="{{ section.settings.accessibility_alt | default: 'ELVORA Featured Banner' | escape }}"
+            class="premium-banner-img"
+            loading="lazy"
+            width="2600"
+            height="1000"
+          >
+        {% else %}
+          <img
+            src="{{ section.settings.image_url_desktop }}"
+            alt="{{ section.settings.accessibility_alt | default: 'ELVORA Featured Banner' | escape }}"
+            class="premium-banner-img"
+            loading="lazy"
+            width="2600"
+            height="1000"
+          >
+        {% endif %}
+      </picture>
     {% else %}
-      <div class="elvora-banner-static">
-    {% endif %}
-
-      {% if desktop_img != blank or desktop_url != blank %}
-        <picture class="elvora-banner-picture">
-          <!-- Mobile View Source -->
-          {% if mobile_img != blank %}
-            <source media="(max-width: 767px)" srcset="{{ mobile_img | image_url: width: 1200 }}">
-          {% elsif mobile_url != blank %}
-            <source media="(max-width: 767px)" srcset="{{ mobile_url }}">
-          {% endif %}
-
-          <!-- Desktop Image -->
-          {% if desktop_img != blank %}
-            <img
-              src="{{ desktop_img | image_url: width: 2400 }}"
-              alt="{{ section.settings.accessibility_alt | default: 'ELVORA Skincare Featured Banner' | escape }}"
-              class="elvora-banner-img"
-              loading="{% if section.settings.lazyload %}lazy{% else %}eager{% endif %}"
-              width="{{ desktop_img.width | default: 2400 }}"
-              height="{{ desktop_img.height | default: 800 }}"
-            >
-          {% else %}
-            <img
-              src="{{ desktop_url }}"
-              alt="{{ section.settings.accessibility_alt | default: 'ELVORA Skincare Featured Banner' | escape }}"
-              class="elvora-banner-img"
-              loading="{% if section.settings.lazyload %}lazy{% else %}eager{% endif %}"
-              width="2400"
-              height="800"
-            >
-          {% endif %}
-        </picture>
-      {% else %}
-        <!-- Luxury Empty State for Theme Editor -->
-        <div class="elvora-banner-placeholder">
-          <div class="elvora-placeholder-card">
-            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #D4AF37; margin: 0 auto 0.75rem;">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
-            </svg>
-            <h3 style="font-family: var(--font-heading); color: #FFF6E8; font-size: 1.25rem; margin-bottom: 0.35rem; font-weight: 700;">Featured Banner (Image Only)</h3>
-            <p style="color: rgba(255, 240, 220, 0.75); font-size: 0.9rem; margin: 0;">Shopify Theme Editor (Customize) se yahan apna graphic banner upload karein.</p>
-          </div>
-        </div>
-      {% endif %}
-
-    {% if banner_link != blank %}
-      </a>
-    {% else %}
+      <!-- Empty State inside Shopify Theme Editor -->
+      <div class="premium-banner-placeholder-box">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #D4AF37; margin: 0 auto 0.75rem;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+        </svg>
+        <h3 style="font-family: var(--font-heading); color: #FFF6E8; font-size: 1.25rem; margin-bottom: 0.35rem; font-weight: 700;">Featured Banner (Image Only)</h3>
+        <p style="color: rgba(255, 240, 220, 0.75); font-size: 0.9rem; margin: 0;">Shopify Theme Editor (Customize) se yahan apna graphic banner upload karein.</p>
       </div>
     {% endif %}
 
-  </div>
+  {% if section.settings.banner_link != blank %}
+    </a>
+  {% else %}
+    </div>
+  {% endif %}
+
 </div>
 
 <style>
-  .elvora-featured-banner-wrapper {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .elvora-featured-banner-wrapper.elvora-banner-fullbleed {
+  /* Full-bleed Edge-to-Edge Container (Exact same width as Sale Banner) */
+  .premium-featured-banner-section {
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
     max-width: 100% !important;
-    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     padding: 0 !important;
+    display: block !important;
+    background: #140A05 !important;
+    grid-column: 1 / -1 !important;
   }
 
-  .elvora-featured-banner-wrapper.elvora-banner-boxed {
-    max-width: 1650px;
-    margin: 2.5rem auto;
-    padding: 0 1rem;
-  }
-
-  .elvora-banner-boxed .elvora-featured-banner-inner {
-    border-radius: 18px;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
-  }
-
-  .elvora-featured-banner-inner {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background: #140A05;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Glowing Top & Bottom Sahara Gold Accent Lines */
-  .elvora-banner-accent-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #46240E 25%, #D4AF37 50%, #46240E 75%, transparent);
-    z-index: 4;
-    pointer-events: none;
-  }
-
-  .elvora-banner-accent-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #46240E 25%, #D4AF37 50%, #46240E 75%, transparent);
-    z-index: 4;
-    pointer-events: none;
-  }
-
-  .elvora-banner-link,
-  .elvora-banner-static {
+  .premium-banner-clickable-wrap {
     display: block;
     width: 100%;
     height: 100%;
@@ -156,95 +94,91 @@
     position: relative;
   }
 
-  .elvora-banner-link {
-    cursor: pointer;
-  }
-
-  .elvora-banner-picture {
+  .premium-banner-picture {
     display: block;
     width: 100%;
     height: 100%;
   }
 
-  .elvora-banner-img {
+  /* Height Modes matching Sale Banner */
+  .premium-featured-banner-section.height-match_sale .premium-banner-img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: center;
     display: block;
+  }
+
+  .premium-featured-banner-section.height-compact .premium-banner-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .premium-featured-banner-section.height-large .premium-banner-img {
+    width: 100%;
+    height: 650px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .premium-featured-banner-section.height-natural .premium-banner-img {
     width: 100%;
     height: auto;
-    object-fit: cover;
-    object-position: center center;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Fixed Height Modes */
-  .elvora-featured-banner-inner.is-fixed-height.height-compact {
-    height: 420px;
-  }
-  .elvora-featured-banner-inner.is-fixed-height.height-medium {
-    height: 540px;
-  }
-  .elvora-featured-banner-inner.is-fixed-height.height-large {
-    height: 680px;
-  }
-
-  .elvora-featured-banner-inner.is-fixed-height .elvora-banner-img {
-    height: 100%;
+    display: block;
   }
 
   @media (max-width: 767px) {
-    .elvora-featured-banner-inner.is-fixed-height.height-compact {
-      height: 300px;
+    .premium-featured-banner-section.height-match_sale .premium-banner-img {
+      height: 380px;
     }
-    .elvora-featured-banner-inner.is-fixed-height.height-medium {
-      height: 420px;
+    .premium-featured-banner-section.height-compact .premium-banner-img {
+      height: 280px;
     }
-    .elvora-featured-banner-inner.is-fixed-height.height-large {
-      height: 520px;
+    .premium-featured-banner-section.height-large .premium-banner-img {
+      height: 480px;
     }
   }
 
-  /* Subtle interactive hover when banner is clickable */
-  .elvora-banner-link:hover .elvora-banner-img {
-    transform: scale(1.012);
-  }
-
-  /* Placeholder Styling */
-  .elvora-banner-placeholder {
+  .premium-banner-placeholder-box {
     width: 100%;
+    min-height: 420px;
     padding: 5rem 1.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #1C0C04 0%, #35180A 50%, #1C0C04 100%);
-    border: 1px dashed rgba(212, 175, 55, 0.45);
+    border: 1.5px dashed rgba(212, 175, 55, 0.45);
     text-align: center;
-  }
-
-  .elvora-placeholder-card {
-    max-width: 460px;
+    box-sizing: border-box;
   }
 </style>
 
 {% schema %}
 {
-  "name": "Featured Banner (Image)",
+  "name": "Featured Banner (Image Only)",
   "tag": "section",
   "class": "section section--full-width section--full-bleed",
   "settings": [
     {
       "type": "header",
-      "content": "Desktop & Mobile Banner Images"
+      "content": "Banner Images (No Text Overlay)"
     },
     {
       "type": "image_picker",
       "id": "image_desktop",
       "label": "Desktop Banner Image",
-      "info": "Recommended: 1920x600px ya 2000x700px (JPG/WebP/PNG)"
+      "info": "Recommended: 1920x600px ya 2400x800px"
     },
     {
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Mobile Banner Image (Optional)",
-      "info": "Recommended: 800x1000px ya 1080x1350px. Khali chorne par desktop image automatically use hogi."
+      "info": "Recommended: 800x1000px ya 1080x1350px. Khali chorne par desktop image chalegi."
     },
     {
       "type": "text",
@@ -258,13 +192,13 @@
     },
     {
       "type": "header",
-      "content": "Banner Click Link"
+      "content": "Click Link & Actions"
     },
     {
       "type": "url",
       "id": "banner_link",
-      "label": "Banner Click URL",
-      "info": "Agar customer banner par click kare to kahan redirect ho (e.g. collection ya product). Khali chorne par click disabled rahega."
+      "label": "Banner Click Link (Optional)",
+      "info": "Click karne par customer kahan jaye (e.g. collection ya product). Khali chorne par click off hoga."
     },
     {
       "type": "checkbox",
@@ -280,66 +214,42 @@
     },
     {
       "type": "header",
-      "content": "Layout & Styling"
+      "content": "Banner Height"
     },
     {
       "type": "select",
-      "id": "container_width",
-      "label": "Container Width",
-      "options": [
-        {
-          "value": "full_width",
-          "label": "Full Width (Edge-to-Edge)"
-        },
-        {
-          "value": "boxed",
-          "label": "Boxed (Contained)"
-        }
-      ],
-      "default": "full_width"
-    },
-    {
-      "type": "select",
-      "id": "height_mode",
+      "id": "banner_height",
       "label": "Height Mode",
       "options": [
+        {
+          "value": "match_sale",
+          "label": "Same as Sale Banner (520px Full Width)"
+        },
         {
           "value": "natural",
           "label": "Natural (Original Image Ratio)"
         },
         {
           "value": "compact",
-          "label": "Compact Height (420px / 300px)"
-        },
-        {
-          "value": "medium",
-          "label": "Medium Height (540px / 420px)"
+          "label": "Compact Height (400px)"
         },
         {
           "value": "large",
-          "label": "Large Height (680px / 520px)"
+          "label": "Large Height (650px)"
         }
       ],
-      "default": "natural"
+      "default": "match_sale"
     },
     {
       "type": "checkbox",
       "id": "show_gold_accents",
-      "label": "Show Glowing Sahara Gold Accent Borders",
-      "default": true,
-      "info": "Sale banner ki tarah uper aur neechay glowing gold line show karta hai."
-    },
-    {
-      "type": "checkbox",
-      "id": "lazyload",
-      "label": "Enable Lazy Loading",
+      "label": "Show Glowing Gold Border Lines",
       "default": true
     }
   ],
   "presets": [
     {
-      "name": "Featured Banner (Image Only)",
-      "category": "Image"
+      "name": "Featured Banner (Image Only)"
     }
   ]
 }

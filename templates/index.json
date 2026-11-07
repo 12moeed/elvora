@@ -205,6 +205,17 @@
         "image_url": ""
       }
     },
+    "featured_image_banner": {
+      "type": "premium-featured-banner",
+      "settings": {
+        "image_url_desktop": "",
+        "banner_link": "",
+        "container_width": "full_width",
+        "height_mode": "natural",
+        "show_gold_accents": true,
+        "accessibility_alt": "ELVORA Luxury Featured Banner"
+      }
+    },
     "featured_products_2": {
       "type": "premium-products",
       "settings": {
@@ -235,6 +246,7 @@
     "best_sellers",
     "featured_products_1",
     "sale_banner",
+    "featured_image_banner",
     "featured_products_2",
     "about_us"
   ]

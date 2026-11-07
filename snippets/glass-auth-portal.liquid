@@ -10,6 +10,90 @@
 
 {%- assign init_tab = default_tab | default: 'signin' -%}
 
+<style>
+  /* ELVORA Auth Portal - Desert Brown & Sahara Gold Theme Enforcement */
+  .elvora-sahara-auth-stage input.elvora-crystal-input,
+  .elvora-sahara-auth-stage textarea.elvora-crystal-input,
+  .elvora-crystal-form input:not([type='checkbox'], [type='radio']),
+  .elvora-crystal-input {
+    width: 100% !important;
+    padding: 0.85rem 1rem 0.85rem 2.65rem !important;
+    background-color: rgba(36, 19, 10, 0.75) !important;
+    background: rgba(36, 19, 10, 0.75) !important;
+    border: 1.5px solid rgba(229, 195, 122, 0.5) !important;
+    border-radius: 12px !important;
+    font-size: 13.5px !important;
+    color: #FFF6E8 !important;
+    font-family: inherit !important;
+    transition: all 0.22s ease !important;
+    box-sizing: border-box !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .elvora-sahara-auth-stage input.elvora-crystal-input::placeholder,
+  .elvora-crystal-form input::placeholder {
+    color: rgba(235, 210, 180, 0.6) !important;
+    opacity: 1 !important;
+  }
+
+  .elvora-sahara-auth-stage input.elvora-crystal-input:focus,
+  .elvora-crystal-form input:focus {
+    outline: none !important;
+    background-color: rgba(52, 28, 14, 0.9) !important;
+    background: rgba(52, 28, 14, 0.9) !important;
+    border-color: #D4AF37 !important;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(212, 175, 55, 0.35) !important;
+    color: #FFFFFF !important;
+  }
+
+  /* Autofill Desert Brown Fix */
+  .elvora-sahara-auth-stage input:-webkit-autofill,
+  .elvora-sahara-auth-stage input:-webkit-autofill:hover, 
+  .elvora-sahara-auth-stage input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #FFF6E8 !important;
+    -webkit-box-shadow: 0 0 0px 1000px #26140A inset !important;
+    box-shadow: 0 0 0px 1000px #26140A inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+
+  /* Submit Button - Desert Brown & Amber Gold Gradient */
+  .elvora-crystal-submit-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    padding: 0.95rem 1.5rem !important;
+    margin-top: 0.25rem !important;
+    background: linear-gradient(135deg, #46240E 0%, #784119 48%, #C48739 100%) !important;
+    color: #ffffff !important;
+    border: 1.5px solid rgba(245, 215, 150, 0.6) !important;
+    border-radius: 12px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    box-shadow: 0 8px 24px rgba(70, 36, 14, 0.55), 0 0 14px rgba(212, 175, 55, 0.3) !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .elvora-crystal-submit-btn:hover {
+    transform: translateY(-2px) !important;
+    background: linear-gradient(135deg, #582D12 0%, #8D4D1E 48%, #D89844 100%) !important;
+    box-shadow: 0 12px 30px rgba(70, 36, 14, 0.7), 0 0 20px rgba(212, 175, 55, 0.45) !important;
+    border-color: #FFE6A3 !important;
+  }
+
+  .elvora-crystal-tab-btn.is-active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(122, 66, 26, 0.6) 100%) !important;
+    border-color: rgba(229, 195, 122, 0.65) !important;
+    color: #ffffff !important;
+  }
+</style>
+
 <div class="elvora-sahara-auth-stage" style="--sahara-bg: url('{{ 'elvora_sahara_dunes.jpg' | asset_url }}');">
   
   <!-- Layer 1: Sahara Desert Full-Screen Backdrop with Slow Ken-Burns Breathe -->

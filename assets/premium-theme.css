@@ -6,14 +6,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&display=swap');
 
 :root {
-  --color-primary: #B34090;
-  --color-primary-rgb: 179, 64, 144;
-  --color-primary-dark: #8B1A6B;
-  --color-primary-light: #f472b6;
-  --color-secondary: #FDF2F8;
-  --color-secondary-rgb: 253, 242, 248;
+  --color-primary: #1C1226;
+  --color-primary-rgb: 28, 18, 38;
+  --color-primary-dark: #120A1A;
+  --color-primary-light: #3D1A37;
+  --color-secondary: #FAF6F0;
+  --color-secondary-rgb: 250, 246, 240;
   --color-accent: #222222;
-  --color-gold: #C9A961;
+  --color-gold: #D4AF37;
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -24,7 +24,7 @@
 .premium-gradient-line {
   height: 3px;
   width: 100%;
-  background: linear-gradient(90deg, var(--color-primary) 0%, #e879c0 50%, var(--color-primary) 100%);
+  background: linear-gradient(90deg, #1C1226 0%, #D4AF37 50%, #1C1226 100%);
 }
 
 /* ==========================================================================
@@ -757,7 +757,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #B34090 30%, #f472b6 70%, transparent);
+  background: linear-gradient(90deg, transparent, #1C1226 30%, #D4AF37 70%, transparent);
   z-index: 5;
 }
 
@@ -767,7 +767,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #B34090 30%, #f472b6 70%, transparent);
+  background: linear-gradient(90deg, transparent, #1C1226 30%, #D4AF37 70%, transparent);
   z-index: 5;
 }
 
@@ -1143,7 +1143,7 @@ header,
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-primary) 0%, #e879c0 50%, var(--color-primary) 100%);
+  background: linear-gradient(90deg, #1C1226 0%, #D4AF37 50%, #1C1226 100%);
   z-index: 999;
 }
 
@@ -3269,7 +3269,7 @@ body:not(:has(.elvora-navbar-root[data-is-home="true"])) .elvora-navbar-root {
   left: 0;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #B34090 0%, #ff8ecb 100%);
+  background: linear-gradient(90deg, #1C1226 0%, #D4AF37 100%);
   border-radius: 9999px;
 }
 
@@ -5608,7 +5608,7 @@ main#MainContent[data-template*="customers/register"] {
   width: 100%;
   padding: 0.95rem 1.5rem;
   margin-top: 0.25rem;
-  background: linear-gradient(135deg, #B34090 0%, #8B1A6B 52%, #c98a4b 100%);
+  background: linear-gradient(135deg, #1C1226 0%, #351731 52%, #D4AF37 100%);
   color: #ffffff;
   border: 1px solid rgba(255, 232, 195, 0.42);
   border-radius: 12px;

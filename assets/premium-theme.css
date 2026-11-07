@@ -5423,8 +5423,8 @@ main#MainContent[data-template*="customers/register"] {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
-  background: rgba(14, 7, 3, 0.36);
-  border: 1px solid rgba(255, 225, 180, 0.22);
+  background: rgba(14, 7, 3, 0.45);
+  border: 1px solid rgba(229, 195, 122, 0.35);
   padding: 5px;
   border-radius: 14px;
   margin-bottom: 1.5rem;
@@ -5441,7 +5441,7 @@ main#MainContent[data-template*="customers/register"] {
   border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 242, 224, 0.72);
+  color: rgba(255, 242, 224, 0.75);
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: var(--font-body);
@@ -5449,14 +5449,15 @@ main#MainContent[data-template*="customers/register"] {
 
 .elvora-crystal-tab-btn:hover {
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .elvora-crystal-tab-btn.is-active {
-  background: linear-gradient(135deg, rgba(255, 236, 200, 0.24) 0%, rgba(179, 64, 144, 0.38) 100%);
-  border-color: rgba(255, 230, 185, 0.48);
-  color: #ffffff;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(122, 66, 26, 0.6) 100%) !important;
+  border-color: rgba(229, 195, 122, 0.65) !important;
+  color: #ffffff !important;
   font-weight: 700;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* Panes */
@@ -5504,7 +5505,7 @@ main#MainContent[data-template*="customers/register"] {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: rgba(255, 240, 218, 0.92);
+  color: rgba(255, 240, 218, 0.95);
 }
 
 .elvora-crystal-forgot-link {
@@ -5529,36 +5530,57 @@ main#MainContent[data-template*="customers/register"] {
   align-items: center;
 }
 
+/* Desert Brown Luxury Input Fields (Overrides Dawn / Base.css white background) */
+input.elvora-crystal-input,
+textarea.elvora-crystal-input,
+.elvora-crystal-form input:not([type='checkbox'], [type='radio']),
 .elvora-crystal-input {
-  width: 100%;
-  padding: 0.82rem 1rem 0.82rem 2.55rem;
-  background: rgba(15, 8, 4, 0.38);
-  border: 1px solid rgba(255, 224, 178, 0.3);
-  border-radius: 12px;
-  font-size: 13.5px;
-  color: #ffffff;
-  font-family: var(--font-body);
-  transition: all 0.22s ease;
-  box-sizing: border-box;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  width: 100% !important;
+  padding: 0.85rem 1rem 0.85rem 2.65rem !important;
+  background-color: rgba(36, 19, 10, 0.72) !important;
+  background: rgba(36, 19, 10, 0.72) !important;
+  border: 1.5px solid rgba(229, 195, 122, 0.45) !important;
+  border-radius: 12px !important;
+  font-size: 13.5px !important;
+  color: #FFF6E8 !important;
+  font-family: var(--font-body) !important;
+  transition: all 0.22s ease !important;
+  box-sizing: border-box !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4) !important;
 }
 
-.elvora-crystal-input::placeholder {
-  color: rgba(255, 238, 215, 0.45);
+input.elvora-crystal-input::placeholder,
+.elvora-crystal-form input::placeholder {
+  color: rgba(235, 210, 180, 0.55) !important;
+  opacity: 1 !important;
 }
 
-.elvora-crystal-input:focus {
-  outline: none;
-  background: rgba(15, 8, 4, 0.56);
-  border-color: #f5c678;
-  box-shadow: 0 0 0 3px rgba(245, 198, 120, 0.22);
+input.elvora-crystal-input:focus,
+.elvora-crystal-form input:focus {
+  outline: none !important;
+  background-color: rgba(50, 26, 13, 0.88) !important;
+  background: rgba(50, 26, 13, 0.88) !important;
+  border-color: #D4AF37 !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(212, 175, 55, 0.3) !important;
+  color: #FFFFFF !important;
+}
+
+/* Chrome/Safari Autofill fix to preserve warm desert brown */
+input.elvora-crystal-input:-webkit-autofill,
+input.elvora-crystal-input:-webkit-autofill:hover, 
+input.elvora-crystal-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #FFF6E8 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #26140A inset !important;
+  box-shadow: 0 0 0px 1000px #26140A inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 .elvora-crystal-icon {
   position: absolute;
   left: 0.88rem;
-  color: rgba(255, 232, 195, 0.7);
+  color: rgba(229, 195, 122, 0.85);
   display: flex;
   align-items: center;
   pointer-events: none;
@@ -5569,7 +5591,7 @@ main#MainContent[data-template*="customers/register"] {
   right: 0.75rem;
   background: none;
   border: none;
-  color: rgba(255, 232, 195, 0.7);
+  color: rgba(229, 195, 122, 0.85);
   cursor: pointer;
   padding: 4px;
   display: flex;
@@ -5593,38 +5615,40 @@ main#MainContent[data-template*="customers/register"] {
   font-size: 11px;
   font-weight: 600;
   color: #ffe8be;
-  background: rgba(245, 198, 120, 0.14);
-  border: 1px solid rgba(245, 198, 120, 0.32);
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(229, 195, 122, 0.42);
   padding: 3px 10px;
   border-radius: 9999px;
 }
 
-/* Submit Button */
+/* Submit Button - Luxury Sahara Desert Brown & Radiant Warm Amber */
 .elvora-crystal-submit-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 0.95rem 1.5rem;
-  margin-top: 0.25rem;
-  background: linear-gradient(135deg, #0E2E4E 0%, #1B5285 52%, #D4AF37 100%);
-  color: #ffffff;
-  border: 1px solid rgba(255, 232, 195, 0.42);
-  border-radius: 12px;
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 10px 28px rgba(179, 64, 144, 0.38);
-  transition: all 0.25s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  padding: 0.95rem 1.5rem !important;
+  margin-top: 0.25rem !important;
+  background: linear-gradient(135deg, #46240E 0%, #784119 48%, #C48739 100%) !important;
+  color: #ffffff !important;
+  border: 1.5px solid rgba(245, 215, 150, 0.6) !important;
+  border-radius: 12px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  box-shadow: 0 8px 24px rgba(70, 36, 14, 0.55), 0 0 14px rgba(212, 175, 55, 0.3) !important;
+  transition: all 0.25s ease !important;
 }
 
 .elvora-crystal-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 34px rgba(179, 64, 144, 0.52);
-  filter: brightness(1.08);
+  transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, #582D12 0%, #8D4D1E 48%, #D89844 100%) !important;
+  box-shadow: 0 12px 30px rgba(70, 36, 14, 0.7), 0 0 20px rgba(212, 175, 55, 0.45) !important;
+  border-color: #FFE6A3 !important;
+  filter: brightness(1.05) !important;
 }
 
 /* Switch Prompt Link */

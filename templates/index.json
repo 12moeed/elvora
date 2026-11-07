@@ -66,12 +66,7 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "enable_carousel": true,
         "carousel_speed": 3,
-        "slides_count": 3,
-        "slide_image_1": "shopify://shop_images/banner_3_desert_sand.jpg",
-        "slide_image_2": "shopify://shop_images/banner_3c_clinical_routine.jpg",
-        "slide_image_3": "shopify://shop_images/banner_3b_dewy_radiance.jpg",
         "media_type_1": "image",
         "image_1": "shopify://shop_images/banner_3_desert_sand.jpg",
         "media_type_2": "image",
@@ -109,10 +104,8 @@
         "cat_1": {
           "type": "category",
           "settings": {
-            "collection": "",
             "title": "Serums & Actives",
             "subtitle": "Formulas",
-            "image": "shopify://shop_images/01_Serums_and_Actives_CLEAR.jpg",
             "image_url": "",
             "link": ""
           }
@@ -120,10 +113,8 @@
         "cat_2": {
           "type": "category",
           "settings": {
-            "collection": "",
             "title": "Cleansers & Toners",
             "subtitle": "Products",
-            "image": "shopify://shop_images/02_Cleansers_and_Toners_CLEAR.jpg",
             "image_url": "",
             "link": ""
           }
@@ -131,10 +122,8 @@
         "cat_3": {
           "type": "category",
           "settings": {
-            "collection": "",
             "title": "Barrier Moisturizers",
             "subtitle": "Creams",
-            "image": "shopify://shop_images/03_Barrier_Moisturizers_CLEAR_A.jpg",
             "image_url": "",
             "link": ""
           }
@@ -142,10 +131,8 @@
         "cat_4": {
           "type": "category",
           "settings": {
-            "collection": "",
             "title": "Sunscreen & SPF",
             "subtitle": "Formulas",
-            "image": "shopify://shop_images/04_Sunscreen_and_SPF_CLEAR_A.jpg",
             "image_url": "",
             "link": ""
           }
@@ -153,10 +140,8 @@
         "cat_5": {
           "type": "category",
           "settings": {
-            "collection": "",
             "title": "Eye & Night Care",
             "subtitle": "Treatments",
-            "image": "shopify://shop_images/05_Eye_and_Night_Care_CLEAR_A.jpg",
             "image_url": "",
             "link": ""
           }

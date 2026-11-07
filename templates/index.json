@@ -210,10 +210,8 @@
       "settings": {
         "image_url_desktop": "",
         "banner_link": "",
-        "container_width": "full_width",
-        "height_mode": "natural",
-        "show_gold_accents": true,
-        "accessibility_alt": "ELVORA Luxury Featured Banner"
+        "accessibility_alt": "ELVORA Luxury Featured Banner",
+        "show_gold_accents": true
       }
     },
     "featured_products_2": {

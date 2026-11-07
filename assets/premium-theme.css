@@ -715,13 +715,16 @@
 }
 
 /* ==========================================================================
-   SALE PROMO BANNER (EDGE-TO-EDGE HORIZONTAL FULL SCREEN)
+   SALE PROMO BANNER & FEATURED IMAGE BANNER (EDGE-TO-EDGE FULL SCREEN)
    Zero out all side white space, full bleed 100vw, horizontal expansive card
    ========================================================================== */
 .shopify-section:has(.premium-promo-section),
+.shopify-section:has(.premium-featured-banner-section),
 #shopify-section-template--28214031745276__sale_banner,
 .shopify-section.section--full-width:has(.premium-promo-section),
-.shopify-section.section:has(.premium-promo-section) {
+.shopify-section.section--full-width:has(.premium-featured-banner-section),
+.shopify-section.section:has(.premium-promo-section),
+.shopify-section.section:has(.premium-featured-banner-section) {
   width: 100% !important;
   max-width: 100% !important;
   padding-left: 0 !important;
@@ -731,7 +734,8 @@
   display: block !important;
 }
 
-.shopify-section:has(.premium-promo-section) > * {
+.shopify-section:has(.premium-promo-section) > *,
+.shopify-section:has(.premium-featured-banner-section) > * {
   grid-column: 1 / -1 !important;
 }
 

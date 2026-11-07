@@ -48,9 +48,9 @@
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button-custom",
-            "custom_button_background": "#46240E",
+            "custom_button_background": "#46240e",
             "custom_button_text": "#ffffff",
-            "custom_button_border": "#D4AF37",
+            "custom_button_border": "#d4af37",
             "link_text_color": "",
             "width": "fit-content",
             "custom_width": 100,
@@ -66,7 +66,9 @@
       ],
       "name": "t:names.hero",
       "settings": {
+        "enable_carousel": true,
         "carousel_speed": 3,
+        "slides_count": 3,
         "media_type_1": "image",
         "image_1": "shopify://shop_images/banner_3_desert_sand.jpg",
         "media_type_2": "image",
@@ -104,6 +106,7 @@
         "cat_1": {
           "type": "category",
           "settings": {
+            "collection": "",
             "title": "Serums & Actives",
             "subtitle": "Formulas",
             "image_url": "",
@@ -113,6 +116,7 @@
         "cat_2": {
           "type": "category",
           "settings": {
+            "collection": "",
             "title": "Cleansers & Toners",
             "subtitle": "Products",
             "image_url": "",
@@ -122,6 +126,7 @@
         "cat_3": {
           "type": "category",
           "settings": {
+            "collection": "",
             "title": "Barrier Moisturizers",
             "subtitle": "Creams",
             "image_url": "",
@@ -131,6 +136,7 @@
         "cat_4": {
           "type": "category",
           "settings": {
+            "collection": "",
             "title": "Sunscreen & SPF",
             "subtitle": "Formulas",
             "image_url": "",
@@ -140,6 +146,7 @@
         "cat_5": {
           "type": "category",
           "settings": {
+            "collection": "",
             "title": "Eye & Night Care",
             "subtitle": "Treatments",
             "image_url": "",
@@ -172,6 +179,17 @@
         "sample_preset": "new_arrivals"
       }
     },
+    "sale_banner": {
+      "type": "premium-promo-banner",
+      "settings": {
+        "badge": "Limited Time Offer",
+        "title": "Exclusive Skincare Glow Sale",
+        "subtitle": "Enjoy up to 40% off on our clinical serums, ceramide barrier creams, and daily SPF defense. Elevate your glow today.",
+        "cta_text": "Shop The Glow Sale",
+        "link": "",
+        "image_url": ""
+      }
+    },
     "best_sellers": {
       "type": "premium-products",
       "settings": {
@@ -192,17 +210,6 @@
         "products_to_show": 10,
         "show_view_all": true,
         "sample_preset": "featured"
-      }
-    },
-    "sale_banner": {
-      "type": "premium-promo-banner",
-      "settings": {
-        "badge": "Limited Time Offer",
-        "title": "Exclusive Skincare Glow Sale",
-        "subtitle": "Enjoy up to 40% off on our clinical serums, ceramide barrier creams, and daily SPF defense. Elevate your glow today.",
-        "cta_text": "Shop The Glow Sale",
-        "link": "",
-        "image_url": ""
       }
     },
     "featured_products_2": {
@@ -232,9 +239,9 @@
     "hero_jVaWmY",
     "categories_section",
     "new_arrivals",
+    "sale_banner",
     "best_sellers",
     "featured_products_1",
-    "sale_banner",
     "featured_products_2",
     "about_us"
   ]

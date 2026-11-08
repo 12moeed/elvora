@@ -199,7 +199,7 @@
             e.preventDefault();
             e.stopPropagation();
             if (sessionStorage.getItem('elvora_admin_logged_in') === 'true') {
-              window.location.href = '/pages/contact?view=admin';
+              window.location.href = '/admin';
             } else {
               const u = localStorage.getItem('elvora_auth_user');
               if (u) {

@@ -1,3 +1,12 @@
-{{ 'overflow-list.css' | asset_url | preload_tag: as: 'style' }}
-{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
-{{ 'premium-theme.css' | asset_url | stylesheet_tag: preload: true }}
+<!-- Google Fonts Preconnect & High-Speed CSS Delivery (No @import FOUC Delay) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&display=swap">
+
+<!-- Critical High-Priority Stylesheet Preloading (Zero FOUC / Immediate Style Evaluation) -->
+<link rel="preload" href="{{ 'base.css' | asset_url }}" as="style" fetchpriority="high">
+<link rel="preload" href="{{ 'premium-theme.css' | asset_url }}" as="style" fetchpriority="high">
+<link rel="stylesheet" href="{{ 'base.css' | asset_url }}" type="text/css" media="all">
+<link rel="stylesheet" href="{{ 'premium-theme.css' | asset_url }}" type="text/css" media="all">
+
+<link rel="preload" href="{{ 'overflow-list.css' | asset_url }}" as="style">

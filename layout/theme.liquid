@@ -17,12 +17,28 @@
 
     {%- render 'view-transition-opt-in' -%}
 
+    <style id="elvora-anti-fouc">
+      /* Instant Critical Anti-FOUC Baseline - Prevents White/Unstyled Flash on Initial Paint */
+      :root {
+        --color-primary: #46240E;
+        --color-primary-rgb: 70, 36, 14;
+        --color-secondary: #FAF6F0;
+        --color-gold: #D4AF37;
+        --font-heading: 'Playfair Display', Georgia, serif;
+        --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      html, body {
+        background-color: #140A05 !important;
+        color: #FFF6E8;
+      }
+    </style>
+
     {%- render 'meta-tags' -%}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-palette' -%}
     {%- render 'stylesheets' -%}
     {%- render 'card-hover-effect-styles' -%}
     {%- render 'scripts' -%}
-    {%- render 'theme-styles-variables' -%}
-    {%- render 'color-palette' -%}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}

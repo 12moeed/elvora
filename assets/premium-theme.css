@@ -7430,3 +7430,789 @@ input.elvora-crystal-input:-webkit-autofill:focus {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
+
+
+/* ==========================================================================
+   ELVORA POLICY PAGES & HELP CENTER STYLES (CS619 Compliance)
+   ========================================================================== */
+.elvora-policy-page-wrapper {
+  background-color: #FAF7F2;
+  min-height: 80vh;
+  padding: 3rem 1.25rem 5rem;
+  color: #2D1A10;
+  font-family: var(--font-body, inherit);
+}
+
+.elvora-policy-header {
+  max-width: 900px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+
+.elvora-policy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(184, 134, 11, 0.12);
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8C5E14;
+  margin-bottom: 1rem;
+}
+
+.elvora-policy-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #C48739;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(196, 135, 57, 0.8);
+}
+
+.elvora-policy-title {
+  font-family: var(--font-heading, serif);
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  font-weight: 700;
+  color: #1A0D06;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.elvora-policy-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: #6B5548;
+  max-width: 700px;
+  margin: 0 auto 1.25rem;
+  line-height: 1.6;
+}
+
+.elvora-policy-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8C5E14;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-wrap: wrap;
+}
+
+/* Quick Nav Tabs */
+.elvora-policy-tabs-nav {
+  max-width: 960px;
+  margin: 0 auto 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.elvora-policy-tab {
+  padding: 8px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2D7CC;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #553A26;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.elvora-policy-tab:hover {
+  background: #F3EAE1;
+  border-color: #C48739;
+  color: #1A0D06;
+  transform: translateY(-1px);
+}
+
+.elvora-policy-tab.is-active {
+  background: linear-gradient(135deg, #381A08 0%, #683713 100%);
+  color: #FFFFFF;
+  border-color: #C48739;
+  box-shadow: 0 4px 12px rgba(56, 26, 8, 0.25);
+}
+
+/* Main Content Card */
+.elvora-policy-content-card {
+  max-width: 960px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid #E8DFD5;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(56, 26, 8, 0.05);
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+}
+
+/* Highlights Grid */
+.elvora-policy-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.75rem;
+  padding-bottom: 2.25rem;
+  border-bottom: 1px solid #EFE8E0;
+}
+
+@media (min-width: 640px) {
+  .elvora-policy-highlights-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.elvora-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 1.15rem;
+  background: #FAF6F0;
+  border: 1px solid #EADCCF;
+  border-radius: 12px;
+}
+
+.elvora-highlight-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #2E1508;
+  color: #E5C37A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.elvora-highlight-item h4 {
+  margin: 0 0 4px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1A0D06;
+}
+
+.elvora-highlight-item p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #604B3E;
+}
+
+/* Article Body Typography */
+.elvora-policy-body h2 {
+  font-family: var(--font-heading, serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1A0D06;
+  margin: 2.25rem 0 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid #F0E6DC;
+  position: relative;
+}
+
+.elvora-policy-body h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #C48739;
+}
+
+.elvora-policy-body p {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #4A3A2F;
+  margin-bottom: 1.25rem;
+}
+
+.elvora-policy-body ul {
+  margin: 0.75rem 0 1.5rem 1.25rem;
+  padding: 0;
+  color: #4A3A2F;
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+.elvora-policy-body li {
+  margin-bottom: 0.5rem;
+}
+
+/* Policy Table */
+.elvora-policy-table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0 2rem;
+  border: 1px solid #E5D8CC;
+  border-radius: 12px;
+}
+
+.elvora-policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  text-align: left;
+}
+
+.elvora-policy-table th {
+  background: #2E1508;
+  color: #FFFFFF;
+  padding: 12px 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 11.5px;
+}
+
+.elvora-policy-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #EFE7DE;
+  color: #443328;
+}
+
+.elvora-policy-table tr:last-child td {
+  border-bottom: none;
+}
+
+.elvora-policy-table tr:nth-child(even) {
+  background-color: #FAF6F2;
+}
+
+.elvora-badge-free {
+  display: inline-block;
+  background: #15803D;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* Steps Grid */
+.elvora-policy-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2.25rem;
+}
+
+@media (min-width: 640px) {
+  .elvora-policy-steps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .elvora-policy-steps-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.elvora-step-card {
+  background: #FAF6F0;
+  border: 1px solid #EADCCF;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  position: relative;
+}
+
+.elvora-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #C48739;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.elvora-step-card h5 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1A0D06;
+  margin: 0 0 6px;
+}
+
+.elvora-step-card p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #604B3E;
+  margin: 0;
+}
+
+/* Contact Box */
+.elvora-policy-contact-box {
+  margin-top: 3rem;
+  background: linear-gradient(135deg, #241106 0%, #421F0B 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border-radius: 16px;
+  padding: 1.75rem;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.elvora-policy-contact-box h4 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFF6E8;
+}
+
+.elvora-policy-contact-box p {
+  margin: 0 0 1.25rem;
+  font-size: 13.5px;
+  color: #D1BEAE;
+}
+
+.elvora-policy-contact-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.elvora-policy-btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #FFFFFF;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.elvora-policy-btn-whatsapp:hover {
+  background: #1DA851;
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.elvora-policy-btn-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(229, 195, 122, 0.5);
+  color: #FFF6E8;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.elvora-policy-btn-email:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #E5C37A;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* FAQ Interactive Components */
+.elvora-faq-search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FAF6F0;
+  border: 1.5px solid #E0D3C4;
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 1.5rem;
+}
+
+.elvora-faq-search-box svg {
+  color: #8C5E14;
+  flex-shrink: 0;
+}
+
+.elvora-faq-search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #241106;
+  font-family: inherit;
+}
+
+.elvora-faq-cat-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.elvora-faq-filter-btn {
+  background: #FAF6F0;
+  border: 1px solid #E0D3C4;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #553A26;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elvora-faq-filter-btn:hover {
+  background: #EFE4D7;
+  color: #1A0D06;
+}
+
+.elvora-faq-filter-btn.is-active {
+  background: #2E1508;
+  border-color: #C48739;
+  color: #FFF6E8;
+}
+
+.elvora-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.elvora-faq-item {
+  border: 1px solid #EAE0D5;
+  border-radius: 12px;
+  background: #FFFFFF;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.elvora-faq-item.is-open {
+  border-color: #C48739;
+  box-shadow: 0 4px 14px rgba(56, 26, 8, 0.08);
+}
+
+.elvora-faq-question {
+  width: 100%;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.elvora-faq-q-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A0D06;
+  line-height: 1.4;
+}
+
+.elvora-faq-icon {
+  font-size: 20px;
+  font-weight: 700;
+  color: #8C5E14;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.elvora-faq-answer {
+  display: none;
+  padding: 0 20px 18px;
+  border-top: 1px dashed #F0E6DC;
+  margin-top: 4px;
+}
+
+.elvora-faq-item.is-open .elvora-faq-answer {
+  display: block;
+}
+
+.elvora-faq-answer p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4A3A2F;
+}
+
+/* ==========================================================================
+   UPDATED PREMIUM FOOTER (Matching Reference Layout & Sahara Desert Theme)
+   ========================================================================== */
+.premium-footer {
+  background: #140A05;
+  color: #FFFFFF;
+  padding-top: 4rem;
+  border-top: 1px solid #2D180C;
+  position: relative;
+}
+
+.premium-footer-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .premium-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .premium-footer-grid {
+    grid-template-columns: 1.5fr 1.25fr 1.15fr 1.15fr;
+  }
+}
+
+.premium-footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.premium-footer-locations {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.premium-footer-loc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 12.5px;
+  color: #A89587;
+  line-height: 1.45;
+}
+
+.premium-footer-loc-item svg {
+  color: #D4AF37;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.premium-footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.premium-footer-contact-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.premium-footer-contact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: #E5C37A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.premium-footer-contact-val {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFF6E8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.premium-footer-contact-val:hover {
+  color: #D4AF37;
+}
+
+.premium-footer-contact-label {
+  display: block;
+  font-size: 11px;
+  color: #8C7B6E;
+  margin-top: 2px;
+}
+
+.premium-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.premium-footer-links a {
+  color: #A89587;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.premium-footer-links a:hover {
+  color: #D4AF37;
+  transform: translateX(4px);
+}
+
+/* Newsletter & Payments Mid-Bar */
+.premium-footer-newsletter-wrap {
+  border-top: 1px solid #28150A;
+  border-bottom: 1px solid #28150A;
+  background: #1A0D06;
+  padding: 1.75rem 1.5rem;
+}
+
+.premium-footer-newsletter-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 900px) {
+  .premium-footer-newsletter-inner {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+.premium-footer-newsletter-text {
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .premium-footer-newsletter-text {
+    text-align: left;
+    max-width: 380px;
+  }
+}
+
+.premium-footer-newsletter-action {
+  width: 100%;
+  max-width: 420px;
+}
+
+.premium-footer-payments-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.premium-payments-label {
+  font-size: 10.5px;
+  color: #8C7B6E;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.premium-pay-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.03em;
+}
+
+.pay-cod { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.35); }
+.pay-card { background: rgba(96, 165, 250, 0.15); color: #93C5FD; border: 1px solid rgba(96, 165, 250, 0.35); }
+.pay-jazz { background: rgba(248, 113, 113, 0.15); color: #FCA5A5; border: 1px solid rgba(248, 113, 113, 0.35); }
+.pay-easy { background: rgba(52, 211, 153, 0.15); color: #6EE7B7; border: 1px solid rgba(52, 211, 153, 0.35); }
+
+/* Bottom Bar */
+.premium-footer-bottom {
+  padding: 1.5rem 1.5rem 2rem;
+  background: #140A05;
+}
+
+.premium-footer-bottom-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+  .premium-footer-bottom-inner {
+    flex-direction: row;
+  }
+}
+
+.premium-footer-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.premium-social-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFF6E8;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+
+.premium-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #241208;
+  border: 1px solid #3A1F0F;
+  color: #D1BEAE;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.premium-social-icon:hover {
+  background: #D4AF37;
+  border-color: #D4AF37;
+  color: #140A05;
+  transform: translateY(-2px);
+}
+
+.premium-footer-copy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #8C7B6E;
+  letter-spacing: 0.05em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.premium-dot-sep {
+  color: #D4AF37;
+}

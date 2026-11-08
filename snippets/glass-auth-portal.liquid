@@ -539,7 +539,7 @@
     window.elvoraCurrentAuthTab = targetTab;
   }
 
-  // Trigger the Golden Sandstorm Gust ("Andhi / Golden Reet ki Lehar") & 3D Flip inside the Dust Mist
+  // Trigger the Golden Sandstorm Gust ("Andhi / Golden Reet ki Lehar") & 3D Flip inside the Dust Mist (Lag-free 60fps)
   function triggerSandstormSwitch(targetTab) {
     if (window.elvoraStormAnimating || window.elvoraCurrentAuthTab === targetTab) return;
     window.elvoraStormAnimating = true;
@@ -553,30 +553,32 @@
       window.spawnGoldenSandstormWave(direction);
     }
 
-    // 2. Activate volumetric golden dust cloud & 3D wind-swept card turn
+    // 2. Activate volumetric golden dust cloud & 3D wind-swept card turn without reflow bottlenecks
     if (dustOverlay) {
       dustOverlay.classList.remove('storm-ltr', 'storm-rtl');
-      void dustOverlay.offsetWidth; // force reflow
-      dustOverlay.classList.add(direction === 1 ? 'storm-ltr' : 'storm-rtl');
+      requestAnimationFrame(function() {
+        dustOverlay.classList.add(direction === 1 ? 'storm-ltr' : 'storm-rtl');
+      });
     }
 
     if (card) {
       card.classList.remove('sand-flip-ltr', 'sand-flip-rtl');
-      void card.offsetWidth;
-      card.classList.add(direction === 1 ? 'sand-flip-ltr' : 'sand-flip-rtl');
+      requestAnimationFrame(function() {
+        card.classList.add(direction === 1 ? 'sand-flip-ltr' : 'sand-flip-rtl');
+      });
     }
 
-    // 3. At the exact peak of the golden sand cloud (410ms), swap the form content
+    // 3. At the exact peak (340ms) when the card is edge-on (90deg) shrouded inside the golden sandstorm, swap the form
     setTimeout(function() {
       applyAuthTabState(targetTab);
-    }, 410);
+    }, 340);
 
-    // 4. Clean up animation classes after the sandstorm wave passes
+    // 4. Clean up animation classes smoothly right as the card settles
     setTimeout(function() {
       if (card) card.classList.remove('sand-flip-ltr', 'sand-flip-rtl');
       if (dustOverlay) dustOverlay.classList.remove('storm-ltr', 'storm-rtl');
       window.elvoraStormAnimating = false;
-    }, 1050);
+    }, 760);
   }
 
   // =========================================================================

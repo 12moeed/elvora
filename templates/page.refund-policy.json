@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "premium-refund-policy",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

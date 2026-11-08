@@ -1,0 +1,272 @@
+<div class="elvora-policy-page-wrapper">
+  <!-- Subtle Header Banner -->
+  <div class="elvora-policy-header">
+    <div class="elvora-policy-badge">
+      <span class="elvora-policy-dot"></span>
+      <span>Official Help Center • CS619 Compliant</span>
+    </div>
+    <h1 class="elvora-policy-title">FAQ (Frequently Asked Questions)</h1>
+    <p class="elvora-policy-subtitle">
+      Instant answers regarding nationwide delivery, Cash on Delivery, clinical ingredients, order tracking, and easy returns.
+    </p>
+    <div class="elvora-policy-meta">
+      <span>24/7 Knowledge Base</span>
+      <span>•</span>
+      <span>Clinical Guidance</span>
+      <span>•</span>
+      <span>WhatsApp Instant Support</span>
+    </div>
+  </div>
+
+  <!-- Quick Nav Tabs -->
+  <div class="elvora-policy-tabs-nav">
+    <a href="/pages/contact?view=shipping-policy" class="elvora-policy-tab">Shipping Policy</a>
+    <a href="/pages/contact?view=privacy-policy" class="elvora-policy-tab">Privacy Policy</a>
+    <a href="/pages/contact?view=return-and-refund-policy" class="elvora-policy-tab">Return & Refund Policy</a>
+    <a href="/pages/contact?view=terms-and-conditions" class="elvora-policy-tab">Terms & Conditions</a>
+    <a href="/pages/contact?view=faq" class="elvora-policy-tab is-active">FAQ</a>
+    <a href="/pages/contact" class="elvora-policy-tab">Contact Us</a>
+  </div>
+
+  <!-- Main FAQ Container -->
+  <div class="elvora-policy-content-card">
+    
+    <!-- FAQ Search Bar -->
+    <div class="elvora-faq-search-box">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input
+        type="text"
+        id="elvora-faq-filter-input"
+        placeholder="Type to filter FAQs (e.g. delivery, COD, returns, serum, tracking)..."
+        oninput="filterFaqQuestions(this.value)"
+      >
+    </div>
+
+    <!-- Category Filter Buttons -->
+    <div class="elvora-faq-cat-filters">
+      <button type="button" class="elvora-faq-filter-btn is-active" onclick="filterFaqCategory('all', this)">All Questions</button>
+      <button type="button" class="elvora-faq-filter-btn" onclick="filterFaqCategory('delivery', this)">Shipping & Delivery</button>
+      <button type="button" class="elvora-faq-filter-btn" onclick="filterFaqCategory('payments', this)">Cash on Delivery & Pay</button>
+      <button type="button" class="elvora-faq-filter-btn" onclick="filterFaqCategory('skincare', this)">Clinical Skincare</button>
+      <button type="button" class="elvora-faq-filter-btn" onclick="filterFaqCategory('returns', this)">Returns & Refunds</button>
+    </div>
+
+    <!-- FAQ Accordion List -->
+    <div class="elvora-faq-list" id="elvora-faq-accordion-list">
+      
+      <!-- ITEM 1 -->
+      <div class="elvora-faq-item" data-category="delivery">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">How long does delivery take across Pakistan?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            Standard express delivery takes <strong>2 to 4 business days</strong> for major metropolitan areas (Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan). For other cities, towns, and rural areas across Pakistan, delivery takes approximately <strong>3 to 5 business days</strong>. Orders are dispatched within 24 hours of confirmation.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="elvora-faq-item" data-category="delivery">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">What are the shipping charges? Do you have free shipping?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            Yes! All orders valued at <strong>Rs. 2,500 and above qualify for 100% FREE SHIPPING nationwide</strong>. For orders below Rs. 2,500, a minimal flat shipping fee of <strong>Rs. 200</strong> applies anywhere in Pakistan.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="elvora-faq-item" data-category="payments">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">Is Cash on Delivery (COD) available in all cities?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            Yes, <strong>Cash on Delivery (COD)</strong> is available for 100% of serviceable postal codes across Pakistan through our courier network (TCS, Trax, Leopards, Call Courier). You simply pay the delivery rider in cash upon receiving your parcel.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="elvora-faq-item" data-category="payments">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">What payment methods are accepted besides COD?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            In addition to Cash on Delivery, we support <strong>Visa and Mastercard Debit/Credit cards</strong>, <strong>JazzCash</strong>, <strong>Easypaisa</strong>, and direct online bank transfer (IBAN). All digital transactions are processed through encrypted, 3D-Secure payment gateways.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="elvora-faq-item" data-category="delivery">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">How can I track my ELVORA skincare parcel?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            As soon as your parcel is packed and handed over to the courier, an automated tracking number will be sent to your phone via SMS. You can also visit our official <a href="/pages/contact?view=track-order" style="color: #D4AF37; text-decoration: underline; font-weight: 600;">Track Your Order</a> page and enter your Order Number and phone to see live transit milestones.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 6 -->
+      <div class="elvora-faq-item" data-category="skincare">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">Are ELVORA products suitable for sensitive or acne-prone skin?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            Yes. All ELVORA clinical formulas are developed with dermatologists, 100% cruelty-free, non-comedogenic (won't clog pores), and free from synthetic parabens and harsh fragrances. We still always advise conducting a 24-hour patch test behind the ear before full face application.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 7 -->
+      <div class="elvora-faq-item" data-category="skincare">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">How should I layer my serums and creams in my routine?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            Follow the clinical skincare rule of thin-to-thick texture:
+            <br><strong>Morning:</strong> Gentle Cleanser → Vitamin C / Brightening Serum → Hydrating Moisturizer → Broad-Spectrum SPF 50+ Sunscreen.
+            <br><strong>Night:</strong> Gentle Cleanser → Active Treatment (Niacinamide or Retinol) → Deep Barrier Recovery Cream.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 8 -->
+      <div class="elvora-faq-item" data-category="returns">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">What if my bottle arrives broken or leaking?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            We take responsibility for all transit hazards! If a bottle arrives broken or leaking, simply WhatsApp photos to <strong>+92 300 1234567</strong> within 48 hours. We dispatch an immediate, <strong>100% free brand-new replacement</strong> without you having to send back the broken glass.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 9 -->
+      <div class="elvora-faq-item" data-category="returns">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">How does the 7-day return and refund process work?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            You have 7 days from delivery to request a return or exchange. Once approved, our courier collects the parcel from your doorstep. Refunds are transferred directly to your Bank Account, JazzCash, or Easypaisa within 3–5 working days, or issued as instant store credit with a 10% bonus.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 10 -->
+      <div class="elvora-faq-item" data-category="payments">
+        <button type="button" class="elvora-faq-question" onclick="toggleFaqAccordion(this)">
+          <span class="elvora-faq-q-text">Can I cancel or edit my order after placing it?</span>
+          <span class="elvora-faq-icon">+</span>
+        </button>
+        <div class="elvora-faq-answer">
+          <p>
+            Yes! If your order has not yet been dispatched, contact us via WhatsApp at <strong>+92 300 1234567</strong> or email <strong>support@elvora.pk</strong> with your Order Number, and we will cancel or modify your items with zero penalty.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Contact Support Box -->
+    <div class="elvora-policy-contact-box">
+      <h4>Still Have Questions?</h4>
+      <p>Our skincare advisors are available Mon–Sat from 10:00 AM to 10:00 PM PKT.</p>
+      <div class="elvora-policy-contact-actions">
+        <a href="https://wa.me/923001234567" target="_blank" class="elvora-policy-btn-whatsapp">
+          <span>WhatsApp: +92 300 1234567</span>
+        </a>
+        <a href="/pages/contact" class="elvora-policy-btn-email">
+          <span>Visit Contact Page</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  if ((window.location.search.includes('view=faq') || window.location.search.includes('view=faqs')) && !window.location.pathname.includes('faq')) {
+    try { window.history.replaceState({}, '', '/pages/faq'); } catch(e){}
+  }
+
+  function toggleFaqAccordion(btn) {
+    var item = btn.closest('.elvora-faq-item');
+    var isOpen = item.classList.contains('is-open');
+    
+    // Close others
+    document.querySelectorAll('.elvora-faq-item.is-open').forEach(function(openEl) {
+      if (openEl !== item) {
+        openEl.classList.remove('is-open');
+        var icon = openEl.querySelector('.elvora-faq-icon');
+        if (icon) icon.textContent = '+';
+      }
+    });
+
+    if (isOpen) {
+      item.classList.remove('is-open');
+      btn.querySelector('.elvora-faq-icon').textContent = '+';
+    } else {
+      item.classList.add('is-open');
+      btn.querySelector('.elvora-faq-icon').textContent = '−';
+    }
+  }
+
+  function filterFaqCategory(cat, btn) {
+    document.querySelectorAll('.elvora-faq-filter-btn').forEach(function(b) {
+      b.classList.remove('is-active');
+    });
+    btn.classList.add('is-active');
+
+    var items = document.querySelectorAll('.elvora-faq-item');
+    items.forEach(function(item) {
+      if (cat === 'all' || item.getAttribute('data-category') === cat) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  function filterFaqQuestions(query) {
+    var q = query.toLowerCase().trim();
+    var items = document.querySelectorAll('.elvora-faq-item');
+    items.forEach(function(item) {
+      var text = item.textContent.toLowerCase();
+      if (q === '' || text.indexOf(q) !== -1) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": []
+}
+{% endschema %}

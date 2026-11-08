@@ -1,14 +1,29 @@
 
 
 <script>
-  if (window.location.pathname.indexOf('track-order') !== -1) {
-    window.location.replace('/pages/contact?view=track-order' + window.location.search);
-  } else if (window.location.pathname.indexOf('checkout') !== -1) {
-    window.location.replace('/pages/contact?view=checkout' + window.location.search);
-  } else if (window.location.pathname.indexOf('register') !== -1) {
-    window.location.replace('/pages/contact?view=register' + window.location.search);
-  } else if (window.location.pathname.indexOf('login') !== -1 || window.location.pathname.indexOf('account') !== -1) {
-    window.location.replace('/pages/contact?view=login' + window.location.search);
+  var path = window.location.pathname.toLowerCase();
+  var search = window.location.search;
+
+  if (path.indexOf('track-order') !== -1) {
+    window.location.replace('/pages/contact?view=track-order' + search);
+  } else if (path.indexOf('checkout') !== -1) {
+    window.location.replace('/pages/contact?view=checkout' + search);
+  } else if (path.indexOf('register') !== -1) {
+    window.location.replace('/pages/contact?view=register' + search);
+  } else if (path.indexOf('login') !== -1 || path.indexOf('account') !== -1) {
+    window.location.replace('/pages/contact?view=login' + search);
+  } else if (path.indexOf('shipping') !== -1) {
+    window.location.replace('/pages/contact?view=shipping-policy' + search);
+  } else if (path.indexOf('privacy') !== -1) {
+    window.location.replace('/pages/contact?view=privacy-policy' + search);
+  } else if (path.indexOf('refund') !== -1 || path.indexOf('return') !== -1) {
+    window.location.replace('/pages/contact?view=return-and-refund-policy' + search);
+  } else if (path.indexOf('terms') !== -1) {
+    window.location.replace('/pages/contact?view=terms-and-conditions' + search);
+  } else if (path.indexOf('faq') !== -1) {
+    window.location.replace('/pages/contact?view=faq' + search);
+  } else if (path.indexOf('contact') !== -1) {
+    window.location.replace('/pages/contact' + search);
   }
 </script>
 

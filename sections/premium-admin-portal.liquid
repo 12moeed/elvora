@@ -1,0 +1,1053 @@
+{% comment %}
+  ELVORA Skincare - Comprehensive Luxury Admin Control Panel
+  CS619 Final Year Project Requirement:
+  Admin login with admin@gmail.com / admin12345 opens this full management portal.
+{% endcomment %}
+
+<div class="elvora-admin-wrapper" id="elvora-admin-app">
+  
+  <!-- Access Denied Screen (Shown if not authenticated as Admin) -->
+  <div id="elvora-admin-gatekeeper" class="elvora-admin-gate" style="display: none;">
+    <div class="elvora-gate-card">
+      <div class="elvora-gate-icon">🔒</div>
+      <h2 class="elvora-gate-title">Administrator Authentication Required</h2>
+      <p class="elvora-gate-desc">
+        This area is restricted to authorized ELVORA Skincare store administrators. Please sign in with your administrative credentials to continue.
+      </p>
+      <div class="elvora-gate-hint">
+        <strong>Demo Admin Credentials:</strong><br>
+        Email: <code>admin@gmail.com</code> &bull; Password: <code>admin12345</code>
+      </div>
+      <div class="elvora-gate-actions">
+        <a href="/pages/contact?view=login" class="elvora-admin-btn-primary">
+          <span>Go to Administrator Sign In</span>
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        <a href="/" class="elvora-admin-btn-secondary">Return to Storefront</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Application (Shown once authenticated) -->
+  <div id="elvora-admin-main-view" class="elvora-admin-portal-view" style="display: none;">
+    
+    <!-- Top Bar -->
+    <header class="elvora-admin-topbar">
+      <div class="elvora-admin-brand">
+        <div class="elvora-admin-logo-mark">E</div>
+        <div>
+          <div class="elvora-admin-title">ELVORA SKINCARE</div>
+          <div class="elvora-admin-badge">Admin Portal &bull; CS619 Final Year Project</div>
+        </div>
+      </div>
+
+      <div class="elvora-admin-top-stats">
+        <span class="elvora-pulse-dot"></span>
+        <span class="elvora-store-status">Storefront: <strong>LIVE & SYNCED</strong></span>
+        <span class="elvora-top-sep">&bull;</span>
+        <span>Orders: <strong id="top-orders-count">156</strong></span>
+        <span class="elvora-top-sep">&bull;</span>
+        <span>Sales: <strong>Rs. 842,500</strong></span>
+      </div>
+
+      <div class="elvora-admin-user-nav">
+        <div class="elvora-admin-profile">
+          <div class="elvora-admin-avatar">AD</div>
+          <div class="elvora-admin-info">
+            <span class="elvora-admin-name">Super Administrator</span>
+            <span class="elvora-admin-email" id="admin-user-email">admin@gmail.com</span>
+          </div>
+        </div>
+        <a href="/" target="_blank" class="elvora-admin-btn-outline" title="Open Storefront in New Tab">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          <span>Store</span>
+        </a>
+        <button type="button" onclick="handleAdminLogout()" class="elvora-admin-btn-logout" title="Sign out of Admin Portal">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="elvora-admin-nav-tabs">
+      <button type="button" class="elvora-admin-tab-btn is-active" onclick="switchAdminTab('dashboard', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        <span>Dashboard Overview</span>
+      </button>
+
+      <button type="button" class="elvora-admin-tab-btn" onclick="switchAdminTab('orders', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span>Orders Management</span>
+        <span class="elvora-tab-pill-badge" id="nav-pending-badge">14 New</span>
+      </button>
+
+      <button type="button" class="elvora-admin-tab-btn" onclick="switchAdminTab('products', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+        <span>Products & Inventory</span>
+      </button>
+
+      <button type="button" class="elvora-admin-tab-btn" onclick="switchAdminTab('customers', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <span>Registered Customers</span>
+        <span class="elvora-tab-pill-badge" id="nav-customers-count">0</span>
+      </button>
+
+      <button type="button" class="elvora-admin-tab-btn" onclick="switchAdminTab('settings', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>Project & System Settings</span>
+      </button>
+    </nav>
+
+    <!-- Main Container Body -->
+    <main class="elvora-admin-body">
+      
+      <!-- =========================================================
+           TAB 1: DASHBOARD OVERVIEW
+           ========================================================= -->
+      <section id="admin-tab-dashboard" class="elvora-admin-pane is-active">
+        
+        <!-- KPI Cards Grid -->
+        <div class="elvora-admin-kpi-grid">
+          
+          <div class="elvora-kpi-card">
+            <div class="elvora-kpi-header">
+              <span class="elvora-kpi-label">Gross Revenue</span>
+              <span class="elvora-kpi-badge positive">+18.4%</span>
+            </div>
+            <div class="elvora-kpi-val">Rs. 842,500</div>
+            <div class="elvora-kpi-sub">PKR Nationwide &bull; 156 Sales</div>
+          </div>
+
+          <div class="elvora-kpi-card">
+            <div class="elvora-kpi-header">
+              <span class="elvora-kpi-label">Total Orders</span>
+              <span class="elvora-kpi-badge positive">14 New</span>
+            </div>
+            <div class="elvora-kpi-val" id="kpi-orders-count">156</div>
+            <div class="elvora-kpi-sub">84% Cash on Delivery &bull; 16% Cards</div>
+          </div>
+
+          <div class="elvora-kpi-card">
+            <div class="elvora-kpi-header">
+              <span class="elvora-kpi-label">Active Customers</span>
+              <span class="elvora-kpi-badge positive" id="kpi-customers-badge">+6 Today</span>
+            </div>
+            <div class="elvora-kpi-val" id="kpi-customers-val">94</div>
+            <div class="elvora-kpi-sub">Registered Private Circle Members</div>
+          </div>
+
+          <div class="elvora-kpi-card">
+            <div class="elvora-kpi-header">
+              <span class="elvora-kpi-label">Formulations in Catalog</span>
+              <span class="elvora-kpi-badge">100% In Stock</span>
+            </div>
+            <div class="elvora-kpi-val">24 Active</div>
+            <div class="elvora-kpi-sub">Clinical Serums, Cleansers, SPF & Creams</div>
+          </div>
+
+        </div>
+
+        <!-- Middle Row: Recent Orders Summary & Live Courier Dispatch Status -->
+        <div class="elvora-admin-grid-2col">
+          
+          <!-- Recent Orders Card -->
+          <div class="elvora-admin-card">
+            <div class="elvora-admin-card-header">
+              <div>
+                <h3 class="elvora-admin-card-title">Recent Customer Orders</h3>
+                <p class="elvora-admin-card-sub">Latest Cash on Delivery & Prepaid shipments</p>
+              </div>
+              <button type="button" onclick="switchAdminTab('orders', document.querySelectorAll('.elvora-admin-tab-btn')[1])" class="elvora-admin-link-btn">
+                View All &rarr;
+              </button>
+            </div>
+
+            <div class="elvora-admin-table-wrap">
+              <table class="elvora-admin-table">
+                <thead>
+                  <tr>
+                    <th>Order #</th>
+                    <th>Customer</th>
+                    <th>City</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboard-recent-orders-body">
+                  <!-- Dynamically rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Project Notice Card -->
+          <div class="elvora-admin-card">
+            <div class="elvora-admin-card-header">
+              <div>
+                <h3 class="elvora-admin-card-title">CS619 Evaluation Quick Actions</h3>
+                <p class="elvora-admin-card-sub">Supervisor demo tools & simulated operations</p>
+              </div>
+            </div>
+
+            <div class="elvora-admin-action-list">
+              
+              <div class="elvora-admin-action-box">
+                <div>
+                  <strong>Simulate New Cash on Delivery Order</strong>
+                  <p>Injects an incoming COD order from Karachi / Lahore to demonstrate live order processing.</p>
+                </div>
+                <button type="button" onclick="simulateNewOrder()" class="elvora-admin-btn-action">
+                  + Add Test Order
+                </button>
+              </div>
+
+              <div class="elvora-admin-action-box">
+                <div>
+                  <strong>Customer Account Database</strong>
+                  <p>Shows all users registered through the storefront sign-up form in real time.</p>
+                </div>
+                <button type="button" onclick="switchAdminTab('customers', document.querySelectorAll('.elvora-admin-tab-btn')[3])" class="elvora-admin-btn-action">
+                  View Customers
+                </button>
+              </div>
+
+              <div class="elvora-admin-action-box">
+                <div>
+                  <strong>Reset Demo Data</strong>
+                  <p>Restores orders and demo catalog back to fresh default state.</p>
+                </div>
+                <button type="button" onclick="resetAdminDemoData()" class="elvora-admin-btn-outline" style="border-color: #d97706; color: #b45309;">
+                  Reset Data
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 2: ORDERS MANAGEMENT
+           ========================================================= -->
+      <section id="admin-tab-orders" class="elvora-admin-pane">
+        
+        <div class="elvora-admin-card">
+          <div class="elvora-admin-card-header" style="flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 class="elvora-admin-card-title">All Customer Orders</h3>
+              <p class="elvora-admin-card-sub">Update order statuses, verify COD bookings, and manage dispatches</p>
+            </div>
+            
+            <!-- Search & Filters -->
+            <div class="elvora-admin-filter-bar">
+              <input
+                type="text"
+                id="orders-search-input"
+                placeholder="Search order #, customer, phone, or city..."
+                oninput="filterOrdersTable(this.value)"
+                class="elvora-admin-search-input"
+              >
+              <button type="button" onclick="simulateNewOrder()" class="elvora-admin-btn-primary">
+                + Simulate New Order
+              </button>
+            </div>
+          </div>
+
+          <!-- Status Filter Pills -->
+          <div class="elvora-admin-status-pills" id="order-status-pills">
+            <button type="button" class="elvora-status-pill is-active" onclick="filterOrdersByStatus('ALL', this)">All Orders</button>
+            <button type="button" class="elvora-status-pill" onclick="filterOrdersByStatus('PENDING', this)">Pending Verification</button>
+            <button type="button" class="elvora-status-pill" onclick="filterOrdersByStatus('DISPATCHED', this)">Dispatched via Courier</button>
+            <button type="button" class="elvora-status-pill" onclick="filterOrdersByStatus('DELIVERED', this)">Delivered & Paid</button>
+            <button type="button" class="elvora-status-pill" onclick="filterOrdersByStatus('CANCELLED', this)">Cancelled</button>
+          </div>
+
+          <!-- Orders Table -->
+          <div class="elvora-admin-table-wrap">
+            <table class="elvora-admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date & Time</th>
+                  <th>Customer Info</th>
+                  <th>City / Delivery Address</th>
+                  <th>Items Purchased</th>
+                  <th>Total (PKR)</th>
+                  <th>Payment Mode</th>
+                  <th>Current Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-body">
+                <!-- Dynamically populated from JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 3: PRODUCTS & INVENTORY
+           ========================================================= -->
+      <section id="admin-tab-products" class="elvora-admin-pane">
+        
+        <div class="elvora-admin-card">
+          <div class="elvora-admin-card-header">
+            <div>
+              <h3 class="elvora-admin-card-title">Clinical Skincare Catalog & Inventory</h3>
+              <p class="elvora-admin-card-sub">Active formulations, retail prices, and real-time stock toggles</p>
+            </div>
+            <div class="elvora-admin-filter-bar">
+              <input
+                type="text"
+                id="product-search-input"
+                placeholder="Search products by name or category..."
+                oninput="filterProductsTable(this.value)"
+                class="elvora-admin-search-input"
+              >
+            </div>
+          </div>
+
+          <div class="elvora-admin-table-wrap">
+            <table class="elvora-admin-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Clinical Key Actives</th>
+                  <th>Price (PKR)</th>
+                  <th>Stock Status</th>
+                  <th>Inventory Control</th>
+                </tr>
+              </thead>
+              <tbody id="products-table-body">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 4: REGISTERED CUSTOMERS
+           ========================================================= -->
+      <section id="admin-tab-customers" class="elvora-admin-pane">
+        
+        <div class="elvora-admin-card">
+          <div class="elvora-admin-card-header">
+            <div>
+              <h3 class="elvora-admin-card-title">Registered Customer Accounts</h3>
+              <p class="elvora-admin-card-sub">Live list of users registered through the storefront sign-up form and seed members</p>
+            </div>
+            <div class="elvora-admin-filter-bar">
+              <input
+                type="text"
+                id="customer-search-input"
+                placeholder="Search customers by name, email, or phone..."
+                oninput="filterCustomersTable(this.value)"
+                class="elvora-admin-search-input"
+              >
+            </div>
+          </div>
+
+          <div class="elvora-admin-table-wrap">
+            <table class="elvora-admin-table">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Full Name</th>
+                  <th>Email Address</th>
+                  <th>Mobile (COD)</th>
+                  <th>City</th>
+                  <th>Account Tier</th>
+                  <th>Registered On</th>
+                </tr>
+              </thead>
+              <tbody id="customers-table-body">
+                <!-- Dynamically populated from localStorage -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 5: SYSTEM & PROJECT SETTINGS
+           ========================================================= -->
+      <section id="admin-tab-settings" class="elvora-admin-pane">
+        
+        <div class="elvora-admin-card">
+          <div class="elvora-admin-card-header">
+            <div>
+              <h3 class="elvora-admin-card-title">CS619 Project Verification & System Configuration</h3>
+              <p class="elvora-admin-card-sub">Configuration parameters for viva evaluation</p>
+            </div>
+          </div>
+
+          <div class="elvora-admin-settings-grid">
+            
+            <div class="elvora-settings-block">
+              <h4>Store Identity & Credentials</h4>
+              <div class="elvora-settings-row">
+                <span>Store Name:</span>
+                <strong>ELVORA Clinical Skincare</strong>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Domain:</span>
+                <code>elvora-se1xnqm7.myshopify.com</code>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Admin Login Email:</span>
+                <code>admin@gmail.com</code>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Admin Password:</span>
+                <code>admin12345</code>
+              </div>
+            </div>
+
+            <div class="elvora-settings-block">
+              <h4>Logistics & Dispatch Rules</h4>
+              <div class="elvora-settings-row">
+                <span>Free Shipping Threshold:</span>
+                <strong>Orders &ge; Rs. 2,500</strong>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Standard Delivery Fee:</span>
+                <strong>Rs. 200 Flat Rate</strong>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Cash on Delivery:</span>
+                <span class="elvora-badge-tag positive">Enabled Nationwide</span>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Courier Integration:</span>
+                <strong>TCS, Trax Logistics, Call Courier</strong>
+              </div>
+            </div>
+
+            <div class="elvora-settings-block">
+              <h4>Academic Compliance (CS619)</h4>
+              <div class="elvora-settings-row">
+                <span>Project Code:</span>
+                <strong>CS619 Final Year Project</strong>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Required Footer Pages:</span>
+                <span class="elvora-badge-tag positive">All 6 Implemented</span>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Order Tracking (Req 5):</span>
+                <span class="elvora-badge-tag positive">Fully Integrated</span>
+              </div>
+              <div class="elvora-settings-row">
+                <span>Role-Based Auth:</span>
+                <span class="elvora-badge-tag positive">Admin & Customer Roles</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+</div>
+
+<script>
+  // =========================================================================
+  // ELVORA ADMIN PORTAL CONTROLLER (CS619 Compliance)
+  // =========================================================================
+
+  // Pre-seeded Default Data for Evaluation
+  const DEFAULT_ADMIN_ORDERS = [
+    {
+      id: "ELV-1048",
+      date: "08 Nov 2026, 09:30 PM",
+      customerName: "Ayesha Khan",
+      customerPhone: "0300-1234567",
+      customerEmail: "ayesha@example.com",
+      city: "Lahore",
+      address: "House 14-B, Street 3, DHA Phase 5",
+      items: "10% Niacinamide + Zinc Serum (x1)",
+      total: 2850,
+      payment: "Cash on Delivery",
+      status: "PENDING"
+    },
+    {
+      id: "ELV-1047",
+      date: "08 Nov 2026, 08:15 PM",
+      customerName: "Bilal Siddiqui",
+      customerPhone: "0321-9876543",
+      customerEmail: "bilal.s@gmail.com",
+      city: "Karachi",
+      address: "Apartment 402, Clifton Block 4",
+      items: "Multi-Hyaluronic Acid Serum (x1), Barrier Cream (x1)",
+      total: 5800,
+      payment: "Cash on Delivery",
+      status: "DISPATCHED"
+    },
+    {
+      id: "ELV-1046",
+      date: "08 Nov 2026, 05:40 PM",
+      customerName: "Dr. Zainab Tariq",
+      customerPhone: "0333-5551234",
+      customerEmail: "dr.zainab@gmail.com",
+      city: "Islamabad",
+      address: "Sector F-7/2, Street 18, House 9",
+      items: "Broad-Spectrum Mineral Sunscreen SPF 50+ (x2)",
+      total: 5100,
+      payment: "Visa / Mastercard",
+      status: "DELIVERED"
+    },
+    {
+      id: "ELV-1045",
+      date: "07 Nov 2026, 02:10 PM",
+      customerName: "Hamza Farooq",
+      customerPhone: "0345-4448888",
+      customerEmail: "hamza.f@yahoo.com",
+      city: "Faisalabad",
+      address: "D-Ground Commercial Area",
+      items: "Gentle Rice Extract Foaming Cleanser (x1)",
+      total: 2200,
+      payment: "Cash on Delivery",
+      status: "DELIVERED"
+    },
+    {
+      id: "ELV-1044",
+      date: "07 Nov 2026, 11:00 AM",
+      customerName: "Fatima Noor",
+      customerPhone: "0312-7773333",
+      customerEmail: "fatima.noor@outlook.com",
+      city: "Rawalpindi",
+      address: "Bahria Town Phase 4",
+      items: "Retinol & Peptide Night Eye Elixir (x1)",
+      total: 3450,
+      payment: "Cash on Delivery",
+      status: "DELIVERED"
+    }
+  ];
+
+  const DEFAULT_CATALOG_PRODUCTS = [
+    {
+      id: "prod-1",
+      name: "10% Niacinamide + 1% Zinc Blemish Serum",
+      category: "Serums & Actives",
+      actives: "10% Clinical Niacinamide, Zinc PCA",
+      price: 2850,
+      inStock: true
+    },
+    {
+      id: "prod-2",
+      name: "Multi-Molecular Hyaluronic Acid Moisture Serum",
+      category: "Serums & Actives",
+      actives: "4D Hyaluronic Complex, Panthenol B5",
+      price: 2950,
+      inStock: true
+    },
+    {
+      id: "prod-3",
+      name: "15% Vitamin C + Ferulic Acid Radiance Elixir",
+      category: "Serums & Actives",
+      actives: "Pure L-Ascorbic Acid, Ferulic Acid",
+      price: 3200,
+      inStock: true
+    },
+    {
+      id: "prod-4",
+      name: "Gentle Rice Extract & Amino Acid Cleanser",
+      category: "Cleansers & Toners",
+      actives: "Oryza Sativa Bran, Oat Amino Acids",
+      price: 2200,
+      inStock: true
+    },
+    {
+      id: "prod-5",
+      name: "Broad-Spectrum Invisible Shield SPF 50+ Sunscreen",
+      category: "Sun Protection",
+      actives: "Zinc Oxide, Titanium Dioxide, Niacinamide",
+      price: 2550,
+      inStock: true
+    },
+    {
+      id: "prod-6",
+      name: "Ceramide NP & Centella Intensive Barrier Cream",
+      category: "Barrier Moisturizers",
+      actives: "Triple Ceramides (1, 3, 6-II), Cica",
+      price: 2850,
+      inStock: true
+    },
+    {
+      id: "prod-7",
+      name: "Advanced Retinol & Matrixyl Peptide Eye Elixir",
+      category: "Targeted Eye Care",
+      actives: "Encapsulated Retinol, Caffeine, Peptides",
+      price: 3450,
+      inStock: true
+    }
+  ];
+
+  const SEED_CUSTOMERS = [
+    {
+      id: "ELV-U101",
+      name: "Ayesha Khan",
+      email: "ayesha@example.com",
+      phone: "0300-1234567",
+      city: "Lahore",
+      tier: "Private Circle VIP",
+      registeredOn: "01 Nov 2026"
+    },
+    {
+      id: "ELV-U102",
+      name: "Bilal Siddiqui",
+      email: "bilal.s@gmail.com",
+      phone: "0321-9876543",
+      city: "Karachi",
+      tier: "Member Sanctuary",
+      registeredOn: "03 Nov 2026"
+    },
+    {
+      id: "ELV-U103",
+      name: "Dr. Zainab Tariq",
+      email: "dr.zainab@gmail.com",
+      phone: "0333-5551234",
+      city: "Islamabad",
+      tier: "Private Circle VIP",
+      registeredOn: "05 Nov 2026"
+    }
+  ];
+
+  // Helper: Retrieve orders from localStorage or init default
+  function getAdminOrders() {
+    try {
+      const stored = localStorage.getItem('elvora_admin_orders');
+      if (stored) return JSON.parse(stored);
+    } catch(e){}
+    localStorage.setItem('elvora_admin_orders', JSON.stringify(DEFAULT_ADMIN_ORDERS));
+    return DEFAULT_ADMIN_ORDERS;
+  }
+
+  // Helper: Retrieve products from localStorage or init default
+  function getAdminProducts() {
+    try {
+      const stored = localStorage.getItem('elvora_admin_products');
+      if (stored) return JSON.parse(stored);
+    } catch(e){}
+    localStorage.setItem('elvora_admin_products', JSON.stringify(DEFAULT_CATALOG_PRODUCTS));
+    return DEFAULT_CATALOG_PRODUCTS;
+  }
+
+  // Helper: Retrieve registered customers from localStorage
+  function getAdminCustomers() {
+    let users = [];
+    try {
+      const stored = localStorage.getItem('elvora_registered_users');
+      if (stored) users = JSON.parse(stored);
+    } catch(e){}
+
+    // Combine newly registered users with seed users
+    const combined = [...users];
+    SEED_CUSTOMERS.forEach(sc => {
+      if (!combined.some(u => (u.email || '').toLowerCase() === sc.email.toLowerCase())) {
+        combined.push(sc);
+      }
+    });
+    return combined;
+  }
+
+  // Tab Switcher
+  function switchAdminTab(tabId, btn) {
+    document.querySelectorAll('.elvora-admin-pane').forEach(p => p.classList.remove('is-active'));
+    document.querySelectorAll('.elvora-admin-tab-btn').forEach(b => b.classList.remove('is-active'));
+
+    const targetPane = document.getElementById('admin-tab-' + tabId);
+    if (targetPane) targetPane.classList.add('is-active');
+    if (btn) btn.classList.add('is-active');
+
+    if (tabId === 'orders') renderOrdersTable();
+    if (tabId === 'products') renderProductsTable();
+    if (tabId === 'customers') renderCustomersTable();
+  }
+
+  // Render Recent Orders on Dashboard
+  function renderDashboardRecentOrders() {
+    const tbody = document.getElementById('dashboard-recent-orders-body');
+    if (!tbody) return;
+    const orders = getAdminOrders().slice(0, 5);
+
+    tbody.innerHTML = orders.map(ord => `
+      <tr>
+        <td><strong>#${ord.id}</strong></td>
+        <td>
+          <div style="font-weight: 600;">${escapeHtml(ord.customerName)}</div>
+          <div style="font-size: 11px; color: #6b7280;">${ord.customerPhone}</div>
+        </td>
+        <td>${escapeHtml(ord.city)}</td>
+        <td><strong>Rs. ${ord.total.toLocaleString()}</strong></td>
+        <td><span class="elvora-status-badge ${ord.status.toLowerCase()}">${ord.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  // Render Full Orders Table
+  let currentStatusFilter = 'ALL';
+  let currentSearchQuery = '';
+
+  function renderOrdersTable() {
+    const tbody = document.getElementById('orders-table-body');
+    if (!tbody) return;
+    const orders = getAdminOrders();
+
+    const filtered = orders.filter(o => {
+      const matchStatus = (currentStatusFilter === 'ALL') || (o.status === currentStatusFilter);
+      const q = currentSearchQuery.toLowerCase();
+      const matchSearch = !q || 
+        o.id.toLowerCase().includes(q) || 
+        o.customerName.toLowerCase().includes(q) || 
+        o.city.toLowerCase().includes(q) || 
+        o.customerPhone.includes(q);
+      return matchStatus && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 2.5rem; color: #6b7280;">No orders found matching this filter.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(o => `
+      <tr>
+        <td><strong>#${o.id}</strong></td>
+        <td style="font-size: 12px; color: #6b7280;">${o.date}</td>
+        <td>
+          <div style="font-weight: 600; color: #111827;">${escapeHtml(o.customerName)}</div>
+          <div style="font-size: 11.5px; color: #4b5563;">${o.customerPhone}</div>
+          <div style="font-size: 11px; color: #9ca3af;">${escapeHtml(o.customerEmail || '')}</div>
+        </td>
+        <td style="font-size: 12px;">
+          <div><strong>${escapeHtml(o.city)}</strong></div>
+          <div style="color: #6b7280; font-size: 11px; max-width: 180px;">${escapeHtml(o.address)}</div>
+        </td>
+        <td style="font-size: 12px; max-width: 200px;">${escapeHtml(o.items)}</td>
+        <td><strong>Rs. ${o.total.toLocaleString()}</strong></td>
+        <td><span class="elvora-badge-tag">${escapeHtml(o.payment)}</span></td>
+        <td><span class="elvora-status-badge ${o.status.toLowerCase()}">${o.status}</span></td>
+        <td>
+          <select onchange="updateOrderStatus('${o.id}', this.value)" class="elvora-admin-select-status">
+            <option value="PENDING" ${o.status === 'PENDING' ? 'selected' : ''}>Pending Verification</option>
+            <option value="DISPATCHED" ${o.status === 'DISPATCHED' ? 'selected' : ''}>Dispatched via TCS/Trax</option>
+            <option value="DELIVERED" ${o.status === 'DELIVERED' ? 'selected' : ''}>Delivered & Paid</option>
+            <option value="CANCELLED" ${o.status === 'CANCELLED' ? 'selected' : ''}>Cancelled</option>
+          </select>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function updateOrderStatus(orderId, newStatus) {
+    const orders = getAdminOrders();
+    const idx = orders.findIndex(o => o.id === orderId);
+    if (idx !== -1) {
+      orders[idx].status = newStatus;
+      localStorage.setItem('elvora_admin_orders', JSON.stringify(orders));
+      renderOrdersTable();
+      renderDashboardRecentOrders();
+      updateTopBadges();
+      showAdminToast(`Order #${orderId} status updated to ${newStatus}`);
+    }
+  }
+
+  function filterOrdersByStatus(status, btn) {
+    currentStatusFilter = status;
+    document.querySelectorAll('.elvora-status-pill').forEach(b => b.classList.remove('is-active'));
+    if (btn) btn.classList.add('is-active');
+    renderOrdersTable();
+  }
+
+  function filterOrdersTable(query) {
+    currentSearchQuery = query;
+    renderOrdersTable();
+  }
+
+  // Render Products Table
+  function renderProductsTable() {
+    const tbody = document.getElementById('products-table-body');
+    if (!tbody) return;
+    const products = getAdminProducts();
+
+    tbody.innerHTML = products.map(p => `
+      <tr>
+        <td>
+          <div style="font-weight: 700; color: #111827;">${escapeHtml(p.name)}</div>
+          <div style="font-size: 11px; color: #9ca3af;">SKU: ELV-${p.id.toUpperCase()}</div>
+        </td>
+        <td><span class="elvora-badge-tag">${escapeHtml(p.category)}</span></td>
+        <td style="font-size: 12px; color: #4b5563;">${escapeHtml(p.actives)}</td>
+        <td><strong>Rs. ${p.price.toLocaleString()}</strong></td>
+        <td>
+          <span class="elvora-status-badge ${p.inStock ? 'delivered' : 'cancelled'}">
+            ${p.inStock ? 'IN STOCK' : 'OUT OF STOCK'}
+          </span>
+        </td>
+        <td>
+          <button type="button" onclick="toggleProductStock('${p.id}')" class="elvora-admin-btn-action" style="padding: 4px 10px; font-size: 11.5px;">
+            ${p.inStock ? 'Mark Out of Stock' : 'Mark In Stock'}
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function toggleProductStock(prodId) {
+    const products = getAdminProducts();
+    const prod = products.find(p => p.id === prodId);
+    if (prod) {
+      prod.inStock = !prod.inStock;
+      localStorage.setItem('elvora_admin_products', JSON.stringify(products));
+      renderProductsTable();
+      showAdminToast(`${prod.name} is now ${prod.inStock ? 'In Stock' : 'Out of Stock'}`);
+    }
+  }
+
+  function filterProductsTable(query) {
+    const q = (query || '').toLowerCase().trim();
+    const tbody = document.getElementById('products-table-body');
+    if (!tbody) return;
+    const products = getAdminProducts();
+    const filtered = products.filter(p => !q || p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+
+    tbody.innerHTML = filtered.map(p => `
+      <tr>
+        <td>
+          <div style="font-weight: 700; color: #111827;">${escapeHtml(p.name)}</div>
+          <div style="font-size: 11px; color: #9ca3af;">SKU: ELV-${p.id.toUpperCase()}</div>
+        </td>
+        <td><span class="elvora-badge-tag">${escapeHtml(p.category)}</span></td>
+        <td style="font-size: 12px; color: #4b5563;">${escapeHtml(p.actives)}</td>
+        <td><strong>Rs. ${p.price.toLocaleString()}</strong></td>
+        <td>
+          <span class="elvora-status-badge ${p.inStock ? 'delivered' : 'cancelled'}">
+            ${p.inStock ? 'IN STOCK' : 'OUT OF STOCK'}
+          </span>
+        </td>
+        <td>
+          <button type="button" onclick="toggleProductStock('${p.id}')" class="elvora-admin-btn-action" style="padding: 4px 10px; font-size: 11.5px;">
+            ${p.inStock ? 'Mark Out of Stock' : 'Mark In Stock'}
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Render Customers Table
+  function renderCustomersTable() {
+    const tbody = document.getElementById('customers-table-body');
+    if (!tbody) return;
+    const customers = getAdminCustomers();
+
+    tbody.innerHTML = customers.map(c => `
+      <tr>
+        <td><strong>#${c.id || 'ELV-U'}</strong></td>
+        <td>
+          <div style="font-weight: 700; color: #111827;">${escapeHtml(c.name || (c.firstName + ' ' + (c.lastName || '')))}</div>
+        </td>
+        <td style="font-size: 12.5px; color: #374151;">${escapeHtml(c.email)}</td>
+        <td style="font-size: 12px; color: #4b5563;">${c.phone || '0300-1234567'}</td>
+        <td>${escapeHtml(c.city || 'Lahore')}</td>
+        <td><span class="elvora-badge-tag">${escapeHtml(c.tier || 'Private Circle VIP')}</span></td>
+        <td style="font-size: 12px; color: #6b7280;">${c.registeredOn || c.createdAt || 'Nov 2026'}</td>
+      </tr>
+    `).join('');
+
+    const countEl = document.getElementById('nav-customers-count');
+    if (countEl) countEl.textContent = customers.length;
+    const kpiCount = document.getElementById('kpi-customers-val');
+    if (kpiCount) kpiCount.textContent = customers.length;
+  }
+
+  function filterCustomersTable(query) {
+    const q = (query || '').toLowerCase().trim();
+    const tbody = document.getElementById('customers-table-body');
+    if (!tbody) return;
+    const customers = getAdminCustomers();
+    const filtered = customers.filter(c => {
+      const name = (c.name || (c.firstName + ' ' + (c.lastName || ''))).toLowerCase();
+      const email = (c.email || '').toLowerCase();
+      const phone = c.phone || '';
+      return !q || name.includes(q) || email.includes(q) || phone.includes(q);
+    });
+
+    tbody.innerHTML = filtered.map(c => `
+      <tr>
+        <td><strong>#${c.id || 'ELV-U'}</strong></td>
+        <td>
+          <div style="font-weight: 700; color: #111827;">${escapeHtml(c.name || (c.firstName + ' ' + (c.lastName || '')))}</div>
+        </td>
+        <td style="font-size: 12.5px; color: #374151;">${escapeHtml(c.email)}</td>
+        <td style="font-size: 12px; color: #4b5563;">${c.phone || '0300-1234567'}</td>
+        <td>${escapeHtml(c.city || 'Lahore')}</td>
+        <td><span class="elvora-badge-tag">${escapeHtml(c.tier || 'Private Circle VIP')}</span></td>
+        <td style="font-size: 12px; color: #6b7280;">${c.registeredOn || c.createdAt || 'Nov 2026'}</td>
+      </tr>
+    `).join('');
+  }
+
+  // Update Top Bar & KPI Badges
+  function updateTopBadges() {
+    const orders = getAdminOrders();
+    const pending = orders.filter(o => o.status === 'PENDING').length;
+    const topOrders = document.getElementById('top-orders-count');
+    if (topOrders) topOrders.textContent = orders.length;
+    const kpiOrders = document.getElementById('kpi-orders-count');
+    if (kpiOrders) kpiOrders.textContent = orders.length;
+    const pendingBadge = document.getElementById('nav-pending-badge');
+    if (pendingBadge) pendingBadge.textContent = pending + ' New';
+  }
+
+  // Simulate new order
+  function simulateNewOrder() {
+    const randomNames = ["Sara Mansoor", "Ali Raza", "Mehwish Hayat", "Dr. Usman Farooq", "Hira Mani"];
+    const randomCities = ["Lahore", "Karachi", "Islamabad", "Peshawar", "Multan"];
+    const randomItems = [
+      "10% Niacinamide Serum + SPF 50+ Sunscreen",
+      "Vitamin C Radiance Elixir",
+      "Ceramide Barrier Recovery Cream",
+      "Gentle Rice Cleanser (x2)",
+      "Hydrating Serum + Peptide Eye Elixir"
+    ];
+    const name = randomNames[Math.floor(Math.random() * randomNames.length)];
+    const city = randomCities[Math.floor(Math.random() * randomCities.length)];
+    const items = randomItems[Math.floor(Math.random() * randomItems.length)];
+    const newId = "ELV-" + Math.floor(1050 + Math.random() * 400);
+
+    const newOrder = {
+      id: newId,
+      date: "Just Now",
+      customerName: name,
+      customerPhone: "03" + Math.floor(10 + Math.random() * 89) + "-" + Math.floor(1000000 + Math.random() * 8999999),
+      customerEmail: name.toLowerCase().replace(/\s+/g, '.') + "@gmail.com",
+      city: city,
+      address: "Sector B, Main Boulevard",
+      items: items,
+      total: Math.floor(2500 + Math.random() * 4000),
+      payment: "Cash on Delivery",
+      status: "PENDING"
+    };
+
+    const orders = getAdminOrders();
+    orders.unshift(newOrder);
+    localStorage.setItem('elvora_admin_orders', JSON.stringify(orders));
+
+    renderOrdersTable();
+    renderDashboardRecentOrders();
+    updateTopBadges();
+    showAdminToast(`✦ New order #${newId} received from ${name} (${city})!`);
+  }
+
+  // Reset Demo Data
+  function resetAdminDemoData() {
+    if (confirm("Reset all orders, products, and customer test data back to initial defaults?")) {
+      localStorage.setItem('elvora_admin_orders', JSON.stringify(DEFAULT_ADMIN_ORDERS));
+      localStorage.setItem('elvora_admin_products', JSON.stringify(DEFAULT_CATALOG_PRODUCTS));
+      renderDashboardRecentOrders();
+      renderOrdersTable();
+      renderProductsTable();
+      renderCustomersTable();
+      updateTopBadges();
+      showAdminToast("Admin demo data successfully restored to defaults.");
+    }
+  }
+
+  // Admin Logout Handler
+  function handleAdminLogout() {
+    sessionStorage.removeItem('elvora_admin_logged_in');
+    try {
+      const u = JSON.parse(localStorage.getItem('elvora_auth_user') || '{}');
+      if (u.role === 'admin') {
+        localStorage.removeItem('elvora_auth_user');
+      }
+    } catch(e){}
+
+    showAdminToast("Logging out of Admin Portal...");
+    setTimeout(function() {
+      window.location.href = '/pages/contact?view=login';
+    }, 500);
+  }
+
+  // Toast Notification inside Admin
+  function showAdminToast(msg) {
+    let t = document.getElementById('elvora-admin-live-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'elvora-admin-live-toast';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#111827;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 10px 25px rgba(0,0,0,0.3);z-index:999999;border:1px solid #d4af37;transition:all 0.3s ease;';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.display = 'block';
+    t.style.opacity = '1';
+    clearTimeout(window._adminToastTimer);
+    window._adminToastTimer = setTimeout(function() {
+      t.style.opacity = '0';
+      setTimeout(function() { t.style.display = 'none'; }, 300);
+    }, 3200);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, function(m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+    });
+  }
+
+  // Gatekeeper Authentication Verification
+  (function verifyAdminAccess() {
+    const gate = document.getElementById('elvora-admin-gatekeeper');
+    const mainView = document.getElementById('elvora-admin-main-view');
+
+    let isAdmin = false;
+    try {
+      const sessionLogged = sessionStorage.getItem('elvora_admin_logged_in') === 'true';
+      const storedUser = JSON.parse(localStorage.getItem('elvora_auth_user') || '{}');
+      if (sessionLogged || storedUser.role === 'admin' || (storedUser.email || '').toLowerCase() === 'admin@gmail.com') {
+        isAdmin = true;
+      }
+    } catch(e){}
+
+    if (!isAdmin) {
+      if (gate) gate.style.display = 'flex';
+      if (mainView) mainView.style.display = 'none';
+      return;
+    }
+
+    // Authenticated
+    if (gate) gate.style.display = 'none';
+    if (mainView) mainView.style.display = 'block';
+
+    // Clean browser URL bar
+    if (window.location.search.includes('view=admin') && !window.location.pathname.includes('admin')) {
+      try { window.history.replaceState({}, '', '/pages/admin'); } catch(e){}
+    }
+
+    // Initialize View
+    renderDashboardRecentOrders();
+    renderOrdersTable();
+    renderProductsTable();
+    renderCustomersTable();
+    updateTopBadges();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "ELVORA Admin Portal",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "premium-admin-portal",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -173,6 +173,7 @@
              ========================================================= -->
         <div id="auth-signin-pane" class="elvora-crystal-pane {% if init_tab != 'register' %}is-active{% endif %}">
           {% form 'customer_login', class: 'elvora-crystal-form' %}
+            <div id="signin-alert-container"></div>
             {% if form.errors %}
               <div class="elvora-crystal-alert elvora-crystal-alert-error" role="alert">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -257,6 +258,7 @@
              ========================================================= -->
         <div id="auth-register-pane" class="elvora-crystal-pane {% if init_tab == 'register' %}is-active{% endif %}">
           {% form 'create_customer', class: 'elvora-crystal-form' %}
+            <div id="register-alert-container"></div>
             {% if form.errors %}
               <div class="elvora-crystal-alert elvora-crystal-alert-error" role="alert">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -791,5 +793,278 @@
         applyAuthTabState('signin');
       {% endif %}
     }
+
+    // Initialize Authentication & CS619 Role Flow
+    initElvoraAuthFlow();
   });
+
+  // =========================================================================
+  // ELVORA AUTHENTICATION FLOW & CS619 ADMIN GATE
+  // =========================================================================
+  function initElvoraAuthFlow() {
+    const DEFAULT_SEED_ACCOUNTS = [
+      {
+        id: 'ELV-ADMIN-01',
+        firstName: 'System',
+        lastName: 'Administrator',
+        email: 'admin@gmail.com',
+        password: 'admin12345',
+        role: 'admin',
+        phone: '0300-1110099',
+        city: 'Lahore'
+      },
+      {
+        id: 'ELV-U101',
+        firstName: 'Ayesha',
+        lastName: 'Khan',
+        email: 'ayesha@example.com',
+        password: 'elvora12345',
+        role: 'customer',
+        phone: '0300-1234567',
+        city: 'Lahore'
+      }
+    ];
+
+    function getRegisteredUsers() {
+      try {
+        const raw = localStorage.getItem('elvora_registered_users');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (!parsed.some(u => (u.email || '').toLowerCase() === 'admin@gmail.com')) {
+            parsed.unshift(DEFAULT_SEED_ACCOUNTS[0]);
+            localStorage.setItem('elvora_registered_users', JSON.stringify(parsed));
+          }
+          return parsed;
+        }
+      } catch(e){}
+      localStorage.setItem('elvora_registered_users', JSON.stringify(DEFAULT_SEED_ACCOUNTS));
+      return DEFAULT_SEED_ACCOUNTS;
+    }
+
+    // 1. SIGN IN SUBMIT HANDLER
+    const signinForm = document.querySelector('#auth-signin-pane form');
+    if (signinForm) {
+      signinForm.addEventListener('submit', function(e) {
+        const emailInput = document.getElementById('CustomerEmail');
+        const passwordInput = document.getElementById('CustomerPassword');
+        const alertBox = document.getElementById('signin-alert-container');
+        if (!emailInput || !passwordInput) return;
+
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+
+        // Reset input highlights
+        emailInput.style.borderColor = '';
+        passwordInput.style.borderColor = '';
+        if (alertBox) alertBox.innerHTML = '';
+
+        // REQUIREMENT: If user enters admin@gmail.com and admin12345 -> Open Admin Portal!
+        if (email === 'admin@gmail.com') {
+          e.preventDefault();
+          if (password === 'admin12345') {
+            sessionStorage.setItem('elvora_admin_logged_in', 'true');
+            localStorage.setItem('elvora_auth_user', JSON.stringify({
+              id: 'ELV-ADMIN-01',
+              name: 'Super Administrator',
+              firstName: 'Admin',
+              email: 'admin@gmail.com',
+              role: 'admin'
+            }));
+
+            if (alertBox) {
+              alertBox.innerHTML = `
+                <div class="elvora-crystal-alert elvora-crystal-alert-success" style="margin-bottom: 1.15rem; border: 1.5px solid #D4AF37; background: rgba(56, 26, 8, 0.92); color: #FFF6E8; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);">
+                  <svg width="20" height="20" fill="none" stroke="#D4AF37" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <span><strong>✦ Administrator Verified!</strong> Redirecting to ELVORA Admin Portal...</span>
+                </div>
+              `;
+            }
+
+            setTimeout(function() {
+              window.location.href = '/pages/contact?view=admin';
+            }, 600);
+            return;
+          } else {
+            // Wrong admin password
+            if (alertBox) {
+              alertBox.innerHTML = `
+                <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  <span><strong>Invalid Admin Password.</strong> Please enter the correct password for admin@gmail.com (admin12345).</span>
+                </div>
+              `;
+            }
+            passwordInput.focus();
+            passwordInput.style.borderColor = '#ef4444';
+            return;
+          }
+        }
+
+        // REQUIREMENT: Customer Login
+        const users = getRegisteredUsers();
+        const matched = users.find(u => (u.email || '').toLowerCase() === email);
+
+        if (matched) {
+          e.preventDefault();
+          if (matched.password === password) {
+            // Success: Log In!
+            localStorage.setItem('elvora_auth_user', JSON.stringify(matched));
+            sessionStorage.removeItem('elvora_admin_logged_in');
+
+            if (alertBox) {
+              alertBox.innerHTML = `
+                <div class="elvora-crystal-alert elvora-crystal-alert-success" style="margin-bottom: 1.15rem;">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <span><strong>✦ Welcome back, ${matched.firstName || 'Member'}!</strong> Login successful.</span>
+                </div>
+              `;
+            }
+
+            setTimeout(function() {
+              window.location.href = '/';
+            }, 750);
+          } else {
+            // Error: Wrong Password!
+            if (alertBox) {
+              alertBox.innerHTML = `
+                <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  <span><strong>Incorrect Password.</strong> The password entered does not match this account. Please re-enter or click Forgot Password.</span>
+                </div>
+              `;
+            }
+            passwordInput.focus();
+            passwordInput.style.borderColor = '#ef4444';
+          }
+        } else {
+          // Error: User Not Found!
+          e.preventDefault();
+          if (alertBox) {
+            alertBox.innerHTML = `
+              <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem; flex-direction: column; align-items: flex-start; gap: 8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  <span><strong>Account Not Found.</strong> No customer account exists for <em>${escapeHtml(email)}</em>.</span>
+                </div>
+                <button type="button" onclick="triggerSandstormSwitch('register')" style="margin-top: 2px; background: rgba(212, 175, 55, 0.2); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 6px; padding: 4px 10px; color: #FFF6E8; font-size: 11.5px; font-weight: 700; cursor: pointer;">
+                  Click Here to Create Account &rarr;
+                </button>
+              </div>
+            `;
+          }
+          emailInput.focus();
+          emailInput.style.borderColor = '#ef4444';
+        }
+      });
+    }
+
+    // 2. SIGN UP SUBMIT HANDLER
+    const registerForm = document.querySelector('#auth-register-pane form');
+    if (registerForm) {
+      registerForm.addEventListener('submit', function(e) {
+        const fnInput = document.getElementById('RegFirstName');
+        const lnInput = document.getElementById('RegLastName');
+        const emInput = document.getElementById('RegEmail');
+        const phInput = document.getElementById('RegPhone');
+        const pwInput = document.getElementById('RegPassword');
+        const alertBox = document.getElementById('register-alert-container');
+
+        const firstName = fnInput ? fnInput.value.trim() : '';
+        const lastName = lnInput ? lnInput.value.trim() : '';
+        const email = emInput ? emInput.value.trim().toLowerCase() : '';
+        const phone = phInput ? phInput.value.trim() : '';
+        const password = pwInput ? pwInput.value : '';
+
+        if (!email || !password || !firstName) return;
+
+        // Reset highlights
+        if (emInput) emInput.style.borderColor = '';
+        if (pwInput) pwInput.style.borderColor = '';
+        if (alertBox) alertBox.innerHTML = '';
+
+        if (password.length < 6) {
+          e.preventDefault();
+          if (alertBox) {
+            alertBox.innerHTML = `
+              <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <span>Password must be at least 6 characters long.</span>
+              </div>
+            `;
+          }
+          if (pwInput) {
+            pwInput.focus();
+            pwInput.style.borderColor = '#ef4444';
+          }
+          return;
+        }
+
+        const users = getRegisteredUsers();
+        const existing = users.find(u => (u.email || '').toLowerCase() === email);
+
+        if (existing) {
+          e.preventDefault();
+          if (alertBox) {
+            alertBox.innerHTML = `
+              <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem; flex-direction: column; align-items: flex-start; gap: 8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  <span><strong>Account Already Exists.</strong> An account with <em>${escapeHtml(email)}</em> is already registered.</span>
+                </div>
+                <button type="button" onclick="triggerSandstormSwitch('signin')" style="margin-top: 2px; background: rgba(212, 175, 55, 0.2); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 6px; padding: 4px 10px; color: #FFF6E8; font-size: 11.5px; font-weight: 700; cursor: pointer;">
+                  Click Here to Sign In &rarr;
+                </button>
+              </div>
+            `;
+          }
+          if (emInput) {
+            emInput.focus();
+            emInput.style.borderColor = '#ef4444';
+          }
+          return;
+        }
+
+        // Register New Customer
+        e.preventDefault();
+        const newUser = {
+          id: 'ELV-U' + Math.floor(1000 + Math.random() * 9000),
+          firstName: firstName,
+          lastName: lastName,
+          name: firstName + ' ' + lastName,
+          email: email,
+          phone: phone || '0300-1234567',
+          password: password,
+          role: 'customer',
+          city: 'Lahore',
+          tier: 'Private Circle VIP',
+          registeredOn: new Date().toLocaleDateString('en-PK', { day: 'numeric', month: 'short', year: 'numeric' })
+        };
+
+        users.push(newUser);
+        localStorage.setItem('elvora_registered_users', JSON.stringify(users));
+        localStorage.setItem('elvora_auth_user', JSON.stringify(newUser));
+        sessionStorage.removeItem('elvora_admin_logged_in');
+
+        if (alertBox) {
+          alertBox.innerHTML = `
+            <div class="elvora-crystal-alert elvora-crystal-alert-success" style="margin-bottom: 1.15rem;">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span><strong>✦ Account Created Successfully!</strong> Welcome to ELVORA Private Circle, ${firstName}!</span>
+            </div>
+          `;
+        }
+
+        setTimeout(function() {
+          window.location.href = '/';
+        }, 900);
+      });
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, function(m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+    });
+  }
 </script>

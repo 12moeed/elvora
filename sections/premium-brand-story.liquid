@@ -1,12 +1,16 @@
 <div class="premium-brand-story-section">
+  <!-- Glowing Top & Bottom Amber Accent Lines -->
+  <div class="premium-promo-accent-top"></div>
+  <div class="premium-promo-accent-bottom"></div>
+
   {% if section.settings.image != blank %}
     <img
-      src="{{ section.settings.image | image_url: width: 1800 }}"
+      src="{{ section.settings.image | image_url: width: 2400 }}"
       alt="{{ section.settings.heading | escape }}"
       class="premium-brand-story-bg"
       loading="lazy"
-      width="1800"
-      height="900"
+      width="2400"
+      height="1200"
     >
   {% elsif section.settings.image_url != blank %}
     <img
@@ -14,41 +18,42 @@
       alt="{{ section.settings.heading | escape }}"
       class="premium-brand-story-bg"
       loading="lazy"
-      width="1800"
-      height="900"
+      width="2400"
+      height="1200"
     >
   {% else %}
     <img
-      src="{{ 'banner_3c_clinical_routine.jpg' | asset_url }}"
-      alt="Our Story"
+      src="{{ 'elvora_about_philosophy_banner.jpg' | asset_url }}"
+      alt="{{ section.settings.heading | default: 'Our Formulation Philosophy' | escape }}"
       class="premium-brand-story-bg"
       loading="lazy"
-      width="1800"
-      height="900"
+      width="2400"
+      height="1200"
     >
   {% endif %}
 
   <div class="premium-brand-story-overlay"></div>
 
-  <div style="max-width: 1400px; width: 100%; margin: 0 auto; position: relative; z-index: 10;">
+  <div style="max-width: 1440px; width: 100%; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 10; display: flex; justify-content: flex-end; box-sizing: border-box;">
     <div class="premium-brand-story-card">
       <div class="premium-brand-story-eyebrow">
-        {{ section.settings.eyebrow | default: 'Our Heritage' }}
+        <span>✦</span>
+        <span>{{ section.settings.eyebrow | default: 'Our Formulation Philosophy' }}</span>
       </div>
 
       <h2 class="premium-brand-story-heading">
-        {{ section.settings.heading | default: 'Crafted for Pure Distinction' }}
+        {{ section.settings.heading | default: 'Science-Backed Botanical Skincare' }}
       </h2>
 
       <div class="premium-brand-story-body">
-        {{ section.settings.body | default: '<p>At Elvora, we believe fashion is an effortless blend of elegance and modern craftsmanship. Each collection is meticulously designed with handpicked materials, timeless silhouettes, and an uncompromising commitment to detail.</p><p>From everyday essentials to signature statement pieces, we empower you to embrace your distinctive style.</p>' }}
+        {{ section.settings.body | default: '<p>At ELVORA, we harmonize high-potency clinical actives with pure botanical extracts to heal, protect, and illuminate your skin. Every formula is dermatologically tested, cruelty-free, and formulated without harmful sulfates, parabens, or synthetic fragrances.</p><p>From targeted dark spot correction to barrier-strengthening hydration, we empower your skin to achieve its healthiest, most radiant glow.</p>' }}
       </div>
 
       <div>
         <a href="{{ section.settings.cta_link | default: '/pages/about' }}" class="premium-brand-story-cta">
-          {{ section.settings.cta_text | default: 'Discover Our Story' }}
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          <span>{{ section.settings.cta_text | default: 'Discover Our Story' }}</span>
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
           </svg>
         </a>
       </div>

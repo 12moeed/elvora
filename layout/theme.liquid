@@ -174,43 +174,5 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
-
-    <script>
-      (function() {
-        // Universal Account & Auth Navigation Safeguard
-        document.addEventListener('click', function(e) {
-          const a = e.target.closest('a');
-          if (!a) return;
-          const href = a.getAttribute('href');
-          if (!href) return;
-          
-          if (href === '/account/login' || href.startsWith('/account/login?') || href === '/account/register' || href.startsWith('/account/register?')) {
-            e.preventDefault();
-            e.stopPropagation();
-            const isReg = href.indexOf('register') !== -1;
-            window.location.href = '/pages/contact?view=' + (isReg ? 'register' : 'login');
-          } else if (href === '/account/logout' || href.startsWith('/account/logout?')) {
-            e.preventDefault();
-            e.stopPropagation();
-            localStorage.removeItem('elvora_auth_user');
-            sessionStorage.removeItem('elvora_admin_logged_in');
-            window.location.href = '/pages/contact?view=login';
-          } else if (href === '/account' || href === '/account/') {
-            e.preventDefault();
-            e.stopPropagation();
-            if (sessionStorage.getItem('elvora_admin_logged_in') === 'true') {
-              window.location.href = '/admin';
-            } else {
-              const u = localStorage.getItem('elvora_auth_user');
-              if (u) {
-                window.location.href = '/pages/contact?view=track-order';
-              } else {
-                window.location.href = '/pages/contact?view=login';
-              }
-            }
-          }
-        }, true);
-      })();
-    </script>
   </body>
 </html>

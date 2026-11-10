@@ -11,9 +11,9 @@
   } else if (path.indexOf('checkout') !== -1) {
     window.location.replace('/pages/contact?view=checkout' + search);
   } else if (path.indexOf('register') !== -1) {
-    window.location.replace('/pages/contact?view=register' + search);
+    window.location.replace('{{ routes.account_register_url }}' + search);
   } else if (path.indexOf('login') !== -1 || path.indexOf('account') !== -1) {
-    window.location.replace('/pages/contact?view=login' + search);
+    window.location.replace('{{ routes.account_login_url }}' + search);
   } else if (path.indexOf('shipping') !== -1) {
     window.location.replace('/pages/contact?view=shipping-policy' + search);
   } else if (path.indexOf('privacy') !== -1) {

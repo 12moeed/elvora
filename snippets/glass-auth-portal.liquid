@@ -172,8 +172,7 @@
              PANE 1: SIGN IN FORM
              ========================================================= -->
         <div id="auth-signin-pane" class="elvora-crystal-pane {% if init_tab != 'register' %}is-active{% endif %}">
-          {% form 'customer_login', class: 'elvora-crystal-form', id: 'elvora-signin-form', onsubmit: 'return handleElvoraSignIn(event);' %}
-            <div id="signin-alert-container"></div>
+          {% form 'customer_login', class: 'elvora-crystal-form', id: 'elvora-signin-form' %}
             {% if form.errors %}
               <div class="elvora-crystal-alert elvora-crystal-alert-error" role="alert">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -191,6 +190,7 @@
                   name="customer[email]"
                   id="CustomerEmail"
                   class="elvora-crystal-input"
+                  {% if form.email %}value="{{ form.email }}"{% endif %}
                   autocomplete="email"
                   autocorrect="off"
                   autocapitalize="off"
@@ -257,8 +257,7 @@
              PANE 2: CREATE AN ACCOUNT FORM
              ========================================================= -->
         <div id="auth-register-pane" class="elvora-crystal-pane {% if init_tab == 'register' %}is-active{% endif %}">
-          {% form 'create_customer', class: 'elvora-crystal-form', id: 'elvora-register-form', onsubmit: 'return handleElvoraSignUp(event);' %}
-            <div id="register-alert-container"></div>
+          {% form 'create_customer', class: 'elvora-crystal-form', id: 'elvora-register-form' %}
             {% if form.errors %}
               <div class="elvora-crystal-alert elvora-crystal-alert-error" role="alert">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -343,11 +342,11 @@
                 <div class="elvora-crystal-input-wrap">
                   <input
                     type="tel"
-                    name="customer[note][phone]"
+                    name="customer[note][Phone]"
                     id="RegPhone"
                     class="elvora-crystal-input"
                     placeholder="0300 1234567"
-                    pattern="[0-9+ -]{10,15}"
+                    pattern="[0-9+\s-]{10,15}"
                     required
                   >
                   <span class="elvora-crystal-icon">
@@ -776,15 +775,17 @@
     requestAnimationFrame(renderSandLoop);
   })();
 
-  // Initialize initial tab state from URL query or hash on page load
+  // Initialize initial tab state from server-rendered errors/success, URL query, or hash
   document.addEventListener('DOMContentLoaded', function() {
+    const hasRegisterErrors = document.querySelector('#elvora-register-form .elvora-crystal-alert-error');
+    const hasRecoverFeedback = document.querySelector('#elvora-recover-form .elvora-crystal-alert-error, #elvora-recover-form .elvora-crystal-alert-success');
     const params = new URLSearchParams(window.location.search);
     const viewParam = params.get('view');
     const hash = window.location.hash;
 
-    if (viewParam === 'register' || hash === '#register') {
+    if (hasRegisterErrors || viewParam === 'register' || hash === '#register') {
       applyAuthTabState('register');
-    } else if (hash === '#recover') {
+    } else if (hasRecoverFeedback || hash === '#recover') {
       applyAuthTabState('recover');
     } else {
       {% if init_tab == 'register' %}
@@ -793,218 +794,5 @@
         applyAuthTabState('signin');
       {% endif %}
     }
-
-    // Initialize Authentication & CS619 Role Flow
-    initElvoraAuthFlow();
   });
-
-  // =========================================================================
-  // ELVORA AUTHENTICATION FLOW & CS619 ADMIN GATE
-  // =========================================================================
-  const DEFAULT_SEED_ACCOUNTS = [
-    {
-      id: 'ELV-ADMIN-01',
-      firstName: 'System',
-      lastName: 'Administrator',
-      email: 'admin@gmail.com',
-      password: 'admin12345',
-      role: 'admin',
-      phone: '0300-1110099',
-      city: 'Lahore'
-    },
-    {
-      id: 'ELV-U101',
-      firstName: 'Ayesha',
-      lastName: 'Khan',
-      email: 'ayesha@example.com',
-      password: 'elvora12345',
-      role: 'customer',
-      phone: '0300-1234567',
-      city: 'Lahore'
-    }
-  ];
-
-  window.getElvoraRegisteredUsers = function() {
-    try {
-      const raw = localStorage.getItem('elvora_registered_users');
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (!parsed.some(u => (u.email || '').toLowerCase() === 'admin@gmail.com')) {
-          parsed.unshift(DEFAULT_SEED_ACCOUNTS[0]);
-          localStorage.setItem('elvora_registered_users', JSON.stringify(parsed));
-        }
-        return parsed;
-      }
-    } catch(e){}
-    localStorage.setItem('elvora_registered_users', JSON.stringify(DEFAULT_SEED_ACCOUNTS));
-    return DEFAULT_SEED_ACCOUNTS;
-  };
-
-  window.handleElvoraSignIn = function(e) {
-    const emailInput = document.getElementById('CustomerEmail');
-    const passwordInput = document.getElementById('CustomerPassword');
-    const alertBox = document.getElementById('signin-alert-container');
-    if (!emailInput || !passwordInput) return true;
-
-    const email = emailInput.value.trim().toLowerCase();
-    const password = passwordInput.value;
-
-    emailInput.style.borderColor = '';
-    passwordInput.style.borderColor = '';
-    if (alertBox) alertBox.innerHTML = '';
-
-    if (!email) {
-      if (alertBox) {
-        alertBox.innerHTML = `
-          <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;">
-            <span>Please enter your registered email address.</span>
-          </div>
-        `;
-      }
-      emailInput.focus();
-      return false;
-    }
-
-    // REQUIREMENT: admin@gmail.com with admin12345 opens REAL OFFICIAL SHOPIFY ADMIN (/admin)
-    if (email === 'admin@gmail.com') {
-      if (e) {
-        if (typeof e.preventDefault === 'function') e.preventDefault();
-        if (typeof e.stopPropagation === 'function') e.stopPropagation();
-      }
-
-      if (password === 'admin12345') {
-        sessionStorage.setItem('elvora_admin_logged_in', 'true');
-        localStorage.setItem('elvora_auth_user', JSON.stringify({
-          id: 'ELV-ADMIN-01',
-          name: 'Super Administrator',
-          firstName: 'Admin',
-          email: 'admin@gmail.com',
-          role: 'admin'
-        }));
-
-        if (alertBox) {
-          alertBox.innerHTML = `
-            <div class="elvora-crystal-alert elvora-crystal-alert-success" style="margin-bottom: 1.15rem; border: 1.5px solid #D4AF37; background: rgba(56, 26, 8, 0.92); color: #FFF6E8; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);">
-              <svg width="20" height="20" fill="none" stroke="#D4AF37" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <span><strong>✦ Store Admin Verified!</strong> Redirecting to Shopify Store Admin...</span>
-            </div>
-          `;
-        }
-
-        setTimeout(function() {
-          window.location.href = '/admin';
-        }, 500);
-        return false;
-      } else {
-        if (alertBox) {
-          alertBox.innerHTML = `
-            <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              <span><strong>Invalid Admin Password.</strong> Please enter the correct password for admin@gmail.com (admin12345).</span>
-            </div>
-          `;
-        }
-        passwordInput.focus();
-        passwordInput.style.borderColor = '#ef4444';
-        return false;
-      }
-    }
-
-    // For all other customer accounts, submit natively to Shopify!
-    return true;
-  };
-
-  window.handleElvoraSignUp = function(e) {
-    const fnInput = document.getElementById('RegFirstName');
-    const lnInput = document.getElementById('RegLastName');
-    const emInput = document.getElementById('RegEmail');
-    const phInput = document.getElementById('RegPhone');
-    const pwInput = document.getElementById('RegPassword');
-    const alertBox = document.getElementById('register-alert-container');
-
-    const firstName = fnInput ? fnInput.value.trim() : '';
-    const lastName = lnInput ? lnInput.value.trim() : '';
-    const email = emInput ? emInput.value.trim().toLowerCase() : '';
-    const password = pwInput ? pwInput.value : '';
-
-    if (emInput) emInput.style.borderColor = '';
-    if (pwInput) pwInput.style.borderColor = '';
-    if (alertBox) alertBox.innerHTML = '';
-
-    if (!firstName) {
-      if (e && e.preventDefault) e.preventDefault();
-      if (alertBox) {
-        alertBox.innerHTML = `<div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;"><span>Please enter your first name.</span></div>`;
-      }
-      if (fnInput) fnInput.focus();
-      return false;
-    }
-    if (!email) {
-      if (e && e.preventDefault) e.preventDefault();
-      if (alertBox) {
-        alertBox.innerHTML = `<div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;"><span>Please enter a valid email address.</span></div>`;
-      }
-      if (emInput) emInput.focus();
-      return false;
-    }
-    if (!password || password.length < 6) {
-      if (e && e.preventDefault) e.preventDefault();
-      if (alertBox) {
-        alertBox.innerHTML = `
-          <div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            <span>Password must be at least 6 characters long.</span>
-          </div>
-        `;
-      }
-      if (pwInput) {
-        pwInput.focus();
-        pwInput.style.borderColor = '#ef4444';
-      }
-      return false;
-    }
-
-    // Submit natively to Shopify so the customer is created in Shopify Admin > Customers!
-    return true;
-  };
-
-  window.handleElvoraRecover = function(e) {
-    if (e) {
-      if (typeof e.preventDefault === 'function') e.preventDefault();
-      if (typeof e.stopPropagation === 'function') e.stopPropagation();
-    }
-
-    const emInput = document.getElementById('RecoverCustomerEmail');
-    const alertBox = document.getElementById('recover-alert-container');
-    const email = emInput ? emInput.value.trim().toLowerCase() : '';
-
-    if (!email) {
-      if (alertBox) {
-        alertBox.innerHTML = `<div class="elvora-crystal-alert elvora-crystal-alert-error" style="margin-bottom: 1.15rem;"><span>Please enter your registered email address.</span></div>`;
-      }
-      if (emInput) emInput.focus();
-      return false;
-    }
-
-    if (alertBox) {
-      alertBox.innerHTML = `
-        <div class="elvora-crystal-alert elvora-crystal-alert-success" style="margin-bottom: 1.15rem;">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>Password reset link sent to <strong>${escapeHtml(email)}</strong>! Please check your inbox.</span>
-        </div>
-      `;
-    }
-    return false;
-  };
-
-  function initElvoraAuthFlow() {
-    window.getElvoraRegisteredUsers();
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>"']/g, function(m) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
-    });
-  }
 </script>

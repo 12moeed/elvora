@@ -285,18 +285,19 @@
         <!-- Account / Join Us Button -->
         <div id="elvora-desktop-auth-container">
           {% if customer %}
-            <div class="elvora-user-menu-wrap">
-              <a href="/account" class="elvora-user-avatar-btn" title="My Account">
+            <div class="elvora-user-menu-wrap" style="display: flex; align-items: center; gap: 10px;">
+              <a href="{{ routes.account_url }}" class="elvora-user-avatar-btn" title="My Account">
                 <span class="elvora-avatar-circle">
                   {{ customer.first_name | slice: 0 | default: 'E' | upcase }}
                 </span>
-                <span class="elvora-user-name">{{ customer.first_name }}</span>
+                <span class="elvora-user-name">{{ customer.first_name | default: 'Account' }}</span>
               </a>
+              <a href="{{ routes.account_logout_url }}" style="color: #a89587; font-size: 11.5px; text-decoration: underline;">Logout</a>
             </div>
           {% else %}
             <div class="elvora-desktop-auth">
-              <a href="/pages/contact?view=login" class="elvora-login-link">Login</a>
-              <a href="/pages/contact?view=register" class="elvora-join-btn">
+              <a href="{{ routes.account_login_url }}" class="elvora-login-link">Login</a>
+              <a href="{{ routes.account_register_url }}" class="elvora-join-btn">
                 <span>Join Us</span>
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -546,11 +547,11 @@
 
       <div id="elvora-drawer-auth-container" class="elvora-drawer-auth">
         {% if customer %}
-          <a href="/account" class="elvora-drawer-btn elvora-drawer-btn-primary">My Account</a>
-          <a href="/account/logout" class="elvora-drawer-btn elvora-drawer-btn-secondary">Log Out</a>
+          <a href="{{ routes.account_url }}" class="elvora-drawer-btn elvora-drawer-btn-primary">My Account</a>
+          <a href="{{ routes.account_logout_url }}" class="elvora-drawer-btn elvora-drawer-btn-secondary">Log Out</a>
         {% else %}
-          <a href="/pages/contact?view=register" class="elvora-drawer-btn elvora-drawer-btn-primary">Join Us</a>
-          <a href="/pages/contact?view=login" class="elvora-drawer-btn elvora-drawer-btn-secondary">Login</a>
+          <a href="{{ routes.account_register_url }}" class="elvora-drawer-btn elvora-drawer-btn-primary">Join Us</a>
+          <a href="{{ routes.account_login_url }}" class="elvora-drawer-btn elvora-drawer-btn-secondary">Login</a>
         {% endif %}
       </div>
     </div>
@@ -1157,67 +1158,6 @@
         }
       }
     };
-
-    // ── 10. Role-Based Header Auth Sync (Admin vs Customer vs Guest) ──
-    function syncElvoraHeaderAuth() {
-      let user = null;
-      try {
-        user = JSON.parse(localStorage.getItem('elvora_auth_user') || 'null');
-      } catch(e){}
-
-      const desktopAuth = document.getElementById('elvora-desktop-auth-container');
-      const drawerAuth = document.getElementById('elvora-drawer-auth-container');
-
-      if (user) {
-        if (user.role === 'admin' || (user.email || '').toLowerCase() === 'admin@gmail.com') {
-          if (desktopAuth) {
-            desktopAuth.innerHTML = `
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <a href="/admin" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(212, 175, 55, 0.2); border: 1.5px solid #D4AF37; border-radius: 8px; color: #FFF6E8; font-size: 12px; font-weight: 700; text-decoration: none;">
-                  <span>★ Shopify Admin</span>
-                </a>
-                <button type="button" onclick="elvoraHeaderLogout()" style="background: none; border: none; color: #a89587; font-size: 12px; cursor: pointer; text-decoration: underline;">
-                  Logout
-                </button>
-              </div>
-            `;
-          }
-          if (drawerAuth) {
-            drawerAuth.innerHTML = `
-              <a href="/admin" class="elvora-drawer-btn elvora-drawer-btn-primary" style="background: #D4AF37; color: #140A05; font-weight: 700;">★ Shopify Admin</a>
-              <button type="button" onclick="elvoraHeaderLogout()" class="elvora-drawer-btn elvora-drawer-btn-secondary" style="width: 100%;">Log Out (Admin)</button>
-            `;
-          }
-        } else {
-          // Regular customer
-          const dispName = user.firstName || user.name || 'Member';
-          if (desktopAuth) {
-            desktopAuth.innerHTML = `
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: #FFF6E8; font-size: 12.5px; font-weight: 600;">Hi, ${dispName}</span>
-                <button type="button" onclick="elvoraHeaderLogout()" style="background: none; border: none; color: #a89587; font-size: 11.5px; cursor: pointer; text-decoration: underline;">
-                  Logout
-                </button>
-              </div>
-            `;
-          }
-          if (drawerAuth) {
-            drawerAuth.innerHTML = `
-              <div style="text-align: center; color: #FFF; font-weight: 700; font-size: 13px; margin-bottom: 8px;">Hi, ${dispName}</div>
-              <button type="button" onclick="elvoraHeaderLogout()" class="elvora-drawer-btn elvora-drawer-btn-secondary" style="width: 100%;">Log Out</button>
-            `;
-          }
-        }
-      }
-    }
-
-    window.elvoraHeaderLogout = function() {
-      localStorage.removeItem('elvora_auth_user');
-      sessionStorage.removeItem('elvora_admin_logged_in');
-      window.location.href = '/pages/contact?view=login';
-    };
-
-    syncElvoraHeaderAuth();
 
     // Initial sync
     window.syncWishlistBadges();
